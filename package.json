@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon index.js",
+    "build": "babel -d dist ./src -s ",
+    "start": "node dist/index.js",
+    "test": "nodemon test.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +19,19 @@
   "bugs": {
     "url": "https://github.com/GerardoDev25/hotel_america_backend/issues"
   },
-  "homepage": "https://github.com/GerardoDev25/hotel_america_backend#readme"
+  "homepage": "https://github.com/GerardoDev25/hotel_america_backend#readme",
+  "dependencies": {
+    "core-js": "^3.20.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "regenerator-runtime": "^0.13.9"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "@babel/register": "^7.16.5",
+    "nodemon": "^2.0.15"
+  }
 }
