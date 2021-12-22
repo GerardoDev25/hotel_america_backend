@@ -1,14 +1,8 @@
-import { Router, response, request } from 'express';
+import { Router } from 'express';
+import { userService } from '../services/user.service';
 
 const router = Router();
 
-router.get('/', (req = request, res = response) => {
-  const query = req.query;
-
-  res.json({
-    msg: 'get API - user',
-    query,
-  });
-});
+router.get('/', userService);
 
 export default router;
