@@ -1,6 +1,8 @@
 import cors from 'cors';
 import express from 'express';
+
 import router from '../routers';
+import dbConnection from '../database';
 import { PORT, PATH } from '../settings';
 
 class Server {
@@ -8,6 +10,7 @@ class Server {
     this.app = express();
     this.port = PORT;
 
+    this.connection();
     this.middlewares();
     this.routerApp();
   }
@@ -20,6 +23,10 @@ class Server {
 
   routerApp() {
     this.app.use(PATH.user, router.user);
+  }
+
+  async connection() {
+    await dbConnection();
   }
 
   listen() {
