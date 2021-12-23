@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { userService } from '../services/user.service';
+import Service from '../services';
 
 const router = Router();
 
-router.get('/', userService);
+router.get('/', Service.getUser);
 
 export default router;

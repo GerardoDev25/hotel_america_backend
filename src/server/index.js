@@ -1,3 +1,4 @@
+import 'colors';
 import cors from 'cors';
 import express from 'express';
 
@@ -31,7 +32,7 @@ class Server {
 
   listen() {
     this.app.listen(this.port, () => {
-      console.log('server run in port ', this.port);
+      console.log(` server run in port ${this.port} `.bgWhite.black.bold);
     });
   }
 }
