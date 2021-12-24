@@ -1,3 +1,3 @@
-import { getUser } from './user.service';
+import { getUser, deleteUser, postUser, putUser } from './user.service';
 
-export default { getUser };
+export default { getUser, deleteUser, postUser, putUser };
