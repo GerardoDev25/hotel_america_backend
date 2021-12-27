@@ -5,9 +5,11 @@ import { dbConnectionUrl } from '../settings';
 const dbConnection = async () => {
   try {
     await mongoose.connect(dbConnectionUrl + '/hotel');
-    console.log(' db online '.bgWhite.black);
+    console.log('*'.blue + '----------- db online -----------'.bgCyan.black + '*'.blue);
+    console.log('*'.blue + `*********************************`.blue + '*'.blue);
   } catch (error) {
     console.log(' db offline '.bgWhite.red);
+    console.log(error.toString().bgWhite.red);
   }
 };
 

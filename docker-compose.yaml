@@ -11,5 +11,3 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
-    # volumes:
-    #   - /home/gerardo/Escritorio/PROYECTOS/PROPIOS/hotel_america/hotel_america_backend/data/:/data/db

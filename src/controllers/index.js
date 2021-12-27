@@ -1,3 +1,3 @@
-import { getUser } from './user.controller';
+import { getUsers, getUser, postUser, deleteUser, putUser } from './user.controller';
 
-export default {  getUser };
+export default { getUsers, getUser, postUser, deleteUser, putUser };
