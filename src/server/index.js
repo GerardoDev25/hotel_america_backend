@@ -2,7 +2,7 @@ import 'colors';
 import cors from 'cors';
 import express from 'express';
 
-import router from '../routers';
+import Router from '../routers';
 import dbConnection from '../database';
 import { PORT, PATH } from '../settings';
 
@@ -23,7 +23,7 @@ class Server {
   }
 
   routerApp() {
-    this.app.use(PATH.user, router.user);
+    this.app.use(PATH.user, Router.user);
   }
 
   async connection() {
@@ -32,7 +32,8 @@ class Server {
 
   listen() {
     this.app.listen(this.port, () => {
-      console.log(` server run in port ${this.port} `.bgWhite.black.bold);
+      console.log('*'.blue + `*********************************`.blue + '*'.blue);
+      console.log('*'.blue + `---- server run in port ${this.port} ----`.bgCyan.black + '*'.blue);
     });
   }
 }

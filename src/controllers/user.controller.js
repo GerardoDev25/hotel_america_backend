@@ -1,11 +1,11 @@
-import MODEL from '../models';
+import Model from '../models';
 import { MESSAGE, STATUS } from '../settings';
 
-export const getUser = async (limit = 10, offset = 0) => {
+export const getUsers = async (limit = 10, offset = 0) => {
   try {
     const [total, users] = await Promise.all([
-      MODEL.user.countDocuments({ state: true }),
-      MODEL.user.find({ state: true }).limit(Number(limit)).skip(Number(offset)),
+      Model.user.countDocuments({ state: true }),
+      Model.user.find({ state: true }).limit(Number(limit)).skip(Number(offset)),
     ]);
 
     const data = {
@@ -19,6 +19,24 @@ export const getUser = async (limit = 10, offset = 0) => {
     //
   } catch (error) {
     console.log({
+      step: 'error getUsersController',
+      error: error.toString(),
+    });
+    return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
+  }
+};
+
+export const getUser = async (_id) => {
+  try {
+    const user = await Model.user.findById(_id);
+
+    return user
+      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [user] }
+      : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
+
+    //
+  } catch (error) {
+    console.log({
       step: 'error getUserController',
       error: error.toString(),
     });
@@ -28,7 +46,7 @@ export const getUser = async (limit = 10, offset = 0) => {
 
 export const postUser = async (fiels) => {
   try {
-    const user = new MODEL.user({ ...fiels });
+    const user = new Model.user({ ...fiels });
     await user.save();
 
     return { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: user };
@@ -46,7 +64,7 @@ export const postUser = async (fiels) => {
 export const putUser = async (fiels) => {
   try {
     const { _id, password, email, ...rest } = fiels;
-    const user = await MODEL.user.findByIdAndUpdate(_id, rest);
+    const user = await Model.user.findByIdAndUpdate(_id, rest);
     return { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: user };
 
     //
@@ -61,7 +79,7 @@ export const putUser = async (fiels) => {
 
 export const deleteUser = async (_id) => {
   try {
-    const user = await MODEL.user.findByIdAndUpdate(_id, { state: false });
+    const user = await Model.user.findByIdAndUpdate(_id, { state: false });
     return { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: user };
 
     //

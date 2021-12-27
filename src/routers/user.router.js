@@ -1,11 +1,12 @@
 import { Router } from 'express';
-import SERVICE from '../services';
+import Service from '../services';
 
 const router = Router();
 
-router.get('/', SERVICE.getUser);
-router.post('/', SERVICE.postUser);
-router.put('/:_id', SERVICE.putUser);
-router.delete('/:_id', SERVICE.deleteUser);
+router.get('/', Service.getUsers);
+router.get('/:_id', Service.getUser);
+router.post('/', Service.postUser);
+router.put('/:_id', Service.putUser);
+router.delete('/:_id', Service.deleteUser);
 
 export default router;
