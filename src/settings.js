@@ -10,10 +10,17 @@ export const PATH = {
 
 export const ROLES = {
   admin: 'role_admin',
-  guest: 'role_guest',
   laundry: 'role_laundry',
   reception: 'role_reception',
   cafeteria: 'role_Cafeteria',
+};
+
+export const DESCRIPTION_ROLES = {
+  advance: 'advance',
+  surcharge: 'surcharge',
+  laundry: 'laundry',
+  frigobar: 'frigobar',
+  others: 'others',
 };
 
 export const MESSAGE = {
@@ -24,7 +31,7 @@ export const MESSAGE = {
   internalServerError: 'Error to connect database',
   undefined: 'insufficient permissions to access the resource',
   conflict: 'The request could not be completed because of a conflict',
-  badRequest:'Bad Request'
+  badRequest: 'Bad Request',
 };
 
 export const STATUS = {
