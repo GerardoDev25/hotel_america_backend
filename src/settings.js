@@ -24,12 +24,14 @@ export const MESSAGE = {
   internalServerError: 'Error to connect database',
   undefined: 'insufficient permissions to access the resource',
   conflict: 'The request could not be completed because of a conflict',
+  badRequest:'Bad Request'
 };
 
 export const STATUS = {
   success: 200,
   created: 201,
   notFound: 404,
+  badRequest: 400,
   conflict: 409,
   unauthorized: 401,
   internalServerError: 500,
