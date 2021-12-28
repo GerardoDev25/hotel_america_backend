@@ -3,8 +3,8 @@ import { DESCRIPTION_ROLES } from '../settings';
 
 const roles = Array.from(DESCRIPTION_ROLES);
 
-const descriptionSchema = Schema({
-  amount: { type: Number, required: [true, 'amount is required'] },
+const amountSchema = Schema({
+  totalAmount: { type: Number, required: [true, 'amount is required'] },
   description: { type: String },
   registerId: {
     type: Schema.Types.ObjectId,
@@ -23,9 +23,9 @@ const descriptionSchema = Schema({
   },
 });
 
-descriptionSchema.methods.toJSON = function () {
+amountSchema.methods.toJSON = function () {
   const { __v, _id, ...data } = this.toObject();
-  return { descriptionId: _id, ...data };
+  return { amountId: _id, ...data };
 };
 
-export default model('Description', descriptionSchema);
+export default model('Amount', amountSchema);

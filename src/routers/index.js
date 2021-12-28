@@ -1,3 +1,4 @@
 import user from './user.router';
+import room from './room.router';
 
-export default { user };
+export default { user, room };

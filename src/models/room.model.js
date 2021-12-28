@@ -4,7 +4,7 @@ const roomSchema = Schema({
   doubleBed: { type: Number, required: [true, 'number of double bed is required'] },
   singleBed: { type: Number, required: [true, 'number of single bed is required'] },
   maxGuest: { type: Number, required: [true, 'number of max guest is required'] },
-  numberRoom: { type: Number, required: [true, 'room number is required'] },
+  numberRoom: { type: Number, unique: true, required: [true, 'room number is required'] },
   available: { type: Boolean, required: true },
 });
 

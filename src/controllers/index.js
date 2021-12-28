@@ -1,3 +1,3 @@
 import { getUsers, getUser, postUser, deleteUser, putUser } from './user.controller';
-
-export default { getUsers, getUser, postUser, deleteUser, putUser };
+import Room from './room.controller';
+export default { getUsers, getUser, postUser, deleteUser, putUser, Room };

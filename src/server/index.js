@@ -24,6 +24,7 @@ class Server {
 
   routerApp() {
     this.app.use(PATH.user, Router.user);
+    this.app.use(PATH.room, Router.room);
   }
 
   async connection() {

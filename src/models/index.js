@@ -1,8 +1,8 @@
-import user from './user.model';
-import room from './room.model';
-import staff from './staff.model';
-import goest from './goest.model';
-import register from './register.model';
-import description from './description.model';
+import User from './user.model';
+import Room from './room.model';
+import Staff from './staff.model';
+import Goest from './goest.model';
+import Register from './register.model';
+import Amount from './amount.model';
 
-export default { user, description, room, staff, register, goest };
+export default { User, Amount, Room, Staff, Register, Goest };

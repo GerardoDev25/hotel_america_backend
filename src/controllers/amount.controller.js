@@ -1,15 +1,15 @@
 import Model from '../models';
 import { MESSAGE, STATUS } from '../settings';
 
-export const getUsers = async (limit = 10, offset = 0) => {
+export const getAmounts = async (limit = 10, offset = 0, params) => {
   try {
-    const [total, users] = await Promise.all([
-      Model.User.countDocuments({ state: true }),
-      Model.User.find({ state: true }).limit(Number(limit)).skip(Number(offset)),
+    const [total, amounts] = await Promise.all([
+      Model.Amount.countDocuments(params),
+      Model.Amount.find(params).limit(Number(limit)).skip(Number(offset)),
     ]);
 
     const data = {
-      users,
+      amounts,
       total,
       pageCount: Math.ceil(total / limit),
     };
@@ -19,73 +19,73 @@ export const getUsers = async (limit = 10, offset = 0) => {
     //
   } catch (error) {
     console.log({
-      step: 'error getUsersController',
+      step: 'error getAmountsController',
       error: error.toString(),
     });
     return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
   }
 };
 
-export const getUser = async (_id) => {
+export const getAmount = async (amountId) => {
   try {
-    const user = await Model.User.findById(_id);
+    const amount = await Model.Amount.findById(amountId);
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [user] }
+    return amount
+      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [amount] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
 
     //
   } catch (error) {
     console.log({
-      step: 'error getUserController',
+      step: 'error getAmountController',
       error: error.toString(),
     });
     return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
   }
 };
 
-export const postUser = async (fiels) => {
+export const postAmount = async (fiels) => {
   try {
-    const user = new Model.User({ ...fiels });
-    await user.save();
+    const amount = new Model.Amount({ ...fiels });
+    await amount.save();
 
-    return { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: user };
+    return { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: amount };
 
     //
   } catch (error) {
     console.log({
-      step: 'error postUserController',
+      step: 'error postAmountController',
       error: error.toString(),
     });
     return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
   }
 };
 
-export const putUser = async (fiels) => {
+export const putAmount = async (fiels) => {
   try {
-    const { _id, password, email, ...rest } = fiels;
-    const user = await Model.User.findByIdAndUpdate(_id, rest);
-    return { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: user };
+    const { amountId, ...rest } = fiels;
+    const amount = await Model.Amount.findByIdAndUpdate(amountId, rest);
+    return { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: amount };
 
     //
   } catch (error) {
     console.log({
-      step: 'error putUserController',
+      step: 'error putAmountController',
       error: error.toString(),
     });
     return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
   }
 };
 
-export const deleteUser = async (_id) => {
+export const deleteAmount = async (amountId) => {
   try {
-    const user = await Model.User.findByIdAndUpdate(_id, { state: false });
-    return { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: user };
+    const amount = await Model.Amount.findOneAndDelete({ amountId });
+    return { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: amount };
 
     //
   } catch (error) {
     console.log({
-      step: 'error deleteUserController',
+      step: 'error deleteAmountController',
       error: error.toString(),
     });
     return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };

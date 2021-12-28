@@ -4,18 +4,18 @@ const registerSchema = Schema({
   price: { type: Number, required: [true, 'the price is required'] },
   numberRoom: { type: Number, required: [true, 'the room number is required'] },
   discount: { type: Number },
+  checkIn: { type: SchemaTypes.Date, required: [true, 'the check in is required'] },
+  checkOut: { type: SchemaTypes.Date },
   roomId: {
-    type: Schema.Types.ObjectId,
+    type: SchemaTypes.ObjectId,
     ref: 'Room',
     required: true,
   },
   staffId: {
-    type: Schema.Types.ObjectId,
+    type: SchemaTypes.ObjectId,
     ref: 'Staff',
     required: true,
   },
-  checkIn: { type: SchemaTypes.Date, required: [true, 'the check in is required'] },
-  checkOut: { type: SchemaTypes.Date },
 });
 
 registerSchema.methods.toJSON = function () {
