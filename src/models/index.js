@@ -1,3 +1,7 @@
-import user from './user.model';
+import Room from './room.model';
+import Staff from './staff.model';
+import Goest from './goest.model';
+import Register from './register.model';
+import Amount from './amount.model';
 
-export default { user };
+export default { Amount, Room, Staff, Register, Goest };
