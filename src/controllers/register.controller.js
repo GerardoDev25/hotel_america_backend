@@ -4,8 +4,8 @@ import { MESSAGE, STATUS } from '../settings';
 const getAll = async (limit = 10, offset = 0, where = {}) => {
   try {
     const [total, rows] = await Promise.all([
-      Model.Amount.countDocuments(where),
-      Model.Amount.find(where).limit(Number(limit)).skip(Number(offset)),
+      Model.Register.countDocuments(where),
+      Model.Register.find(where).limit(Number(limit)).skip(Number(offset)),
     ]);
     const data = { rows, total, pageCount: Math.ceil(total / limit) };
 
@@ -13,14 +13,14 @@ const getAll = async (limit = 10, offset = 0, where = {}) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error getAllAmountController', error: error.toString() });
+    console.log({ step: 'error getAll.RegisterController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
   }
 };
 
-const getById = async (amountId) => {
+const getById = async (registerId) => {
   try {
-    const data = await Model.Amount.findById(amountId);
+    const data = await Model.Register.findById(registerId);
 
     return data
       ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data }
@@ -28,14 +28,14 @@ const getById = async (amountId) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error getByIdAmountController', error: error.toString() });
+    console.log({ step: 'error getById.RegisterController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
   }
 };
 
 const create = async (fiels) => {
   try {
-    const data = new Model.Amount({ ...fiels });
+    const data = new Model.Register({ ...fiels });
     await data.save();
 
     return data
@@ -44,15 +44,15 @@ const create = async (fiels) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error createAmountController', error: error.toString() });
+    console.log({ step: 'error create.RegisterController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
   }
 };
 
 const update = async (fiels) => {
   try {
-    const { amountId, ...rest } = fiels;
-    const data = await Model.Amount.findByIdAndUpdate(amountId, rest);
+    const { registerId, ...rest } = fiels;
+    const data = await Model.Register.findByIdAndUpdate(registerId, rest);
 
     return data
       ? { statusCode: STATUS.success, msg: MESSAGE.successUpdate, ok: true, data }
@@ -60,14 +60,14 @@ const update = async (fiels) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error updateAmountController', error: error.toString() });
+    console.log({ step: 'error update.RegisterController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
   }
 };
 
-const del = async (amountId) => {
+const del = async (registerId) => {
   try {
-    const data = await Model.Amount.findOneAndDelete({ amountId });
+    const data = await Model.Register.findOneAndDelete({ registerId });
 
     return data
       ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data }
@@ -75,7 +75,7 @@ const del = async (amountId) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error deleteAmountController', error: error.toString() });
+    console.log({ step: 'error delete.RegisterController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
   }
 };
