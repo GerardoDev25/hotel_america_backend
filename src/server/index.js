@@ -23,7 +23,6 @@ class Server {
   }
 
   routerApp() {
-    this.app.use(PATH.user, Router.user);
     this.app.use(PATH.room, Router.room);
     this.app.use(PATH.staff, Router.staff);
     this.app.use(PATH.goest, Router.goest);

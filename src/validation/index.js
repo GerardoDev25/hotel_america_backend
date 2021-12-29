@@ -1,3 +1,3 @@
-import { getUser } from './user.validation.js';
+import Room from './room.validation.js';
 
-export default { getUser };
+export default { Room };

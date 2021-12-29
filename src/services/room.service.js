@@ -20,7 +20,6 @@ const getAll = async (req = request, res = response) => {
 const getById = async (req = request, res = response) => {
   try {
     const { roomId } = req.params;
-    console.log(req.params);
     const { msg, statusCode, data, ok } = await Controller.Room.getById(roomId);
 
     res.status(statusCode).json({ data, msg, ok });
