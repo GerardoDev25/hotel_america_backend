@@ -3,7 +3,13 @@ dotenv.config();
 
 export const PORT = process.env.PORT || 3000;
 export const dbConnectionUrl = process.env.MONGOBD;
-export const PATH = { room: '/api/room', staff: '/api/staff', goest: '/api/goest', amount: '/api/amount' };
+export const PATH = {
+  room: '/api/room',
+  staff: '/api/staff',
+  goest: '/api/goest',
+  amount: '/api/amount',
+  register: '/api/register',
+};
 
 export const ROLES = {
   admin: 'role_admin',
