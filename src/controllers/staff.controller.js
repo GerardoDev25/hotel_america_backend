@@ -3,24 +3,24 @@ import { MESSAGE, STATUS } from '../settings';
 
 const getAll = async (limit = 10, offset = 0, where = {}) => {
   try {
-    const [total, rooms] = await Promise.all([
-      Model.Room.countDocuments(where),
-      Model.Room.find(where).limit(Number(limit)).skip(Number(offset)),
+    const [total, staffs] = await Promise.all([
+      Model.Staff.countDocuments(where),
+      Model.Staff.find(where).limit(Number(limit)).skip(Number(offset)),
     ]);
-    const data = { rooms, total, pageCount: Math.ceil(total / limit) };
+    const data = { staffs, total, pageCount: Math.ceil(total / limit) };
 
     return { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data };
 
     //
   } catch (error) {
-    console.log({ step: 'error getAllRoomsController', error: error.toString() });
+    console.log({ step: 'error getAllStaffsController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
   }
 };
 
-const getById = async (roomId) => {
+const getById = async (staffId) => {
   try {
-    const data = await Model.Room.findById(roomId);
+    const data = await Model.Staff.findById(staffId);
 
     return data
       ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data }
@@ -28,14 +28,14 @@ const getById = async (roomId) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error getByIdRoomController', error: error.toString() });
+    console.log({ step: 'error getByIdStaffController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
   }
 };
 
 const create = async (fiels) => {
   try {
-    const data = new Model.Room({ ...fiels });
+    const data = new Model.Staff({ ...fiels });
     await data.save();
 
     return data
@@ -44,15 +44,15 @@ const create = async (fiels) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error createRoomController', error: error.toString() });
+    console.log({ step: 'error createStaffController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
   }
 };
 
 const update = async (fiels) => {
   try {
-    const { roomId, ...rest } = fiels;
-    const data = await Model.Room.findByIdAndUpdate(roomId, rest);
+    const { staffId, ...rest } = fiels;
+    const data = await Model.Staff.findByIdAndUpdate(staffId, rest);
 
     return data
       ? { statusCode: STATUS.success, msg: MESSAGE.successUpdate, ok: true, data }
@@ -60,14 +60,14 @@ const update = async (fiels) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error updateRoomController', error: error.toString() });
+    console.log({ step: 'error updateStaffController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
   }
 };
 
-const del = async (roomId) => {
+const del = async (staffId) => {
   try {
-    const data = await Model.Room.findOneAndDelete({ roomId });
+    const data = await Model.Staff.findOneAndDelete({ staffId });
 
     return data
       ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data }
@@ -75,7 +75,7 @@ const del = async (roomId) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error deleteRoomController', error: error.toString() });
+    console.log({ step: 'error deleteStaffController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
   }
 };
