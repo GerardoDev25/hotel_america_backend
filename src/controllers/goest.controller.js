@@ -1,93 +1,83 @@
 import Model from '../models';
 import { MESSAGE, STATUS } from '../settings';
 
-export const getGoests = async (limit = 10, offset = 0, params) => {
+const getAll = async (limit = 10, offset = 0, where = {}) => {
   try {
-    const [total, goests] = await Promise.all([
-      Model.Goest.countDocuments(params),
-      Model.Goest.find(params).limit(Number(limit)).skip(Number(offset)),
+    const [total, rows] = await Promise.all([
+      Model.Goest.countDocuments(where),
+      Model.Goest.find(where).limit(Number(limit)).skip(Number(offset)),
     ]);
-
-    const data = {
-      goests,
-      total,
-      pageCount: Math.ceil(total / limit),
-    };
+    const data = { rows, total, pageCount: Math.ceil(total / limit) };
 
     return { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data };
 
     //
   } catch (error) {
-    console.log({
-      step: 'error getGoestsController',
-      error: error.toString(),
-    });
+    console.log({ step: 'error getAllGoestController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
   }
 };
 
-export const getGoest = async (goestId) => {
+const getById = async (goestId) => {
   try {
-    const goest = await Model.Goest.findById(goestId);
+    const data = await Model.Goest.findById(goestId);
 
-    return goest
-      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [goest] }
-      : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
+    return data
+      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data }
+      : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: {} };
 
     //
   } catch (error) {
-    console.log({
-      step: 'error getGoestController',
-      error: error.toString(),
-    });
+    console.log({ step: 'error getByIdGoestController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
   }
 };
 
-export const postGoest = async (fiels) => {
+const create = async (fiels) => {
   try {
-    const goest = new Model.Goest({ ...fiels });
-    await goest.save();
+    const data = new Model.Goest({ ...fiels });
+    await data.save();
 
-    return { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: goest };
+    return data
+      ? { statusCode: STATUS.created, msg: MESSAGE.successCrete, ok: true, data }
+      : { statusCode: STATUS.internalServerError, msg: MESSAGE.errorCreate, ok: false, data: {} };
 
     //
   } catch (error) {
-    console.log({
-      step: 'error postGoestController',
-      error: error.toString(),
-    });
+    console.log({ step: 'error createGoestController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
   }
 };
 
-export const putGoest = async (fiels) => {
+const update = async (fiels) => {
   try {
-    const { GoestId, ...rest } = fiels;
-    const Goest = await Model.Goest.findByIdAndUpdate(GoestId, rest);
-    return { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: Goest };
+    const { goestId, ...rest } = fiels;
+    const data = await Model.Goest.findByIdAndUpdate(goestId, rest);
+
+    return data
+      ? { statusCode: STATUS.success, msg: MESSAGE.successUpdate, ok: true, data }
+      : { statusCode: STATUS.internalServerError, msg: MESSAGE.errorUpdate, ok: false, data: {} };
 
     //
   } catch (error) {
-    console.log({
-      step: 'error putGoestController',
-      error: error.toString(),
-    });
+    console.log({ step: 'error updateGoestController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
   }
 };
 
-export const deleteGoest = async (goestId) => {
+const del = async (goestId) => {
   try {
-    const goest = await Model.Goest.findOneAndDelete({ goestId });
-    return { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: goest };
+    const data = await Model.Goest.findOneAndDelete({ goestId });
+
+    return data
+      ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data }
+      : { statusCode: STATUS.internalServerError, msg: MESSAGE.errorDelete, ok: false, data: {} };
 
     //
   } catch (error) {
-    console.log({
-      step: 'error deleteGoestController',
-      error: error.toString(),
-    });
+    console.log({ step: 'error deleteGoestController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
   }
 };
+
+export default { getAll, getById, create, update, del };

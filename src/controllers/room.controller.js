@@ -3,11 +3,11 @@ import { MESSAGE, STATUS } from '../settings';
 
 const getAll = async (limit = 10, offset = 0, where = {}) => {
   try {
-    const [total, rooms] = await Promise.all([
+    const [total, rows] = await Promise.all([
       Model.Room.countDocuments(where),
       Model.Room.find(where).limit(Number(limit)).skip(Number(offset)),
     ]);
-    const data = { rooms, total, pageCount: Math.ceil(total / limit) };
+    const data = { rows, total, pageCount: Math.ceil(total / limit) };
 
     return { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data };
 
