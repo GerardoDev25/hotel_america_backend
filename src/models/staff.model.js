@@ -1,19 +1,14 @@
-import { Schema, model } from 'mongoose';
-import { ROLES } from '../settings';
-
-const roles = Array.from(ROLES);
+import { Schema, model, SchemaTypes } from 'mongoose';
+import { ROLES_STAFF } from '../settings';
 
 const staffSchema = Schema({
-  name: { type: String, required: [true, 'name is required'] },
-  password: { type: String, required: [true, 'the password is required'] },
-  age: { type: Number },
-  active: { type: Boolean, default: true },
-  phone: { type: Number },
-  role: {
-    type: String,
-    required: true,
-    enum: [...roles],
-  },
+  age: { type: SchemaTypes.Number },
+  phone: { type: SchemaTypes.Number },
+  active: { type: SchemaTypes.Boolean, default: true },
+  name: { type: SchemaTypes.String, required: [true, 'name is required'] },
+  password: { type: SchemaTypes.String, required: [true, 'the password is required'] },
+
+  role: { type: SchemaTypes.String, required: true, enum: ROLES_STAFF },
 });
 
 staffSchema.methods.toJSON = function () {

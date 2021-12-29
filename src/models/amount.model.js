@@ -1,26 +1,15 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, SchemaTypes } from 'mongoose';
 import { DESCRIPTION_ROLES } from '../settings';
 
 const roles = Array.from(DESCRIPTION_ROLES);
 
 const amountSchema = Schema({
-  totalAmount: { type: Number, required: [true, 'amount is required'] },
-  description: { type: String },
-  registerId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Register',
-    required: true,
-  },
-  staffId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Staff',
-    required: true,
-  },
-  role: {
-    type: String,
-    required: true,
-    enum: [...roles],
-  },
+  description: { type: SchemaTypes.String },
+  totalAmount: { type: SchemaTypes.Number, required: [true, 'amount is required'] },
+  role: { type: SchemaTypes.String, enum: [...roles], required: [true, 'type requered or invalid'] },
+
+  staffId: { type: SchemaTypes.ObjectId, ref: 'Staff', required: [true, 'id staff is required'] },
+  registerId: { type: SchemaTypes.ObjectId, ref: 'Register', required: [true, 'id register is required'] },
 });
 
 amountSchema.methods.toJSON = function () {

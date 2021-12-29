@@ -1,21 +1,18 @@
 import { Schema, model, SchemaTypes } from 'mongoose';
+import moment from 'moment';
+
+import 'moment/locale/es-mx';
+moment.locale('es-mx');
 
 const registerSchema = Schema({
-  price: { type: Number, required: [true, 'the price is required'] },
-  numberRoom: { type: Number, required: [true, 'the room number is required'] },
-  discount: { type: Number },
-  checkIn: { type: SchemaTypes.Date, required: [true, 'the check in is required'] },
-  checkOut: { type: SchemaTypes.Date },
-  roomId: {
-    type: SchemaTypes.ObjectId,
-    ref: 'Room',
-    required: true,
-  },
-  staffId: {
-    type: SchemaTypes.ObjectId,
-    ref: 'Staff',
-    required: true,
-  },
+  discount: { type: SchemaTypes.Number, default: 0 },
+  checkIn: { type: SchemaTypes.Number, default: moment.now() },
+  price: { type: SchemaTypes.Number, required: [true, 'the price is required'] },
+  checkOut: { type: SchemaTypes.Number, required:[true, 'the checkOut is required'] },
+  numberRoom: { type: SchemaTypes.Number, required: [true, 'the room number is required'] },
+
+  roomId: { type: SchemaTypes.ObjectId, ref: 'Room', required: true },
+  staffId: { type: SchemaTypes.ObjectId, ref: 'Staff', required: true },
 });
 
 registerSchema.methods.toJSON = function () {
