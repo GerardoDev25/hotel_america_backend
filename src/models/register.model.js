@@ -8,8 +8,8 @@ const registerSchema = Schema({
   discount: { type: SchemaTypes.Number, default: 0 },
   checkIn: { type: SchemaTypes.Number, default: moment.now() },
   price: { type: SchemaTypes.Number, required: [true, 'the price is required'] },
-  checkOut: { type: SchemaTypes.Number, required:[true, 'the checkOut is required'] },
-  numberRoom: { type: SchemaTypes.Number, required: [true, 'the room number is required'] },
+  checkOut: { type: SchemaTypes.Number, required: [true, 'the checkOut is required'] },
+  numberRoom: { type: SchemaTypes.Number, unique: true, required: [true, 'room number is required'] },
 
   roomId: { type: SchemaTypes.ObjectId, ref: 'Room', required: true },
   staffId: { type: SchemaTypes.ObjectId, ref: 'Staff', required: true },

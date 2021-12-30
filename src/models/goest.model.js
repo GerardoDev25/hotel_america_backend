@@ -12,6 +12,7 @@ const goestSchema = Schema({
   lastName: { type: SchemaTypes.String, required: [true, 'last name is required'] },
   dateOfBirth: { type: SchemaTypes.Number, required: [true, 'birth day is required'] },
   ci: { type: SchemaTypes.String, required: [true, 'ci is required'], unique: true },
+  numberRoom: { type: SchemaTypes.Number, required: [true, 'the room number is required'] },
 
   registerId: { type: SchemaTypes.ObjectId, ref: 'Register', required: true },
 });

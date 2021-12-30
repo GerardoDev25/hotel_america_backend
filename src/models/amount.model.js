@@ -1,12 +1,10 @@
 import { Schema, model, SchemaTypes } from 'mongoose';
 import { DESCRIPTION_ROLES } from '../settings';
 
-const roles = Array.from(DESCRIPTION_ROLES);
-
 const amountSchema = Schema({
   description: { type: SchemaTypes.String, default: '' },
   totalAmount: { type: SchemaTypes.Number, required: [true, 'amount is required'] },
-  role: { type: SchemaTypes.String, enum: [...roles], required: [true, 'type requered or invalid'] },
+  role: { type: SchemaTypes.String, enum: DESCRIPTION_ROLES, required: [true, 'type requered or invalid'] },
 
   staffId: { type: SchemaTypes.ObjectId, ref: 'Staff', required: [true, 'id staff is required'] },
   registerId: { type: SchemaTypes.ObjectId, ref: 'Register', required: [true, 'id register is required'] },

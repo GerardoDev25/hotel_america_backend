@@ -13,14 +13,7 @@ export const PATH = {
 
 export const KIND_OF_ROOM = ['simple', 'double', 'multiple', 'suite'];
 export const ROLES_STAFF = ['role_admin', 'role_laundry', 'role_reception', 'role_Cafeteria'];
-
-export const DESCRIPTION_ROLES = {
-  advance: 'advance',
-  surcharge: 'surcharge',
-  laundry: 'laundry',
-  frigobar: 'frigobar',
-  others: 'others',
-};
+export const DESCRIPTION_ROLES = ['advance', 'surcharge', 'laundry', 'frigobar', 'others'];
 
 export const MESSAGE = {
   success: 'Successful request',
