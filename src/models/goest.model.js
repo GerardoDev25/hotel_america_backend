@@ -1,17 +1,16 @@
 import { Schema, model, SchemaTypes } from 'mongoose';
 
 const goestSchema = Schema({
-  home: { type: SchemaTypes.String },
-  city: { type: SchemaTypes.String },
-  phone: { type: SchemaTypes.Number },
-  email: { type: SchemaTypes.String, unique: true },
+  home: { type: SchemaTypes.String, default: '' },
+  city: { type: SchemaTypes.String, default: '' },
+  phone: { type: SchemaTypes.Number, default: 0 },
   state: { type: SchemaTypes.Boolean, default: true },
   role: { type: SchemaTypes.String, default: 'role_guest' },
   name: { type: SchemaTypes.String, required: [true, 'name is required'] },
   origin: { type: SchemaTypes.String, required: [true, 'origin is required'] },
   posting: { type: SchemaTypes.String, required: [true, 'posting is required'] },
   lastName: { type: SchemaTypes.String, required: [true, 'last name is required'] },
-  dateOfBirth: { type: SchemaTypes.Date, required: [true, 'birth day is required'] },
+  dateOfBirth: { type: SchemaTypes.Number, required: [true, 'birth day is required'] },
   ci: { type: SchemaTypes.String, required: [true, 'ci is required'], unique: true },
 
   registerId: { type: SchemaTypes.ObjectId, ref: 'Register', required: true },

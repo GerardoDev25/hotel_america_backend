@@ -4,7 +4,7 @@ import { DESCRIPTION_ROLES } from '../settings';
 const roles = Array.from(DESCRIPTION_ROLES);
 
 const amountSchema = Schema({
-  description: { type: SchemaTypes.String },
+  description: { type: SchemaTypes.String, default: '' },
   totalAmount: { type: SchemaTypes.Number, required: [true, 'amount is required'] },
   role: { type: SchemaTypes.String, enum: [...roles], required: [true, 'type requered or invalid'] },
 
