@@ -1,11 +1,13 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, SchemaTypes } from 'mongoose';
+import { KIND_OF_ROOM } from '../settings';
 
 const roomSchema = Schema({
-  doubleBed: { type: Number, required: [true, 'number of double bed is required'] },
-  singleBed: { type: Number, required: [true, 'number of single bed is required'] },
-  maxGuest: { type: Number, required: [true, 'number of max guest is required'] },
-  numberRoom: { type: Number, unique: true, required: [true, 'room number is required'] },
-  available: { type: Boolean, required: true },
+  doubleBed: { type: SchemaTypes.Number, default: 0 },
+  singleBed: { type: SchemaTypes.Number, default: 0 },
+  available: { type: SchemaTypes.Boolean, default: true },
+  kindOfRoom: { type: SchemaTypes.String, required: true, enum: KIND_OF_ROOM },
+  maxGuest: { type: SchemaTypes.Number, required: [true, 'number of max guest is required'] },
+  numberRoom: { type: SchemaTypes.Number, unique: true, required: [true, 'room number is required'] },
 });
 
 roomSchema.methods.toJSON = function () {

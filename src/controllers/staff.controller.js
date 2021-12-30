@@ -14,7 +14,7 @@ const getAll = async (limit = 10, offset = 0, where = {}) => {
     //
   } catch (error) {
     console.log({ step: 'error getAllStaffsController', error: error.toString() });
-    return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
+    return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
   }
 };
 
@@ -29,7 +29,7 @@ const getById = async (staffId) => {
     //
   } catch (error) {
     console.log({ step: 'error getByIdStaffController', error: error.toString() });
-    return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
+    return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
   }
 };
 
@@ -45,7 +45,7 @@ const create = async (fiels) => {
     //
   } catch (error) {
     console.log({ step: 'error createStaffController', error: error.toString() });
-    return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
+    return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
   }
 };
 
@@ -56,27 +56,27 @@ const update = async (fiels) => {
 
     return data
       ? { statusCode: STATUS.success, msg: MESSAGE.successUpdate, ok: true, data }
-      : { statusCode: STATUS.internalServerError, msg: MESSAGE.errorUpdate, ok: false, data: {} };
+      : { statusCode: STATUS.notFound, msg: MESSAGE.errorUpdate, ok: false, data: {} };
 
     //
   } catch (error) {
     console.log({ step: 'error updateStaffController', error: error.toString() });
-    return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
+    return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
   }
 };
 
 const del = async (staffId) => {
   try {
-    const data = await Model.Staff.findOneAndDelete({ staffId });
+    const data = await Model.Staff.findOneAndDelete({ _id: staffId });
 
     return data
       ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data }
-      : { statusCode: STATUS.internalServerError, msg: MESSAGE.errorDelete, ok: false, data: {} };
+      : { statusCode: STATUS.notFound, msg: MESSAGE.errorDelete, ok: false, data: {} };
 
     //
   } catch (error) {
     console.log({ step: 'error deleteStaffController', error: error.toString() });
-    return { statusCode: STATUS.internalServerError, ok: false, msg: MESSAGE.internalServerError };
+    return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
   }
 };
 

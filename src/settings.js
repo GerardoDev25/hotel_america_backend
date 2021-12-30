@@ -11,20 +11,9 @@ export const PATH = {
   register: '/api/register',
 };
 
-export const ROLES = {
-  admin: 'role_admin',
-  laundry: 'role_laundry',
-  reception: 'role_reception',
-  cafeteria: 'role_Cafeteria',
-};
-
-export const DESCRIPTION_ROLES = {
-  advance: 'advance',
-  surcharge: 'surcharge',
-  laundry: 'laundry',
-  frigobar: 'frigobar',
-  others: 'others',
-};
+export const KIND_OF_ROOM = ['simple', 'double', 'multiple', 'suite'];
+export const ROLES_STAFF = ['role_admin', 'role_laundry', 'role_reception', 'role_Cafeteria'];
+export const DESCRIPTION_ROLES = ['advance', 'surcharge', 'laundry', 'frigobar', 'others'];
 
 export const MESSAGE = {
   success: 'Successful request',
