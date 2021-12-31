@@ -3,6 +3,11 @@ dotenv.config();
 
 export const PORT = process.env.PORT || 3000;
 export const dbConnectionUrl = process.env.MONGOBD;
+
+export const KIND_OF_ROOM = ['simple', 'double', 'multiple', 'suite'];
+export const ROLES_STAFF = ['role_admin', 'role_laundry', 'role_reception', 'role_Cafeteria'];
+export const DESCRIPTION_ROLES = ['advance', 'surcharge', 'laundry', 'frigobar', 'others'];
+
 export const PATH = {
   room: '/api/room',
   staff: '/api/staff',
@@ -10,10 +15,6 @@ export const PATH = {
   amount: '/api/amount',
   register: '/api/register',
 };
-
-export const KIND_OF_ROOM = ['simple', 'double', 'multiple', 'suite'];
-export const ROLES_STAFF = ['role_admin', 'role_laundry', 'role_reception', 'role_Cafeteria'];
-export const DESCRIPTION_ROLES = ['advance', 'surcharge', 'laundry', 'frigobar', 'others'];
 
 export const MESSAGE = {
   success: 'Successful request',
