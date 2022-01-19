@@ -1,4 +1,5 @@
 import { response, request } from 'express';
+import bcryptjs from 'bcryptjs';
 
 import Controller from '../controllers';
 import { MESSAGE, STATUS } from '../settings';
@@ -34,7 +35,12 @@ const getById = async (req = request, res = response) => {
 const create = async (req = request, res = response) => {
   try {
     const fiels = req.body;
-    const { msg, statusCode, data, ok } = await Controller.Staff.create(fiels);
+
+    const { password } = fiels;
+    const salt = bcryptjs.genSaltSync();
+    const passEncrypt = bcryptjs.hashSync(password, salt);
+
+    const { msg, statusCode, data, ok } = await Controller.Staff.create({ ...fiels, password: passEncrypt });
 
     res.status(statusCode).json({ data, msg, ok });
 
@@ -49,7 +55,15 @@ const update = async (req = request, res = response) => {
   try {
     const { staffId } = req.params;
     const fiels = req.body;
-    const { msg, statusCode, data, ok } = await Controller.Staff.update({ ...fiels, staffId });
+
+    let { password } = fiels;
+    if (password) {
+      // * encode the password
+      const salt = bcryptjs.genSaltSync();
+      password = bcryptjs.hashSync(password, salt);
+    }
+
+    const { msg, statusCode, data, ok } = await Controller.Staff.update({ ...fiels, staffId, password });
 
     res.status(statusCode).json({ data, msg, ok });
 

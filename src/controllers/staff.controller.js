@@ -3,10 +3,7 @@ import { MESSAGE, STATUS } from '../settings';
 
 const getAll = async (limit = 10, offset = 0, where = {}) => {
   try {
-    const [total, rows] = await Promise.all([
-      Model.Staff.countDocuments(where),
-      Model.Staff.find(where).limit(Number(limit)).skip(Number(offset)),
-    ]);
+    const [total, rows] = await Promise.all([Model.Staff.countDocuments(where), Model.Staff.find(where).limit(Number(limit)).skip(Number(offset))]);
     const data = { rows, total, pageCount: Math.ceil(total / limit) };
 
     return { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data };
@@ -29,6 +26,21 @@ const getById = async (staffId) => {
     //
   } catch (error) {
     console.log({ step: 'error getByIdStaffController', error: error.toString() });
+    return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
+  }
+};
+
+const findOne = async (where = {}) => {
+  try {
+    const data = await Model.Staff.find(where);
+
+    return data.length
+      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data }
+      : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: {} };
+
+    //
+  } catch (error) {
+    console.log({ step: 'error findOneStaffController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
   }
 };
@@ -80,4 +92,4 @@ const del = async (staffId) => {
   }
 };
 
-export default { getAll, getById, create, update, del };
+export default { getAll, getById, findOne, create, update, del };

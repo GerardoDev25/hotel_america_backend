@@ -3,12 +3,14 @@ dotenv.config();
 
 export const PORT = process.env.PORT || 3000;
 export const dbConnectionUrl = process.env.MONGOBD;
+export const SECRETORPRIVATEKEY = process.env.SECRETORPRIVATEKEY;
 
 export const KIND_OF_ROOM = ['simple', 'double', 'multiple', 'suite'];
 export const ROLES_STAFF = ['role_admin', 'role_laundry', 'role_reception', 'role_Cafeteria'];
 export const DESCRIPTION_ROLES = ['advance', 'surcharge', 'laundry', 'frigobar', 'others'];
 
 export const PATH = {
+  auth: '/api/auth',
   room: '/api/room',
   staff: '/api/staff',
   goest: '/api/goest',
@@ -17,6 +19,8 @@ export const PATH = {
 };
 
 export const MESSAGE = {
+  authSuccess:'user logged',
+  authError:'password or username incorrect',
   success: 'Successful request',
   notFound: 'Resource not found',
   successCrete: 'Successful create',

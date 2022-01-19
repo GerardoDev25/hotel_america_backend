@@ -6,9 +6,9 @@ const staffSchema = Schema({
   role: { type: SchemaTypes.String, required: true, enum: ROLES_STAFF },
   age: { type: SchemaTypes.Number, required: [true, 'age is required'] },
   name: { type: SchemaTypes.String, required: [true, 'name is required'] },
+  username: { type: SchemaTypes.String, required: [true, 'user name is required'] },
   phone: { type: SchemaTypes.Number, required: [true, 'phone is required'] },
   password: { type: SchemaTypes.String, required: [true, 'the password is required'] },
-
 });
 
 staffSchema.methods.toJSON = function () {
