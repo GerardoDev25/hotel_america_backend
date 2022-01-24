@@ -19,8 +19,8 @@ export const PATH = {
 };
 
 export const MESSAGE = {
-  authSuccess:'user logged',
-  authError:'password or username incorrect',
+  authSuccess: 'user logged',
+  authError: 'password or username incorrect',
   success: 'Successful request',
   notFound: 'Resource not found',
   successCrete: 'Successful create',
@@ -33,6 +33,7 @@ export const MESSAGE = {
   undefined: 'insufficient permissions to access the resource',
   conflict: 'The request could not be completed because of a conflict',
   badRequest: 'Bad Request',
+  forbidden: 'Resource Forbidden',
 };
 
 export const STATUS = {
@@ -40,6 +41,7 @@ export const STATUS = {
   created: 201,
   badRequest: 400,
   unauthorized: 401,
+  forbidden: 403,
   notFound: 404,
   conflict: 409,
   expectationFailed: 417,
