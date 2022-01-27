@@ -27,13 +27,14 @@ export const validateJWT = async (req = request, res = response, next) => {
   }
 };
 
-export const haveRole = (...roles) => {
+export const haveRole = (roles) => {
   return (req = request, res = response, next) => {
     //
 
     if (!req.role) return res.status(STATUS.unauthorized).json({ msg: MESSAGE.undefined, ko: false, data: [] });
-    console.log(roles);
     const { role } = req;
+
+    console.log({ roles, role });
 
     if (!roles.includes(role)) {
       return res.status(STATUS.unauthorized).json({ msg: MESSAGE.undefined, ko: false, data: [] });

@@ -68,7 +68,6 @@ const update = async (fiels) => {
 const del = async (roomId) => {
   try {
     const data = await Model.Room.findOneAndDelete({ _id: roomId });
-    console.log('room delete');
     return data
       ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data }
       : { statusCode: STATUS.notFound, msg: MESSAGE.errorDelete, ok: false, data: {} };

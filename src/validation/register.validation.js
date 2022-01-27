@@ -1,8 +1,6 @@
 import { check } from 'express-validator';
 import { validataInputs } from './validateInputs';
 
-const verifyId = [check('registerId', 'registerId is required or kind of wrong data type - MongoId').isMongoId().notEmpty(), validataInputs];
-
 const create = [
   check('price', 'price is required or kind of wrong data type - Numeric').isNumeric().notEmpty(),
   check('checkOut', 'checkOut is required or kind of wrong data type - Numeric').isNumeric().notEmpty(),
@@ -13,4 +11,4 @@ const create = [
   validataInputs,
 ];
 
-export default { verifyId, create };
+export default { create };
