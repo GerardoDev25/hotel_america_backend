@@ -7,6 +7,8 @@ const router = Router();
 
 router.get('/', Service.Staff.getAll);
 
+router.get('/search/', Service.Staff.getOne);
+
 router.get('/:staffId', Validator.verifyId('staffId'), Service.Staff.getById);
 
 router.post('/', [...Validator.validateRole(['role_admin']), ...Validator.Staff.create], Service.Staff.create);

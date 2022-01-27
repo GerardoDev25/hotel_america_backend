@@ -10,7 +10,7 @@ const getAll = async (limit = 10, offset = 0, where = {}) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error getAllStaffsController', error: error.toString() });
+    console.log({ step: 'error getAll.StaffController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
   }
 };
@@ -25,14 +25,14 @@ const getById = async (staffId) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error getByIdStaffController', error: error.toString() });
+    console.log({ step: 'error getById.StaffController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
   }
 };
 
-const findOne = async (where = {}) => {
+const getOne = async (where = {}) => {
   try {
-    const data = await Model.Staff.find(where);
+    const data = await Model.Staff.findOne(where);
 
     return data.length
       ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data }
@@ -40,7 +40,7 @@ const findOne = async (where = {}) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error findOneStaffController', error: error.toString() });
+    console.log({ step: 'error getOne.StaffController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
   }
 };
@@ -56,7 +56,7 @@ const create = async (fiels) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error createStaffController', error: error.toString() });
+    console.log({ step: 'error create.StaffController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
   }
 };
@@ -72,7 +72,7 @@ const update = async (fiels) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error updateStaffController', error: error.toString() });
+    console.log({ step: 'error update.StaffController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
   }
 };
@@ -87,9 +87,9 @@ const del = async (staffId) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error deleteStaffController', error: error.toString() });
+    console.log({ step: 'error delete.StaffController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
   }
 };
 
-export default { getAll, getById, findOne, create, update, del };
+export default { getAll, getById, getOne, create, update, del };

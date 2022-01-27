@@ -12,7 +12,7 @@ const getAll = async (req = request, res = response) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error getGoestAllService', error: error.toString() });
+    console.log({ step: 'error getAll.GoestService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
   }
 };
@@ -26,7 +26,24 @@ const getById = async (req = request, res = response) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error getGoestByIdService', error: error.toString() });
+    console.log({ step: 'error getById.GoestService', error: error.toString() });
+    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+  }
+};
+
+const getOne = async (req = request, res = response) => {
+  try {
+    //
+
+    const params = req.body;
+    const where = { ...params };
+    const { msg, statusCode, data, ok } = await Controller.Goest.getOne(where);
+
+    res.status(statusCode).json({ data, msg, ok });
+
+    //
+  } catch (error) {
+    console.log({ step: 'error getOne.GoestService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
   }
 };
@@ -40,7 +57,7 @@ const create = async (req = request, res = response) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error createGoestService', error: error.toString() });
+    console.log({ step: 'error create.GoestService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
   }
 };
@@ -55,7 +72,7 @@ const update = async (req = request, res = response) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error updeteGoestService', error: error.toString() });
+    console.log({ step: 'error updete.GoestService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
   }
 };
@@ -69,9 +86,9 @@ const del = async (req = request, res = response) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error deleteGoestService', error: error.toString() });
+    console.log({ step: 'error delete.GoestService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
   }
 };
 
-export default { getAll, getById, create, update, del };
+export default { getAll, getById, getOne, create, update, del };

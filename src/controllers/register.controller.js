@@ -3,6 +3,8 @@ import { MESSAGE, STATUS } from '../settings';
 
 const getAll = async (limit = 10, offset = 0, where = {}) => {
   try {
+    //
+
     const [total, rows] = await Promise.all([
       Model.Register.countDocuments(where),
       Model.Register.find(where).limit(Number(limit)).skip(Number(offset)),
@@ -20,6 +22,8 @@ const getAll = async (limit = 10, offset = 0, where = {}) => {
 
 const getById = async (registerId) => {
   try {
+    //
+
     const data = await Model.Register.findById(registerId);
 
     return data
@@ -33,8 +37,27 @@ const getById = async (registerId) => {
   }
 };
 
+const getOne = async (where = {}) => {
+  try {
+    //
+
+    const data = await Model.Register.find(where);
+
+    return data.length
+      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data }
+      : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: {} };
+
+    //
+  } catch (error) {
+    console.log({ step: 'error getOne.RegisterController', error: error.toString() });
+    return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
+  }
+};
+
 const create = async (fiels) => {
   try {
+    //
+
     const data = new Model.Register({ ...fiels });
     await data.save();
 
@@ -51,6 +74,8 @@ const create = async (fiels) => {
 
 const update = async (fiels) => {
   try {
+    //
+
     const { registerId, ...rest } = fiels;
     const data = await Model.Register.findByIdAndUpdate(registerId, rest);
 
@@ -67,6 +92,8 @@ const update = async (fiels) => {
 
 const del = async (registerId) => {
   try {
+    //
+
     const data = await Model.Register.findOneAndDelete({ _id: registerId });
 
     return data
@@ -80,4 +107,4 @@ const del = async (registerId) => {
   }
 };
 
-export default { getAll, getById, create, update, del };
+export default { getAll, getById, getOne, create, update, del };

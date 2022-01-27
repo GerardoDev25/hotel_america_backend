@@ -7,6 +7,8 @@ const router = Router();
 
 router.get('/', Service.Register.getAll);
 
+router.get('/search/', Service.Register.getOne);
+
 router.get('/:registerId', Validator.verifyId('registerId'), Service.Register.getById);
 
 router.post('/', Validator.Register.create, Service.Register.create);

@@ -7,6 +7,8 @@ const router = Router();
 
 router.get('/', Service.Amount.getAll);
 
+router.get('/search/', Service.Amount.getOne);
+
 router.get('/:amountId', Validator.verifyId('amountId'), Service.Amount.getById);
 
 router.post('/', [...Validator.validateRole(['role_laundry', 'role_reception']), ...Validator.Amount.create], Service.Amount.create);

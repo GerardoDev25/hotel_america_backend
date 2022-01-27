@@ -7,6 +7,8 @@ const router = Router();
 
 router.get('/', Service.Room.getAll);
 
+router.get('/search/', Service.Room.getOne);
+
 router.get('/:roomId', Validator.verifyId('roomId'), Service.Room.getById);
 
 router.post('/', [...Validator.validateRole(['role_admin']), ...Validator.Room.create], Service.Room.create);

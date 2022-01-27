@@ -12,7 +12,7 @@ const getAll = async (req = request, res = response) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error getAmountAllService', error: error.toString() });
+    console.log({ step: 'error getAll.AmountService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
   }
 };
@@ -26,7 +26,24 @@ const getById = async (req = request, res = response) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error getAmountByIdService', error: error.toString() });
+    console.log({ step: 'error getById.AmountService', error: error.toString() });
+    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+  }
+};
+
+const getOne = async (req = request, res = response) => {
+  try {
+    //
+
+    const params = req.body;
+    const where = { ...params };
+    const { msg, statusCode, data, ok } = await Controller.Amount.getOne(where);
+
+    res.status(statusCode).json({ data, msg, ok });
+
+    //
+  } catch (error) {
+    console.log({ step: 'error getOne.AmountService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
   }
 };
@@ -40,7 +57,7 @@ const create = async (req = request, res = response) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error createAmountService', error: error.toString() });
+    console.log({ step: 'error create.AmountService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
   }
 };
@@ -55,7 +72,7 @@ const update = async (req = request, res = response) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error updeteAmountService', error: error.toString() });
+    console.log({ step: 'error updete.AmountService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
   }
 };
@@ -69,9 +86,9 @@ const del = async (req = request, res = response) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error deleteAmountService', error: error.toString() });
+    console.log({ step: 'error delete.AmountService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
   }
 };
 
-export default { getAll, getById, create, update, del };
+export default { getAll, getById, getOne, create, update, del };
