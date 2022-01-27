@@ -28,6 +28,7 @@ class Server {
     this.app.use(PATH.goest, Router.goest);
     this.app.use(PATH.amount, Router.amount);
     this.app.use(PATH.register, Router.register);
+    this.app.use(PATH.auth, Router.auth);
   }
 
   async connection() {

@@ -3,7 +3,14 @@ dotenv.config();
 
 export const PORT = process.env.PORT || 3000;
 export const dbConnectionUrl = process.env.MONGOBD;
+export const SECRETORPRIVATEKEY = process.env.SECRETORPRIVATEKEY;
+
+export const KIND_OF_ROOM = ['simple', 'double', 'multiple', 'suite'];
+export const ROLES_STAFF = ['role_admin', 'role_laundry', 'role_reception', 'role_Cafeteria'];
+export const DESCRIPTION_ROLES = ['advance', 'surcharge', 'laundry', 'frigobar', 'others'];
+
 export const PATH = {
+  auth: '/api/auth',
   room: '/api/room',
   staff: '/api/staff',
   goest: '/api/goest',
@@ -11,11 +18,9 @@ export const PATH = {
   register: '/api/register',
 };
 
-export const KIND_OF_ROOM = ['simple', 'double', 'multiple', 'suite'];
-export const ROLES_STAFF = ['role_admin', 'role_laundry', 'role_reception', 'role_Cafeteria'];
-export const DESCRIPTION_ROLES = ['advance', 'surcharge', 'laundry', 'frigobar', 'others'];
-
 export const MESSAGE = {
+  authSuccess: 'user logged',
+  authError: 'password or username incorrect',
   success: 'Successful request',
   notFound: 'Resource not found',
   successCrete: 'Successful create',
@@ -28,6 +33,7 @@ export const MESSAGE = {
   undefined: 'insufficient permissions to access the resource',
   conflict: 'The request could not be completed because of a conflict',
   badRequest: 'Bad Request',
+  forbidden: 'Resource Forbidden',
 };
 
 export const STATUS = {
@@ -35,6 +41,7 @@ export const STATUS = {
   created: 201,
   badRequest: 400,
   unauthorized: 401,
+  forbidden: 403,
   notFound: 404,
   conflict: 409,
   expectationFailed: 417,
