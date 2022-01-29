@@ -1,18 +1,17 @@
 import { response, request } from 'express';
 
-import Controller from '../controllers';
-import Service from '.';
-
-import { MESSAGE, STATUS } from '../settings';
 import { existItems } from '../helpers';
+import { MESSAGE, STATUS } from '../settings';
+
+import Controller from '../controllers';
 
 const getAll = async (req = request, res = response) => {
   try {
     //
 
     const { limit, offset } = req.query;
-    const { msg, statusCode, data, ok } = await Controller.Amount.getAll(limit, offset);
 
+    const { msg, statusCode, data, ok } = await Controller.Amount.getAll(limit, offset);
     res.status(statusCode).json({ data, msg, ok });
 
     //
@@ -27,8 +26,8 @@ const getById = async (req = request, res = response) => {
     //
 
     const { amountId } = req.params;
-    const { msg, statusCode, data, ok } = await Controller.Amount.getById(amountId);
 
+    const { msg, statusCode, data, ok } = await Controller.Amount.getById(amountId);
     res.status(statusCode).json({ data, msg, ok });
 
     //
@@ -44,8 +43,8 @@ const getOne = async (req = request, res = response) => {
 
     const params = req.body;
     const where = { ...params };
-    const { msg, statusCode, data, ok } = await Controller.Amount.getOne(where);
 
+    const { msg, statusCode, data, ok } = await Controller.Amount.getOne(where);
     res.status(statusCode).json({ data, msg, ok });
 
     //
@@ -60,13 +59,10 @@ const create = async (req = request, res = response) => {
     //
 
     const fiels = req.body;
-
     const { staffId, registerId } = fiels;
-    if (!existItems([staffId, registerId])) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
 
-    // todo create a funtion to verify if exist resuouces nencesaries
-    // const [staff, register] = await Promise.all([Service.Staff.getById(staffId), Service.Register.getById(registerId)]);
-    // if (!staff.ok || !register.ok) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
+    const exist = await existItems({ staffId, registerId });
+    if (!exist) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
 
     const { msg, statusCode, data, ok } = await Controller.Amount.create(fiels);
     res.status(statusCode).json({ data, msg, ok });
@@ -84,8 +80,12 @@ const update = async (req = request, res = response) => {
 
     const { amountId } = req.params;
     const fiels = req.body;
-    const { msg, statusCode, data, ok } = await Controller.Amount.update({ ...fiels, amountId });
+    const { staffId, registerId } = fiels;
 
+    const exist = await existItems({ staffId, registerId });
+    if (!exist) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
+
+    const { msg, statusCode, data, ok } = await Controller.Amount.update({ ...fiels, amountId });
     res.status(statusCode).json({ data, msg, ok });
 
     //
@@ -100,8 +100,8 @@ const del = async (req = request, res = response) => {
     //
 
     const { amountId } = req.params;
-    const { msg, statusCode, data, ok } = await Controller.Amount.del(amountId);
 
+    const { msg, statusCode, data, ok } = await Controller.Amount.del(amountId);
     res.status(statusCode).json({ data, msg, ok });
 
     //

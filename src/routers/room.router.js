@@ -11,7 +11,7 @@ router.get('/search/', Service.Room.getOne);
 
 router.get('/:roomId', Validator.verifyId('roomId'), Service.Room.getById);
 
-router.post('/', [...Validator.validateRole(['role_admin']), ...Validator.Room.create], Service.Room.create);
+router.post('/', [...Validator.validateRole(['role_admin', 'role_reception']), ...Validator.Room.create], Service.Room.create);
 
 router.put('/:roomId', [...Validator.validateRole(['role_admin']), ...Validator.verifyId('roomId')], Service.Room.update);
 

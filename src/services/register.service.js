@@ -79,6 +79,11 @@ const update = async (req = request, res = response) => {
 
     const { registerId } = req.params;
     const fiels = req.body;
+    const { roomId, staffId } = fiels;
+
+    const exist = await existItems({ staffId, roomId });
+    if (!exist) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
+
     const { msg, statusCode, data, ok } = await Controller.Register.update({ ...fiels, registerId });
 
     res.status(statusCode).json({ data, msg, ok });
@@ -95,8 +100,8 @@ const del = async (req = request, res = response) => {
     //
 
     const { registerId } = req.params;
-    const { msg, statusCode, data, ok } = await Controller.Register.del(registerId);
 
+    const { msg, statusCode, data, ok } = await Controller.Register.del(registerId);
     res.status(statusCode).json({ data, msg, ok });
 
     //

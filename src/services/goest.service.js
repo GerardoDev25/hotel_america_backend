@@ -1,13 +1,16 @@
 import { response, request } from 'express';
 
 import Controller from '../controllers';
+import { existItems } from '../helpers';
 import { MESSAGE, STATUS } from '../settings';
 
 const getAll = async (req = request, res = response) => {
   try {
-    const { limit, offset } = req.query;
-    const { msg, statusCode, data, ok } = await Controller.Goest.getAll(limit, offset);
+    //
 
+    const { limit, offset } = req.query;
+
+    const { msg, statusCode, data, ok } = await Controller.Goest.getAll(limit, offset);
     res.status(statusCode).json({ data, msg, ok });
 
     //
@@ -19,9 +22,11 @@ const getAll = async (req = request, res = response) => {
 
 const getById = async (req = request, res = response) => {
   try {
-    const { goestId } = req.params;
-    const { msg, statusCode, data, ok } = await Controller.Goest.getById(goestId);
+    //
 
+    const { goestId } = req.params;
+
+    const { msg, statusCode, data, ok } = await Controller.Goest.getById(goestId);
     res.status(statusCode).json({ data, msg, ok });
 
     //
@@ -37,8 +42,8 @@ const getOne = async (req = request, res = response) => {
 
     const params = req.body;
     const where = { ...params };
-    const { msg, statusCode, data, ok } = await Controller.Goest.getOne(where);
 
+    const { msg, statusCode, data, ok } = await Controller.Goest.getOne(where);
     res.status(statusCode).json({ data, msg, ok });
 
     //
@@ -50,9 +55,15 @@ const getOne = async (req = request, res = response) => {
 
 const create = async (req = request, res = response) => {
   try {
-    const fiels = req.body;
-    const { msg, statusCode, data, ok } = await Controller.Goest.create(fiels);
+    //
 
+    const fiels = req.body;
+    const { registerId } = fiels;
+
+    const exist = await existItems({ registerId });
+    if (!exist) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
+
+    const { msg, statusCode, data, ok } = await Controller.Goest.create(fiels);
     res.status(statusCode).json({ data, msg, ok });
 
     //
@@ -64,10 +75,16 @@ const create = async (req = request, res = response) => {
 
 const update = async (req = request, res = response) => {
   try {
+    //
+
     const { goestId } = req.params;
     const fiels = req.body;
-    const { msg, statusCode, data, ok } = await Controller.Goest.update({ ...fiels, goestId });
+    const { registerId } = fiels;
 
+    const exist = await existItems({ registerId });
+    if (!exist) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
+
+    const { msg, statusCode, data, ok } = await Controller.Goest.update({ ...fiels, goestId });
     res.status(statusCode).json({ data, msg, ok });
 
     //
@@ -79,9 +96,11 @@ const update = async (req = request, res = response) => {
 
 const del = async (req = request, res = response) => {
   try {
-    const { goestId } = req.params;
-    const { msg, statusCode, data, ok } = await Controller.Goest.del(goestId);
+    //
 
+    const { goestId } = req.params;
+
+    const { msg, statusCode, data, ok } = await Controller.Goest.del(goestId);
     res.status(statusCode).json({ data, msg, ok });
 
     //
