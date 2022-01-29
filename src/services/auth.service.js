@@ -10,7 +10,9 @@ const login = async (req = request, res = response) => {
     const fiels = req.body;
     const { username, password } = fiels;
 
-    const { statusCode, data, ok } = await Controller.Staff.findOne({ username });
+    const { statusCode, data, ok } = await Controller.Staff.getOne({ username });
+
+    console.log({ statusCode, data, ok }, { username, password });
 
     if (!ok) return res.status(statusCode).json({ data, msg: MESSAGE.authError, ok });
 

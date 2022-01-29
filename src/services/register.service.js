@@ -1,6 +1,7 @@
 import { response, request } from 'express';
 
 import Controller from '../controllers';
+import { existItems } from '../helpers';
 import { MESSAGE, STATUS } from '../settings';
 
 const getAll = async (req = request, res = response) => {
@@ -57,8 +58,12 @@ const create = async (req = request, res = response) => {
     //
 
     const fiels = req.body;
-    const { msg, statusCode, data, ok } = await Controller.Register.create(fiels);
+    const { roomId, staffId } = fiels;
 
+    const exist = await existItems({ staffId, roomId });
+    if (!exist) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
+
+    const { msg, statusCode, data, ok } = await Controller.Register.create(fiels);
     res.status(statusCode).json({ data, msg, ok });
 
     //

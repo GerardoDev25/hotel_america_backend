@@ -19,6 +19,7 @@ export const PATH = {
 };
 
 export const MESSAGE = {
+  paramsError: 'parameter error necessary items do not exist',
   authSuccess: 'user logged',
   authError: 'password or username incorrect',
   success: 'Successful request',
