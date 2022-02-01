@@ -1,7 +1,7 @@
 import { response, request } from 'express';
 
 import { existItems } from '../helpers';
-import { MESSAGE, STATUS } from '../settings';
+import { MESSAGE, STATUS } from '../helpers/settings';
 
 import Controller from '../controllers';
 

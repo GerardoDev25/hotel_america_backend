@@ -4,7 +4,7 @@ import { response, request } from 'express';
 import Controller from '../controllers';
 
 import { generateJWT } from '../helpers';
-import { MESSAGE, STATUS } from '../settings';
+import { MESSAGE, STATUS } from '../helpers/settings';
 
 const login = async (req = request, res = response) => {
   try {

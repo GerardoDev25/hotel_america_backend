@@ -1,5 +1,5 @@
 import Model from '../models';
-import { MESSAGE, STATUS } from '../settings';
+import { MESSAGE, STATUS } from '../helpers/settings';
 
 const getAll = async (limit = 10, offset = 0, where = {}) => {
   try {

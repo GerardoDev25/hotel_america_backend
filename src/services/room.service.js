@@ -1,7 +1,7 @@
 import { response, request } from 'express';
 
 import Controller from '../controllers';
-import { MESSAGE, STATUS } from '../settings';
+import { MESSAGE, STATUS } from '../helpers/settings';
 
 const getAll = async (req = request, res = response) => {
   try {

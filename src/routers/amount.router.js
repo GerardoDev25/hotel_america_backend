@@ -9,12 +9,12 @@ router.get('/', Service.Amount.getAll);
 
 router.get('/search/', Service.Amount.getOne);
 
-router.get('/:amountId', Validator.verifyId('amountId'), Service.Amount.getById);
+router.get('/:amountId', Validator.Amount.getById, Service.Amount.getById);
 
-router.post('/', [...Validator.validateRole(['role_laundry', 'role_reception']), ...Validator.Amount.create], Service.Amount.create);
+router.post('/', Validator.Amount.create, Service.Amount.create);
 
-router.put('/:amountId', [...Validator.validateRole(['role_laundry', 'role_reception']), ...Validator.verifyId('amountId')], Service.Amount.update);
+router.put('/:amountId', Validator.Amount.update, Service.Amount.update);
 
-router.delete('/:amountId', [...Validator.validateRole(['role_laundry', 'role_reception']), ...Validator.verifyId('amountId')], Service.Amount.del);
+router.delete('/:amountId', Validator.Amount.del, Service.Amount.del);
 
 export default router;

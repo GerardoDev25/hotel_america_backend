@@ -1,5 +1,7 @@
 import { check } from 'express-validator';
-import { validataInputs } from './validateInputs';
+import { validataInputs, validateRole, verifyId } from '../helpers/validateInputs';
+
+const getById = verifyId('registerId');
 
 const create = [
   check('price', 'price is required or kind of wrong data type - Numeric').isNumeric().notEmpty(),
@@ -11,4 +13,8 @@ const create = [
   validataInputs,
 ];
 
-export default { create };
+const update = [...validateRole(['role_reception']), ...verifyId('registerId')];
+
+const del = [...validateRole(['role_reception']), ...verifyId('registerId')];
+
+export default { create, getById, update, del };

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import Controller from '../controllers';
 
-import { SECRETORPRIVATEKEY } from '../settings';
+import { SECRET_PRIVATE_KEY } from './settings';
 
 export const generateJWT = ({ staffId = '', role = '', name = '' }) =>
   new Promise((resolve, reject) => {
@@ -9,7 +9,7 @@ export const generateJWT = ({ staffId = '', role = '', name = '' }) =>
 
     jwt.sign(
       payload,
-      SECRETORPRIVATEKEY,
+      SECRET_PRIVATE_KEY,
       {
         expiresIn: '8h',
       },

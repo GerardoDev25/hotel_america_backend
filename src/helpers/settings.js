@@ -3,7 +3,7 @@ dotenv.config();
 
 export const PORT = process.env.PORT || 3000;
 export const dbConnectionUrl = process.env.MONGOBD;
-export const SECRETORPRIVATEKEY = process.env.SECRETORPRIVATEKEY;
+export const SECRET_PRIVATE_KEY = process.env.SECRETORPRIVATEKEY;
 
 export const KIND_OF_ROOM = ['simple', 'double', 'multiple', 'suite'];
 export const ROLES_STAFF = ['role_admin', 'role_laundry', 'role_reception', 'role_Cafeteria'];

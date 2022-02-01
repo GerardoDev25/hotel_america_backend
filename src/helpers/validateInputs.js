@@ -1,10 +1,12 @@
 import jwt from 'jsonwebtoken';
 import { request, response } from 'express';
-import { validationResult } from 'express-validator';
+import { validationResult, check } from 'express-validator';
 
-import { STATUS, MESSAGE, SECRETORPRIVATEKEY } from '../settings';
+import { STATUS, MESSAGE, SECRETORPRIVATEKEY } from './settings';
 
 export const validataInputs = (req, res, next) => {
+  //
+
   const errors = validationResult(req);
   if (!errors.isEmpty()) return res.status(STATUS.badRequest).json(errors);
   next();
@@ -41,4 +43,12 @@ export const haveRole = (roles) => {
 
     next();
   };
+};
+
+export const validateRole = (roles = []) => {
+  return [validateJWT, haveRole(roles)];
+};
+
+export const verifyId = (id = '') => {
+  return [check(id, `${id} is required or kind of wrong data type - MongoId`).isMongoId().notEmpty(), validataInputs];
 };

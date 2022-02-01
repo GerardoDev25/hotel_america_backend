@@ -1,5 +1,5 @@
 import { Schema, model, SchemaTypes } from 'mongoose';
-import { DESCRIPTION_ROLES } from '../settings';
+import { DESCRIPTION_ROLES } from '../helpers/settings';
 
 const amountSchema = Schema({
   description: { type: SchemaTypes.String, default: '' },

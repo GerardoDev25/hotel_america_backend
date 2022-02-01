@@ -9,12 +9,12 @@ router.get('/', Service.Staff.getAll);
 
 router.get('/search/', Service.Staff.getOne);
 
-router.get('/:staffId', Validator.verifyId('staffId'), Service.Staff.getById);
+router.get('/:staffId', Validator.Staff.getById, Service.Staff.getById);
 
-router.post('/', [...Validator.validateRole(['role_admin']), ...Validator.Staff.create], Service.Staff.create);
+router.post('/', Validator.Staff.create, Service.Staff.create);
 
-router.put('/:staffId', [...Validator.validateRole(['role_admin']), ...Validator.verifyId('staffId')], Service.Staff.update);
+router.put('/:staffId', Validator.Staff.update, Service.Staff.update);
 
-router.delete('/:staffId', [...Validator.validateRole(['role_admin']), ...Validator.verifyId('staffId')], Service.Staff.del);
+router.delete('/:staffId', Validator.Staff.del, Service.Staff.del);
 
 export default router;

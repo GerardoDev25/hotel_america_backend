@@ -1,7 +1,10 @@
 import { check } from 'express-validator';
-import { validataInputs } from './validateInputs';
+import { validataInputs, validateRole, verifyId } from '../helpers/validateInputs';
+
+const getById = verifyId('goestId');
 
 const create = [
+  ...validateRole(['role_reception']),
   check('name', 'name is required or kind of wrong data type - String').isString().notEmpty(),
   check('origin', 'origin is required or kind of wrong data type - String').isString().notEmpty(),
   check('posting', 'posting is required or kind of wrong data type - String').isString().notEmpty(),
@@ -14,4 +17,8 @@ const create = [
   validataInputs,
 ];
 
-export default { create };
+const update = [...validateRole(['role_reception']), ...verifyId('goestId')];
+
+const del = [...validateRole(['role_reception']), ...verifyId('goestId')];
+
+export default { create, getById, update, del };

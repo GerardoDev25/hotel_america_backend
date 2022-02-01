@@ -1,6 +1,6 @@
 import 'colors';
 import mongoose from 'mongoose';
-import { dbConnectionUrl } from '../settings';
+import { dbConnectionUrl } from '../helpers/settings';
 
 const dbConnection = async () => {
   try {

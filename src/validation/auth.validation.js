@@ -1,5 +1,5 @@
 import { check } from 'express-validator';
-import { validataInputs } from './validateInputs';
+import { validataInputs } from '../helpers/validateInputs';
 
 const login = [
   check('username', 'the username is required').not().isEmpty(),

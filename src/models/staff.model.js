@@ -1,5 +1,5 @@
 import { Schema, model, SchemaTypes } from 'mongoose';
-import { ROLES_STAFF } from '../settings';
+import { ROLES_STAFF } from '../helpers/settings';
 
 const staffSchema = Schema({
   active: { type: SchemaTypes.Boolean, default: true },
