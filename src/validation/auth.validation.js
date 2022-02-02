@@ -7,4 +7,6 @@ const login = [
   validataInputs,
 ];
 
-export default { login };
+const renew = [check('token', 'token required').not().isEmpty()];
+
+export default { login, renew };

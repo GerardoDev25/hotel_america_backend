@@ -1,10 +1,10 @@
 import bcryptjs from 'bcryptjs';
 import { response, request } from 'express';
 
-import Controller from '../controllers';
-
-import { generateJWT } from '../helpers';
 import { MESSAGE, STATUS } from '../helpers/settings';
+import { parseJwt, generateJWT } from '../helpers/jsonWebToken';
+
+import Controller from '../controllers';
 
 const login = async (req = request, res = response) => {
   try {
@@ -24,7 +24,7 @@ const login = async (req = request, res = response) => {
     const { _id, role, name } = user;
     const token = await generateJWT({ staffId: _id, role, name });
 
-    res.json({ token, ok, msg: MESSAGE.authSuccess });
+    res.status(statusCode).json({ token, ok, msg: MESSAGE.authSuccess });
 
     //
   } catch (error) {
@@ -33,4 +33,28 @@ const login = async (req = request, res = response) => {
   }
 };
 
-export default { login };
+const renew = async (req = request, res = response) => {
+  try {
+    //
+
+    const { token } = req.body;
+    const { staffId } = parseJwt(token);
+
+    const { statusCode, data, ok } = await Controller.Staff.getById(staffId);
+    if (!ok) return res.status(statusCode).json({ data, msg: MESSAGE.authError, ok });
+
+    const [user] = data;
+
+    const { _id, role, name } = user;
+    const newToken = await generateJWT({ staffId: _id, role, name });
+
+    res.status(statusCode).json({ token: newToken, ok, msg: MESSAGE.authSuccess });
+
+    //
+  } catch (error) {
+    console.log({ step: 'error renewAuthService', error: error.toString() });
+    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+  }
+};
+
+export default { login, renew };

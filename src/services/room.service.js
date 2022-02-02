@@ -6,7 +6,6 @@ import { MESSAGE, STATUS } from '../helpers/settings';
 const getAll = async (req = request, res = response) => {
   try {
     const { limit, offset } = req.query;
-    console.log(req.query);
     const { msg, statusCode, data, ok } = await Controller.Room.getAll(limit, offset);
 
     res.status(statusCode).json({ data, msg, ok });

@@ -1,26 +1,4 @@
-import jwt from 'jsonwebtoken';
 import Controller from '../controllers';
-
-import { SECRET_PRIVATE_KEY } from './settings';
-
-export const generateJWT = ({ staffId = '', role = '', name = '' }) =>
-  new Promise((resolve, reject) => {
-    const payload = { staffId, role, name };
-
-    jwt.sign(
-      payload,
-      SECRET_PRIVATE_KEY,
-      {
-        expiresIn: '8h',
-      },
-      (err, token) => {
-        if (err) {
-          console.error(err);
-          reject('Error to generate jwt');
-        } else resolve(token);
-      }
-    );
-  });
 
 export const existItems = async (ids = {}) => {
   //
