@@ -7,12 +7,14 @@ const router = Router();
 
 router.get('/', Service.Register.getAll);
 
-router.get('/:registerId', Validator.verifyId('registerId'), Service.Register.getById);
+router.get('/search/', Service.Register.getOne);
+
+router.get('/:registerId', Validator.Register.getById, Service.Register.getById);
 
 router.post('/', Validator.Register.create, Service.Register.create);
 
-router.put('/:registerId', [...Validator.validateRole(['role_reception']), ...Validator.verifyId('registerId')], Service.Register.update);
+router.put('/:registerId', Validator.Register.update, Service.Register.update);
 
-router.delete('/:registerId', [...Validator.validateRole(['role_reception']), ...Validator.verifyId('registerId')], Service.Register.del);
+router.delete('/:registerId', Validator.Register.del, Service.Register.del);
 
 export default router;

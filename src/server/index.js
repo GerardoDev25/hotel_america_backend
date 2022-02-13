@@ -4,7 +4,7 @@ import express from 'express';
 
 import Router from '../routers';
 import dbConnection from '../database';
-import { PORT, PATH } from '../settings';
+import { PORT, PATH } from '../helpers/settings';
 
 class Server {
   constructor() {

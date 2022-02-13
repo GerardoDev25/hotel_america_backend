@@ -1,7 +1,7 @@
 import { response, request } from 'express';
 
 import Controller from '../controllers';
-import { MESSAGE, STATUS } from '../settings';
+import { MESSAGE, STATUS } from '../helpers/settings';
 
 const getAll = async (req = request, res = response) => {
   try {
@@ -12,7 +12,7 @@ const getAll = async (req = request, res = response) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error getRoomAllService', error: error.toString() });
+    console.log({ step: 'error getAll.RoomService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
   }
 };
@@ -26,7 +26,24 @@ const getById = async (req = request, res = response) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error getRoomByIdService', error: error.toString() });
+    console.log({ step: 'error getById.RoomService', error: error.toString() });
+    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+  }
+};
+
+const getOne = async (req = request, res = response) => {
+  try {
+    //
+
+    const params = req.body;
+    const where = { ...params };
+
+    const { msg, statusCode, data, ok } = await Controller.Room.getOne(where);
+    res.status(statusCode).json({ data, msg, ok });
+
+    //
+  } catch (error) {
+    console.log({ step: 'error getOne.RoomService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
   }
 };
@@ -40,7 +57,7 @@ const create = async (req = request, res = response) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error createRoomService', error: error.toString() });
+    console.log({ step: 'error create.RoomService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
   }
 };
@@ -55,7 +72,7 @@ const update = async (req = request, res = response) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error updeteRoomService', error: error.toString() });
+    console.log({ step: 'error updete.RoomService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
   }
 };
@@ -69,9 +86,9 @@ const del = async (req = request, res = response) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error deleteRoomService', error: error.toString() });
+    console.log({ step: 'error delete.RoomService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
   }
 };
 
-export default { getAll, getById, create, update, del };
+export default { getAll, getById, getOne, create, update, del };

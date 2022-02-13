@@ -7,12 +7,14 @@ const router = Router();
 
 router.get('/', Service.Amount.getAll);
 
-router.get('/:amountId', Validator.verifyId('amountId'), Service.Amount.getById);
+router.get('/search/', Service.Amount.getOne);
 
-router.post('/', [...Validator.validateRole(['role_laundry', 'role_reception']), ...Validator.Amount.create], Service.Amount.create);
+router.get('/:amountId', Validator.Amount.getById, Service.Amount.getById);
 
-router.put('/:amountId', [...Validator.validateRole(['role_laundry', 'role_reception']), ...Validator.verifyId('amountId')], Service.Amount.update);
+router.post('/', Validator.Amount.create, Service.Amount.create);
 
-router.delete('/:amountId', [...Validator.validateRole(['role_laundry', 'role_reception']), ...Validator.verifyId('amountId')], Service.Amount.del);
+router.put('/:amountId', Validator.Amount.update, Service.Amount.update);
+
+router.delete('/:amountId', Validator.Amount.del, Service.Amount.del);
 
 export default router;

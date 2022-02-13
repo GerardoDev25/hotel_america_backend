@@ -1,5 +1,5 @@
 import { Schema, model, SchemaTypes } from 'mongoose';
-import { KIND_OF_ROOM } from '../settings';
+import { KIND_OF_ROOM } from '../helpers/settings';
 
 const roomSchema = Schema({
   doubleBed: { type: SchemaTypes.Number, default: 0 },

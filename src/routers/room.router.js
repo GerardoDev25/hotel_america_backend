@@ -7,12 +7,14 @@ const router = Router();
 
 router.get('/', Service.Room.getAll);
 
-router.get('/:roomId', Validator.verifyId('roomId'), Service.Room.getById);
+router.get('/search/', Service.Room.getOne);
 
-router.post('/', [...Validator.validateRole(['role_admin']), ...Validator.Room.create], Service.Room.create);
+router.get('/:roomId', Validator.Room.getById, Service.Room.getById);
 
-router.put('/:roomId', [...Validator.validateRole(['role_admin']), ...Validator.verifyId('roomId')], Service.Room.update);
+router.post('/', Validator.Room.create, Service.Room.create);
 
-router.delete('/:roomId', [...Validator.validateRole(['role_admin']), ...Validator.verifyId('roomId')], Service.Room.del);
+router.put('/:roomId', Validator.Room.update, Service.Room.update);
+
+router.delete('/:roomId', Validator.Room.del, Service.Room.del);
 
 export default router;
