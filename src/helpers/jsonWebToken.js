@@ -37,7 +37,7 @@ export const validateJWT = async (req = request, res = response, next) => {
     if (!token) return res.status(STATUS.unauthorized).json({ msg: MESSAGE.undefined, ko: false, data: [] });
 
     const rest = parseJwt(token);
-    console.log({ exp: rest.exp, diff: rest.exp - rest.iat, now: new Date() });
+    // console.log({ exp: rest.exp, diff: rest.exp - rest.iat, now: new Date() });
 
     const { role } = jwt.verify(token, SECRET_PRIVATE_KEY);
     req.role = role;

@@ -8,14 +8,31 @@ const getAll = async (req = request, res = response) => {
   try {
     //
 
+    const { where } = req.body;
     const { limit, offset } = req.query;
 
-    const { msg, statusCode, data, ok } = await Controller.Goest.getAll(limit, offset);
+    const { msg, statusCode, data, ok } = await Controller.Goest.getAll(limit, offset, where);
     res.status(statusCode).json({ data, msg, ok });
 
     //
   } catch (error) {
     console.log({ step: 'error getAll.GoestService', error: error.toString() });
+    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+  }
+};
+
+const getWhere = async (req = request, res = response) => {
+  try {
+    //
+
+    const { limit, offset, ...where } = req.body;
+
+    const { msg, statusCode, data, ok } = await Controller.Goest.getAll(limit, offset, where);
+    res.status(statusCode).json({ data, msg, ok });
+
+    //
+  } catch (error) {
+    console.log({ step: 'error getWhere.GoestService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
   }
 };
@@ -110,4 +127,4 @@ const del = async (req = request, res = response) => {
   }
 };
 
-export default { getAll, getById, getOne, create, update, del };
+export default { getAll, getWhere, getById, getOne, create, update, del };

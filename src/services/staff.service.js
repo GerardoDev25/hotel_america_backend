@@ -20,6 +20,22 @@ const getAll = async (req = request, res = response) => {
   }
 };
 
+const getWhere = async (req = request, res = response) => {
+  try {
+    //
+
+    const { limit, offset, ...where } = req.body;
+
+    const { msg, statusCode, data, ok } = await Controller.Goest.getAll(limit, offset, where);
+    res.status(statusCode).json({ data, msg, ok });
+
+    //
+  } catch (error) {
+    console.log({ step: 'error getWhere.StaffService', error: error.toString() });
+    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+  }
+};
+
 const getById = async (req = request, res = response) => {
   try {
     //
@@ -112,4 +128,4 @@ const del = async (req = request, res = response) => {
   }
 };
 
-export default { getAll, getById, getOne, create, update, del };
+export default { getAll, getWhere, getById, getOne, create, update, del };

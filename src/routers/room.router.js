@@ -9,6 +9,8 @@ router.get('/', Service.Room.getAll);
 
 router.get('/search/', Service.Room.getOne);
 
+router.post('/where', Service.Room.getWhere);
+
 router.get('/:roomId', Validator.Room.getById, Service.Room.getById);
 
 router.post('/', Validator.Room.create, Service.Room.create);
