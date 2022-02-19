@@ -16,6 +16,7 @@ export const PATH = {
   goest: '/api/goest',
   amount: '/api/amount',
   register: '/api/register',
+  lodging: '/api/lodging',
 };
 
 export const MESSAGE = {

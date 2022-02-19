@@ -35,6 +35,11 @@ export const existItems = async (ids = {}) => {
           querys.push(Controller.Staff.getById(staffId));
           break;
 
+        case 'loggingId':
+          const loggingId = value[1];
+          querys.push(Controller.Logging.getById(loggingId));
+          break;
+
         default:
           throw new Error(`invalid param: ${value[0]}`);
       }
