@@ -42,7 +42,6 @@ const getById = async (req = request, res = response) => {
     //
 
     const { loggingId } = req.params;
-
     const { msg, statusCode, data, ok } = await Controller.Logging.getById(loggingId);
     res.status(statusCode).json({ data, msg, ok });
 
@@ -86,8 +85,6 @@ const createByRegistersId = async (req = request, res = response) => {
     const createFun = registerObject.map((fiels) => create(fiels));
     const createResult = await Promise.all([...createFun]);
 
-    // console.log(createResult);
-
     res.status(STATUS.success).json({ data: createResult, total: createResult.length });
 
     //
@@ -111,26 +108,55 @@ const create = async (fiels) => {
   }
 };
 
-// const update = async (req = request, res = response) => {
-//   try {
-//     //
+const update = async (req = request, res = response) => {
+  try {
+    //
 
-//     const { loggingId } = req.params;
-//     const fiels = req.body;
-//     const { staffId, registerId } = fiels;
+    const { lodgingId } = req.params;
+    const fiels = req.body;
+    const { registerId } = fiels;
 
-//     const exist = await existItems({ staffId, registerId });
-//     if (!exist) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
+    const exist = await existItems({ registerId });
+    if (!exist) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
 
-//     const { msg, statusCode, data, ok } = await Controller.Logging.update({ ...fiels, loggingId });
-//     res.status(statusCode).json({ data, msg, ok });
+    const { msg, statusCode, data, ok } = await Controller.Logging.update({ ...fiels, lodgingId });
+    res.status(statusCode).json({ data, msg, ok });
 
-//     //
-//   } catch (error) {
-//     console.log({ step: 'error updete.LoggingService', error: error.toString() });
-//     res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
-//   }
-// };
+    //
+  } catch (error) {
+    console.log({ step: 'error updete.LoggingService', error: error.toString() });
+    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+  }
+};
+
+const delByRegisterId = async (req = request, res = response) => {
+  try {
+    //
+
+    const { registerId } = req.params;
+
+    const exist = await existItems({ registerId });
+    if (!exist) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
+
+    const limit = 0;
+    const offset = 0;
+    const where = { registerId };
+
+    const { msg, statusCode, data, ok } = await Controller.Logging.getAll(limit, offset, where);
+    if (!ok) res.status(statusCode).json({ data, msg, ok });
+
+    const lodgingIds = data.rows.map((item) => ({ lodgingId: item._id.toString() }));
+    const lodgingFun = lodgingIds.map((item) => Controller.Logging.del(item.lodgingId));
+    const lodgingResult = await Promise.all([...lodgingFun]);
+
+    res.status(STATUS.success).json({ msg: MESSAGE.successDelete, data: lodgingResult, total: lodgingResult.length });
+
+    //
+  } catch (error) {
+    console.log({ step: 'error delete.LoggingService', error: error.toString() });
+    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+  }
+};
 
 // const del = async (req = request, res = response) => {
 //   try {
@@ -148,5 +174,4 @@ const create = async (fiels) => {
 //   }
 // };
 
-// export default { getAll, getWhere, getById, getOne, create, update, del };
-export default { createByRegistersId, getAll, getById, getOne, getWhere };
+export default { createByRegistersId, getAll, getById, getOne, getWhere, update, delByRegisterId };
