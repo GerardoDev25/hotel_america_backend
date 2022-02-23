@@ -7,7 +7,7 @@ const roomSchema = Schema({
   available: { type: SchemaTypes.Boolean, default: true },
   kindOfRoom: { type: SchemaTypes.String, required: true, enum: KIND_OF_ROOM },
   maxGuest: { type: SchemaTypes.Number, required: [true, 'number of max guest is required'] },
-  numberRoom: { type: SchemaTypes.Number, unique: true, required: [true, 'room number is required'] },
+  numberRoom: { type: SchemaTypes.Number, required: [true, 'room number is required'], unique: true },
 });
 
 roomSchema.methods.toJSON = function () {

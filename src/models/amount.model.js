@@ -1,10 +1,13 @@
+import moment from 'moment';
 import { Schema, model, SchemaTypes } from 'mongoose';
-import { DESCRIPTION_ROLES } from '../helpers/settings';
+
+import { DESCRIPTION_AMOUNTS } from '../helpers/settings';
 
 const amountSchema = Schema({
   description: { type: SchemaTypes.String, default: '' },
+  date: { type: SchemaTypes.String, default: moment().format('L') },
   totalAmount: { type: SchemaTypes.Number, required: [true, 'amount is required'] },
-  role: { type: SchemaTypes.String, enum: DESCRIPTION_ROLES, required: [true, 'type requered or invalid'] },
+  type: { type: SchemaTypes.String, enum: DESCRIPTION_AMOUNTS, required: [true, 'type requered or invalid'] },
 
   staffId: { type: SchemaTypes.ObjectId, ref: 'Staff', required: [true, 'id staff is required'] },
   registerId: { type: SchemaTypes.ObjectId, ref: 'Register', required: [true, 'id register is required'] },
