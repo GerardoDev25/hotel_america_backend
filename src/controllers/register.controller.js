@@ -24,10 +24,10 @@ const getById = async (registerId) => {
   try {
     //
 
-    const user = await Model.Register.findById(registerId);
+    const result = await Model.Register.findById(registerId);
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
 
     //
@@ -41,10 +41,10 @@ const getOne = async (where = {}) => {
   try {
     //
 
-    const user = await Model.Register.find(where);
+    const result = await Model.Register.find(where);
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
 
     //
@@ -58,11 +58,11 @@ const create = async (fiels) => {
   try {
     //
 
-    const user = new Model.Register({ ...fiels });
-    await user.save();
+    const result = new Model.Register({ ...fiels });
+    await result.save();
 
-    return user
-      ? { statusCode: STATUS.created, msg: MESSAGE.successCrete, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.created, msg: MESSAGE.successCrete, ok: true, data: [result] }
       : { statusCode: STATUS.internalServerError, msg: MESSAGE.errorCreate, ok: false, data: [] };
 
     //
@@ -77,10 +77,10 @@ const update = async (fiels) => {
     //
 
     const { registerId, ...rest } = fiels;
-    const user = await Model.Register.findByIdAndUpdate(registerId, rest);
+    const result = await Model.Register.findByIdAndUpdate(registerId, rest);
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.successUpdate, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.successUpdate, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.errorUpdate, ok: false, data: [] };
 
     //
@@ -94,10 +94,10 @@ const del = async (registerId) => {
   try {
     //
 
-    const user = await Model.Register.findOneAndDelete({ _id: registerId });
+    const result = await Model.Register.findOneAndDelete({ _id: registerId });
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.errorDelete, ok: false, data: [] };
 
     //

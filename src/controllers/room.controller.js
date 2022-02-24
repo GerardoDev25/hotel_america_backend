@@ -21,10 +21,10 @@ const getById = async (roomId) => {
   try {
     //
 
-    const user = await Model.Room.findById(roomId);
+    const result = await Model.Room.findById(roomId);
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
 
     //
@@ -38,10 +38,10 @@ const getOne = async (where = {}) => {
   try {
     //
 
-    const user = await Model.Room.find(where);
+    const result = await Model.Room.find(where);
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
 
     //
@@ -55,11 +55,11 @@ const create = async (fiels) => {
   try {
     //
 
-    const user = new Model.Room({ ...fiels });
-    await user.save();
+    const result = new Model.Room({ ...fiels });
+    await result.save();
 
-    return user
-      ? { statusCode: STATUS.created, msg: MESSAGE.successCrete, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.created, msg: MESSAGE.successCrete, ok: true, data: [result] }
       : { statusCode: STATUS.internalServerError, msg: MESSAGE.errorCreate, ok: false, data: [] };
 
     //
@@ -74,10 +74,10 @@ const update = async (fiels) => {
     //
 
     const { roomId, ...rest } = fiels;
-    const user = await Model.Room.findByIdAndUpdate(roomId, rest);
+    const result = await Model.Room.findByIdAndUpdate(roomId, rest);
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.successUpdate, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.successUpdate, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.errorUpdate, ok: false, data: [] };
 
     //
@@ -89,9 +89,9 @@ const update = async (fiels) => {
 
 const del = async (roomId) => {
   try {
-    const user = await Model.Room.findOneAndDelete({ _id: roomId });
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data: [user] }
+    const result = await Model.Room.findOneAndDelete({ _id: roomId });
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.errorDelete, ok: false, data: [] };
 
     //

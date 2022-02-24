@@ -111,11 +111,24 @@ const update = async (req = request, res = response) => {
   }
 };
 
+const checkOut = async (registerId) => {
+  try {
+    // todo make the checkOut here
+    return registerId;
+  } catch (error) {
+    console.log({ step: 'error checkOut.RegisterService', error: error.toString() });
+    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+  }
+};
+
 const del = async (req = request, res = response) => {
   try {
     //
 
     const { registerId } = req.params;
+
+    const dateDelete = await checkOut(registerId);
+    console.log(dateDelete);
 
     const { msg, statusCode, data, ok } = await Controller.Register.del(registerId);
     res.status(statusCode).json({ data, msg, ok });

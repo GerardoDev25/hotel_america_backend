@@ -21,10 +21,10 @@ const getById = async (staffId) => {
   try {
     //
 
-    const user = await Model.Staff.findById(staffId);
+    const result = await Model.Staff.findById(staffId);
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
 
     //
@@ -38,10 +38,10 @@ const getOne = async (where = {}) => {
   try {
     //
 
-    const user = await Model.Staff.findOne(where);
+    const result = await Model.Staff.findOne(where);
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
 
     //
@@ -55,11 +55,11 @@ const create = async (fiels) => {
   try {
     //
 
-    const user = new Model.Staff({ ...fiels });
-    await user.save();
+    const result = new Model.Staff({ ...fiels });
+    await result.save();
 
-    return user
-      ? { statusCode: STATUS.created, msg: MESSAGE.successCrete, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.created, msg: MESSAGE.successCrete, ok: true, data: [result] }
       : { statusCode: STATUS.internalServerError, msg: MESSAGE.errorCreate, ok: false, data: [] };
 
     //
@@ -74,10 +74,10 @@ const update = async (fiels) => {
     //
 
     const { staffId, ...rest } = fiels;
-    const user = await Model.Staff.findByIdAndUpdate(staffId, rest);
+    const result = await Model.Staff.findByIdAndUpdate(staffId, rest);
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.successUpdate, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.successUpdate, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.errorUpdate, ok: false, data: [] };
 
     //
@@ -91,10 +91,10 @@ const del = async (staffId) => {
   try {
     //
 
-    const user = await Model.Staff.findOneAndDelete({ _id: staffId });
+    const result = await Model.Staff.findOneAndDelete({ _id: staffId });
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.errorDelete, ok: false, data: [] };
 
     //
