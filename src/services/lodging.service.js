@@ -1,6 +1,6 @@
 import { response, request } from 'express';
 
-import { existItems } from '../helpers';
+import { existItems, getAllRegistersItems } from '../helpers';
 import { MESSAGE, STATUS } from '../helpers/settings';
 
 import Controller from '../controllers';
@@ -35,24 +35,6 @@ const getAllIds = async (registerId) => {
     //
   } catch (error) {
     console.log({ step: 'error getAllIds.LodgingService', error: error.toString() });
-    return [];
-  }
-};
-
-const getAllRegistersItems = async () => {
-  try {
-    const limit = 0;
-    const { ok, data } = await Controller.Register.getAll(limit);
-    if (!ok) return [];
-
-    const { rows = [] } = data;
-    const items = rows.map((item) => ({ registerId: item.data[0]._id.toString(), amount: item.data[0].price }));
-
-    return items;
-
-    //
-  } catch (error) {
-    console.log({ step: 'error getAllRegistersItems.LodgingService', error: error.toString() });
     return [];
   }
 };
@@ -105,8 +87,10 @@ const getOne = async (req = request, res = response) => {
   }
 };
 
-const lodgingCreateAll = async (req = request, res = response) => {
+const lodgingCreateAll = async (_, res = response) => {
   try {
+    //
+
     const registerItems = await getAllRegistersItems();
     const createFun = registerItems.map((fiels) => create(fiels));
     const createResult = await Promise.all([...createFun]);

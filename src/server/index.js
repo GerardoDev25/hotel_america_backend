@@ -25,6 +25,7 @@ class Server {
   routerApp() {
     this.app.use(PATH.auth, Router.auth);
     this.app.use(PATH.room, Router.room);
+    this.app.use(PATH.cafe, Router.cafe);
     this.app.use(PATH.staff, Router.staff);
     this.app.use(PATH.goest, Router.goest);
     this.app.use(PATH.amount, Router.amount);

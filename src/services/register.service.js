@@ -118,13 +118,14 @@ const del = async (req = request, res = response) => {
 
     const { registerId } = req.params;
 
-    const [lodging, amount, goest] = await Promise.all([
+    const [lodging, amount, goest, cafe] = await Promise.all([
       Service.Lodging.lodgingDelByRegisterId(registerId),
       Service.Amount.amountDelByRegisterId(registerId),
       Service.Goest.goestDelByRegisterId(registerId),
+      Service.Cafe.cafeDelByRegisterId(registerId),
     ]);
     const { msg, statusCode, data, ok } = await Controller.Register.del(registerId);
-    res.status(statusCode).json({ data: { register: data[0], lodging, amount, goest }, msg, ok });
+    res.status(statusCode).json({ data: { register: data[0], lodging, amount, goest, cafe }, msg, ok });
 
     //
   } catch (error) {

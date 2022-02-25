@@ -11,6 +11,7 @@ export const DESCRIPTION_AMOUNTS = ['advance', 'surcharge', 'laundry', 'frigobar
 
 export const PATH = {
   auth: '/api/auth',
+  cafe: '/api/cafe',
   room: '/api/room',
   staff: '/api/staff',
   goest: '/api/goest',

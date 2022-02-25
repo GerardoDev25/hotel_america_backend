@@ -1,9 +1,10 @@
 import Room from './room.validation';
 import Auth from './auth.validation';
+import Cafe from './cafe.validation';
 import Staff from './staff.validation';
 import Goest from './goest.validation';
 import Amount from './amount.validation';
 import Lodging from './lodging.validation';
 import Register from './register.validation';
 
-export default { Room, Amount, Goest, Register, Staff, Auth, Lodging };
+export default { Cafe, Room, Amount, Goest, Register, Staff, Auth, Lodging };
