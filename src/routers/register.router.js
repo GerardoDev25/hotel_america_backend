@@ -9,7 +9,7 @@ router.get('/', Service.Register.getAll);
 
 router.get('/search/', Service.Register.getOne);
 
-router.post('/where', Service.Register.getWhere);
+router.post('/where/', Service.Register.getWhere);
 
 router.get('/:registerId', Validator.Register.getById, Service.Register.getById);
 

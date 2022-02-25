@@ -37,7 +37,7 @@ export const existItems = async (ids = {}) => {
 
         case 'loggingId':
           const loggingId = value[1];
-          querys.push(Controller.Logging.getById(loggingId));
+          querys.push(Controller.Lodging.getById(loggingId));
           break;
 
         default:

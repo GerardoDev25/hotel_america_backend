@@ -1,5 +1,6 @@
 import { response, request } from 'express';
 
+import Service from '.';
 import Controller from '../controllers';
 import { existItems } from '../helpers';
 import { MESSAGE, STATUS } from '../helpers/settings';
@@ -24,8 +25,8 @@ const getWhere = async (req = request, res = response) => {
   try {
     //
 
-    const { limit, offset, ...where } = req.body;
-
+    const { limit = 0, offset, ...where } = req.body;
+    console.log({ limit, offset, where });
     const { msg, statusCode, data, ok } = await Controller.Register.getAll(limit, offset, where);
     res.status(statusCode).json({ data, msg, ok });
 
@@ -111,27 +112,19 @@ const update = async (req = request, res = response) => {
   }
 };
 
-const checkOut = async (registerId) => {
-  try {
-    // todo make the checkOut here
-    return registerId;
-  } catch (error) {
-    console.log({ step: 'error checkOut.RegisterService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
-  }
-};
-
 const del = async (req = request, res = response) => {
   try {
     //
 
     const { registerId } = req.params;
 
-    const dateDelete = await checkOut(registerId);
-    console.log(dateDelete);
-
+    const [lodging, amount, goest] = await Promise.all([
+      Service.Lodging.lodgingDelByRegisterId(registerId),
+      Service.Amount.amountDelByRegisterId(registerId),
+      Service.Goest.goestDelByRegisterId(registerId),
+    ]);
     const { msg, statusCode, data, ok } = await Controller.Register.del(registerId);
-    res.status(statusCode).json({ data, msg, ok });
+    res.status(statusCode).json({ data: { register: data[0], lodging, amount, goest }, msg, ok });
 
     //
   } catch (error) {

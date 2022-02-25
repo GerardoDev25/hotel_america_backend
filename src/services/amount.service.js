@@ -8,7 +8,6 @@ import Controller from '../controllers';
 const getAll = async (req = request, res = response) => {
   try {
     //
-
     const { limit, offset } = req.query;
 
     const { msg, statusCode, data, ok } = await Controller.Amount.getAll(limit, offset);
@@ -18,6 +17,24 @@ const getAll = async (req = request, res = response) => {
   } catch (error) {
     console.log({ step: 'error getAll.AmountService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+  }
+};
+
+const getAllIds = async (registerId) => {
+  try {
+    const limit = 0;
+    const offset = 0;
+    const where = { registerId };
+    const { ok, data } = await Controller.Amount.getAll(limit, offset, where);
+    if (!ok) return [];
+
+    const { rows = [] } = data;
+    const ids = rows.map((item) => item._id.toString());
+    return ids;
+    //
+  } catch (error) {
+    console.log({ step: 'error getAllIds.AmountService', error: error.toString() });
+    return [];
   }
 };
 
@@ -127,4 +144,21 @@ const del = async (req = request, res = response) => {
   }
 };
 
-export default { getAll, getWhere, getById, getOne, create, update, del };
+const amountDelByRegisterId = async (registerId) => {
+  try {
+    //
+
+    const ids = await getAllIds(registerId);
+    const itemsFuctions = ids.map((amountId) => Controller.Amount.del(amountId));
+    const itemsDelete = await Promise.all([...itemsFuctions]);
+
+    return { ok: true, data: itemsDelete, msg: MESSAGE.successDelete };
+
+    //
+  } catch (error) {
+    console.log({ step: 'error amountDelByRegisterId.AmountService', error: error.toString() });
+    return { ok: false, data: [], msg: MESSAGE.errorDelete };
+  }
+};
+
+export default { getAll, getWhere, getById, getOne, create, update, del, amountDelByRegisterId };

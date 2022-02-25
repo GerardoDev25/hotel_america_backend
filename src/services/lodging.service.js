@@ -21,6 +21,42 @@ const getAll = async (req = request, res = response) => {
   }
 };
 
+const getAllIds = async (registerId) => {
+  try {
+    const limit = 0;
+    const offset = 0;
+    const where = { registerId };
+    const { ok, data } = await Controller.Lodging.getAll(limit, offset, where);
+    if (!ok) return [];
+
+    const { rows = [] } = data;
+    const ids = rows.map((item) => item._id.toString());
+    return ids;
+    //
+  } catch (error) {
+    console.log({ step: 'error getAllIds.LodgingService', error: error.toString() });
+    return [];
+  }
+};
+
+const getAllRegistersItems = async () => {
+  try {
+    const limit = 0;
+    const { ok, data } = await Controller.Register.getAll(limit);
+    if (!ok) return [];
+
+    const { rows = [] } = data;
+    const items = rows.map((item) => ({ registerId: item.data[0]._id.toString(), amount: item.data[0].price }));
+
+    return items;
+
+    //
+  } catch (error) {
+    console.log({ step: 'error getAllRegistersItems.LodgingService', error: error.toString() });
+    return [];
+  }
+};
+
 const getWhere = async (req = request, res = response) => {
   try {
     //
@@ -69,28 +105,18 @@ const getOne = async (req = request, res = response) => {
   }
 };
 
-const createByRegistersId = async (req = request, res = response) => {
+const lodgingCreateAll = async (req = request, res = response) => {
   try {
-    //
-
-    const fiels = req.body;
-    const { registerIds = [] } = fiels;
-
-    const registerFun = registerIds.map((id) => Controller.Register.getById(id));
-    const registerResult = await Promise.all([...registerFun]);
-
-    const registerFound = registerResult.filter((item) => item.ok);
-    const registerObject = registerFound.map((item) => ({ registerId: item.data[0]._id.toString(), amount: item.data[0].price }));
-
-    const createFun = registerObject.map((fiels) => create(fiels));
+    const registerItems = await getAllRegistersItems();
+    const createFun = registerItems.map((fiels) => create(fiels));
     const createResult = await Promise.all([...createFun]);
 
-    res.status(STATUS.success).json({ data: createResult, total: createResult.length });
+    res.status(STATUS.success).json({ data: createResult, total: createResult.length, msg: MESSAGE.successCrete });
 
     //
   } catch (error) {
-    console.log({ step: 'error create.LodgingService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    console.log({ step: 'error lodgingCreateAll.LodgingService', error: error.toString() });
+    res.status(STATUS.conflict).json({ msg: MESSAGE.errorCreate, data: [], ok: false });
   }
 };
 
@@ -129,49 +155,21 @@ const update = async (req = request, res = response) => {
   }
 };
 
-const delByRegisterId = async (req = request, res = response) => {
+const lodgingDelByRegisterId = async (registerId) => {
   try {
     //
 
-    const { registerId } = req.params;
+    const ids = await getAllIds(registerId);
+    const itemsFuctions = ids.map((lodgingId) => Controller.Lodging.del(lodgingId));
+    const itemsDelete = await Promise.all([...itemsFuctions]);
 
-    const exist = await existItems({ registerId });
-    if (!exist) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
-
-    const limit = 0;
-    const offset = 0;
-    const where = { registerId };
-
-    const { msg, statusCode, data, ok } = await Controller.Lodging.getAll(limit, offset, where);
-    if (!ok) res.status(statusCode).json({ data, msg, ok });
-
-    const lodgingIds = data.rows.map((item) => ({ lodgingId: item._id.toString() }));
-    const lodgingFun = lodgingIds.map((item) => Controller.Lodging.del(item.lodgingId));
-    const lodgingResult = await Promise.all([...lodgingFun]);
-
-    res.status(STATUS.success).json({ msg: MESSAGE.successDelete, data: lodgingResult, total: lodgingResult.length });
+    return { ok: true, data: itemsDelete, msg: MESSAGE.successDelete };
 
     //
   } catch (error) {
-    console.log({ step: 'error delete.LodgingService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    console.log({ step: 'error lodgingDelByRegisterId.AmountService', error: error.toString() });
+    return { ok: false, data: [], msg: MESSAGE.errorDelete };
   }
 };
 
-// const del = async (req = request, res = response) => {
-//   try {
-//     //
-
-//     const { lodgingId } = req.params;
-
-//     const { msg, statusCode, data, ok } = await Controller.Lodging.del(lodgingId);
-//     res.status(statusCode).json({ data, msg, ok });
-
-//     //
-//   } catch (error) {
-//     console.log({ step: 'error delete.LodgingService', error: error.toString() });
-//     res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
-//   }
-// };
-
-export default { createByRegistersId, getAll, getById, getOne, getWhere, update, delByRegisterId };
+export default { getAll, getById, getOne, getWhere, update, lodgingDelByRegisterId, lodgingCreateAll };

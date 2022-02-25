@@ -21,6 +21,24 @@ const getAll = async (req = request, res = response) => {
   }
 };
 
+const getAllIds = async (registerId) => {
+  try {
+    const limit = 0;
+    const offset = 0;
+    const where = { registerId };
+    const { ok, data } = await Controller.Goest.getAll(limit, offset, where);
+    if (!ok) return [];
+
+    const { rows = [] } = data;
+    const ids = rows.map((item) => item._id.toString());
+    return ids;
+    //
+  } catch (error) {
+    console.log({ step: 'error getAllIds.GoestService', error: error.toString() });
+    return [];
+  }
+};
+
 const getWhere = async (req = request, res = response) => {
   try {
     //
@@ -127,4 +145,21 @@ const del = async (req = request, res = response) => {
   }
 };
 
-export default { getAll, getWhere, getById, getOne, create, update, del };
+const goestDelByRegisterId = async (registerId) => {
+  try {
+    //
+
+    const ids = await getAllIds(registerId);
+    const itemsFuctions = ids.map((goestId) => Controller.Goest.del(goestId));
+    const itemsDelete = await Promise.all([...itemsFuctions]);
+
+    return { ok: true, data: itemsDelete, msg: MESSAGE.successDelete };
+
+    //
+  } catch (error) {
+    console.log({ step: 'error goestDelByRegisterId.GoestService', error: error.toString() });
+    return { ok: false, data: [], msg: MESSAGE.errorDelete };
+  }
+};
+
+export default { getAll, getWhere, getById, getOne, create, update, del, goestDelByRegisterId };

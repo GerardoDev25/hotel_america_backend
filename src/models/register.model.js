@@ -5,10 +5,10 @@ import 'moment/locale/es-mx';
 moment.locale('es-mx');
 
 const registerSchema = Schema({
-  checkOut: { type: SchemaTypes.Number },
+  checkOut: { type: SchemaTypes.String, default: moment().add(1, 'day').format('L') },
   discount: { type: SchemaTypes.Number, default: 0 },
   numGoest: { type: SchemaTypes.Number, default: 1 },
-  checkIn: { type: SchemaTypes.Number, default: moment().format('L') },
+  checkIn: { type: SchemaTypes.String, default: moment().format('L') },
   price: { type: SchemaTypes.Number, required: [true, 'the price is required'] },
   numberRoom: { type: SchemaTypes.Number, required: [true, 'room number is required'], unique: true },
 
