@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { response, request } from 'express';
 
-import { getAllGoestsItems } from '../helpers';
+import helpers from '../helpers';
 import { MESSAGE, STATUS } from '../helpers/settings';
 
 import Controller from '../controllers';
@@ -9,6 +9,7 @@ import Controller from '../controllers';
 const getAll = async (req = request, res = response) => {
   try {
     //
+
     const { limit, offset } = req.query;
 
     const { msg, statusCode, data, ok } = await Controller.Cafe.getAll(limit, offset);
@@ -21,8 +22,38 @@ const getAll = async (req = request, res = response) => {
   }
 };
 
+export const getAllGoestsItems = async () => {
+  try {
+    //
+
+    const limit = 0;
+    const now = moment().format('L');
+    const { ok, data } = await Controller.Goest.getAll(limit);
+    if (!ok) return [];
+
+    const { rows = [] } = data;
+    const itemsFilter = rows.filter((item) => item.date !== now);
+
+    const items = itemsFilter.map((item) => ({
+      goestId: item.data[0]._id.toString(),
+      registerId: item.data[0].registerId.toString(),
+      name: item.data[0].name + item.data[0].lastName,
+      numberRoom: item.data[0].numberRoom,
+    }));
+
+    return items;
+
+    //
+  } catch (error) {
+    console.log({ step: 'error getAllGoestsItems.helpers', error: error.toString() });
+    return [];
+  }
+};
+
 const getAllIds = async (registerId) => {
   try {
+    //
+
     const limit = 0;
     const offset = 0;
     const where = { registerId };
@@ -111,7 +142,7 @@ const update = async (req = request, res = response) => {
     const fiels = req.body;
     const { goestId, registerId } = fiels;
 
-    const exist = await existItems({ goestId, registerId });
+    const exist = await helpers.existItems({ goestId, registerId });
     if (!exist) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
 
     const { msg, statusCode, data, ok } = await Controller.Cafe.update({ ...fiels, cafeId });

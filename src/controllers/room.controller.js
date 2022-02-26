@@ -5,7 +5,10 @@ const getAll = async (limit = 10, offset = 0, where = {}) => {
   try {
     //
 
-    const [total, rows] = await Promise.all([Model.Room.countDocuments(where), Model.Room.find(where).limit(Number(limit)).skip(Number(offset))]);
+    const [total, rows] = await Promise.all([
+      Model.Room.countDocuments(where),
+      Model.Room.find(where).limit(Number(limit)).skip(Number(offset)),
+    ]);
     const data = { rows, total, pageCount: Math.ceil(total / limit) };
 
     return { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data };
@@ -89,6 +92,8 @@ const update = async (fiels) => {
 
 const del = async (roomId) => {
   try {
+    //
+
     const result = await Model.Room.findOneAndDelete({ _id: roomId });
     return result
       ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data: [result] }

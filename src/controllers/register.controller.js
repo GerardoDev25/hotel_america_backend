@@ -4,7 +4,7 @@ import { MESSAGE, STATUS } from '../helpers/settings';
 const getAll = async (limit = 10, offset = 0, where = {}) => {
   try {
     //
-    
+
     const [total, rows] = await Promise.all([
       Model.Register.countDocuments(where),
       Model.Register.find(where).limit(Number(limit)).skip(Number(offset)),

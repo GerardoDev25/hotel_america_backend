@@ -1,6 +1,6 @@
 import { response, request } from 'express';
 
-import { existItems, getAllRegistersItems } from '../helpers';
+import helpers from '../helpers';
 import { MESSAGE, STATUS } from '../helpers/settings';
 
 import Controller from '../controllers';
@@ -21,8 +21,30 @@ const getAll = async (req = request, res = response) => {
   }
 };
 
+export const getAllRegistersItems = async () => {
+  try {
+    //
+
+    const limit = 0;
+    const { ok, data } = await Controller.Register.getAll(limit);
+    if (!ok) return [];
+
+    const { rows = [] } = data;
+    const items = rows.map((item) => ({ registerId: item.data[0]._id.toString(), amount: item.data[0].price }));
+
+    return items;
+
+    //
+  } catch (error) {
+    console.log({ step: 'error getAllRegistersItems.helpers', error: error.toString() });
+    return [];
+  }
+};
+
 const getAllIds = async (registerId) => {
   try {
+    //
+
     const limit = 0;
     const offset = 0;
     const where = { registerId };
@@ -32,6 +54,7 @@ const getAllIds = async (registerId) => {
     const { rows = [] } = data;
     const ids = rows.map((item) => item._id.toString());
     return ids;
+
     //
   } catch (error) {
     console.log({ step: 'error getAllIds.LodgingService', error: error.toString() });
@@ -126,7 +149,7 @@ const update = async (req = request, res = response) => {
     const fiels = req.body;
     const { registerId } = fiels;
 
-    const exist = await existItems({ registerId });
+    const exist = await helpers.existItems({ registerId });
     if (!exist) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
 
     const { msg, statusCode, data, ok } = await Controller.Lodging.update({ ...fiels, lodgingId });

@@ -7,4 +7,4 @@ import amount from './amount.router';
 import lodging from './lodging.router';
 import register from './register.router';
 
-export default { cafe, room, staff, goest, amount, register, auth, lodging };
+export default { cafe, auth, room, staff, goest, amount, lodging, register };

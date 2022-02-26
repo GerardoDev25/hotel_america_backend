@@ -1,10 +1,11 @@
 import bcryptjs from 'bcryptjs';
 import { response, request } from 'express';
 
+import helpers from '../helpers';
 import { MESSAGE, STATUS } from '../helpers/settings';
-import { parseJwt, generateJWT } from '../helpers/jsonWebToken';
 
 import Controller from '../controllers';
+import helpers from '../helpers';
 
 const login = async (req = request, res = response) => {
   try {
@@ -22,7 +23,7 @@ const login = async (req = request, res = response) => {
     if (!validPassword) return res.status(STATUS.badRequest).json({ data, ok, msg: MESSAGE.authError });
 
     const { _id, role, name } = user;
-    const token = await generateJWT({ staffId: _id, role, name });
+    const token = await helpers.generateJWT({ staffId: _id, role, name });
 
     res.status(statusCode).json({ token, ok, msg: MESSAGE.authSuccess });
 
@@ -38,7 +39,7 @@ const renew = async (req = request, res = response) => {
     //
 
     const { token } = req.body;
-    const { staffId } = parseJwt(token);
+    const { staffId } = helpers.parseJwt(token);
 
     const { statusCode, data, ok } = await Controller.Staff.getById(staffId);
     if (!ok) return res.status(statusCode).json({ data, msg: MESSAGE.authError, ok });
@@ -46,7 +47,7 @@ const renew = async (req = request, res = response) => {
     const [user] = data;
 
     const { _id, role, name } = user;
-    const newToken = await generateJWT({ staffId: _id, role, name });
+    const newToken = await helpers.generateJWT({ staffId: _id, role, name });
 
     res.status(statusCode).json({ token: newToken, ok, msg: MESSAGE.authSuccess });
 

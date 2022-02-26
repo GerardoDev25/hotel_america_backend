@@ -1,19 +1,20 @@
-import { check } from 'express-validator';
-import { validataInputs, validateRole, verifyId } from '../helpers/validateInputs';
+import helpers from '../helpers';
 
-const getById = verifyId('cafeId');
+import { check } from 'express-validator';
+
+const getById = helpers.verifyId('cafeId');
 
 const create = [
-  ...validateRole(['role_reception']),
+  ...helpers.validateRole(['role_reception']),
   check('totalAmount', 'maxGuest is required or kind of wrong data type - Numeric').isNumeric().notEmpty(),
   check('role', 'kindOfRoom is required or kind of wrong data type - String').isString().notEmpty(),
   check('staffId', 'staffId is required or kind of wrong data type - MongoId').isMongoId().notEmpty(),
   check('registerId', 'registerId is required or kind of wrong data type - MongoId').isMongoId().notEmpty(),
-  validataInputs,
+  helpers.validataInputs,
 ];
 
-const update = [...validateRole(['role_Cafe']), ...verifyId('cafeId')];
+const update = [...helpers.validateRole(['role_Cafe']), ...helpers.verifyId('cafeId')];
 
-const del = [...validateRole(['role_reception']), ...verifyId('cafeId')];
+const del = [...helpers.validateRole(['role_reception']), ...helpers.verifyId('cafeId')];
 
 export default { create, update, del, getById };

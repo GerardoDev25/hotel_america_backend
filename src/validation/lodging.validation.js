@@ -1,9 +1,9 @@
-import { validataInputs, validateRole, verifyId } from '../helpers/validateInputs';
+import helpers from '../helpers';
 
-const getById = verifyId('lodgingId');
+const getById = helpers.verifyId('lodgingId');
 
-const create = [...validateRole(['role_reception']), validataInputs];
+const create = [...helpers.validateRole(['role_reception']), helpers.validataInputs];
 
-const update = [...validateRole(['role_reception']), ...verifyId('lodgingId')];
+const update = [...helpers.validateRole(['role_reception']), ...helpers.verifyId('lodgingId')];
 
 export default { create, update, getById };

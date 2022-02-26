@@ -1,8 +1,9 @@
 import { response, request } from 'express';
 
-import Controller from '../controllers';
-import { existItems } from '../helpers';
+import helpers from '../helpers';
 import { MESSAGE, STATUS } from '../helpers/settings';
+
+import Controller from '../controllers';
 
 const getAll = async (req = request, res = response) => {
   try {
@@ -23,6 +24,8 @@ const getAll = async (req = request, res = response) => {
 
 const getAllIds = async (registerId) => {
   try {
+    //
+
     const limit = 0;
     const offset = 0;
     const where = { registerId };
@@ -32,9 +35,31 @@ const getAllIds = async (registerId) => {
     const { rows = [] } = data;
     const ids = rows.map((item) => item._id.toString());
     return ids;
+
     //
   } catch (error) {
     console.log({ step: 'error getAllIds.GoestService', error: error.toString() });
+    return [];
+  }
+};
+
+const getCafeAllIds = async (goestId) => {
+  try {
+    //
+
+    const limit = 0;
+    const offset = 0;
+    const where = { goestId };
+    const { ok, data } = await Controller.Cafe.getAll(limit, offset, where);
+    if (!ok) return [];
+
+    const { rows = [] } = data;
+    const ids = rows.map((item) => item._id.toString());
+    return ids;
+
+    //
+  } catch (error) {
+    console.log({ step: 'error getCafeAllIds.GoestService', error: error.toString() });
     return [];
   }
 };
@@ -95,7 +120,7 @@ const create = async (req = request, res = response) => {
     const fiels = req.body;
     const { registerId } = fiels;
 
-    const exist = await existItems({ registerId });
+    const exist = await helpers.existItems({ registerId });
     if (!exist) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
 
     const { msg, statusCode, data, ok } = await Controller.Goest.create(fiels);
@@ -116,7 +141,7 @@ const update = async (req = request, res = response) => {
     const fiels = req.body;
     const { registerId } = fiels;
 
-    const exist = await existItems({ registerId });
+    const exist = await helpers.existItems({ registerId });
     if (!exist) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
 
     const { msg, statusCode, data, ok } = await Controller.Goest.update({ ...fiels, goestId });
@@ -135,8 +160,13 @@ const del = async (req = request, res = response) => {
 
     const { goestId } = req.params;
 
+    const cafeIds = await getCafeAllIds(goestId);
+    const cafeFunctions = cafeIds.map((cafeId) => Controller.Cafe.del(cafeId));
+
+    const cafeItems = await Promise.all([...cafeFunctions]);
     const { msg, statusCode, data, ok } = await Controller.Goest.del(goestId);
-    res.status(statusCode).json({ data, msg, ok });
+
+    res.status(statusCode).json({ data: { cafe: cafeItems, goest: data }, msg, ok });
 
     //
   } catch (error) {

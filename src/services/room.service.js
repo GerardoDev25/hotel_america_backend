@@ -5,6 +5,8 @@ import { MESSAGE, STATUS } from '../helpers/settings';
 
 const getAll = async (req = request, res = response) => {
   try {
+    //
+
     const { limit, offset } = req.query;
     const { msg, statusCode, data, ok } = await Controller.Room.getAll(limit, offset);
 
@@ -35,6 +37,8 @@ const getWhere = async (req = request, res = response) => {
 
 const getById = async (req = request, res = response) => {
   try {
+    //
+
     const { roomId } = req.params;
     const { msg, statusCode, data, ok } = await Controller.Room.getById(roomId);
 
@@ -66,6 +70,8 @@ const getOne = async (req = request, res = response) => {
 
 const create = async (req = request, res = response) => {
   try {
+    //
+
     const fiels = req.body;
     const { msg, statusCode, data, ok } = await Controller.Room.create(fiels);
 
@@ -80,6 +86,8 @@ const create = async (req = request, res = response) => {
 
 const update = async (req = request, res = response) => {
   try {
+    //
+
     const { roomId } = req.params;
     const fiels = req.body;
     const { msg, statusCode, data, ok } = await Controller.Room.update({ ...fiels, roomId });
@@ -95,6 +103,8 @@ const update = async (req = request, res = response) => {
 
 const del = async (req = request, res = response) => {
   try {
+    //
+
     const { roomId } = req.params;
     const { msg, statusCode, data, ok } = await Controller.Room.del(roomId);
 

@@ -5,7 +5,10 @@ const getAll = async (limit = 10, offset = 0, where = {}) => {
   try {
     //
 
-    const [total, rows] = await Promise.all([Model.Cafe.countDocuments(where), Model.Cafe.find(where).limit(Number(limit)).skip(Number(offset))]);
+    const [total, rows] = await Promise.all([
+      Model.Cafe.countDocuments(where),
+      Model.Cafe.find(where).limit(Number(limit)).skip(Number(offset)),
+    ]);
 
     const data = { rows, total, pageCount: Math.ceil(total / limit) };
 
@@ -97,6 +100,8 @@ const del = async (cafeId) => {
     return result
       ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.errorDelete, ok: false, data: [] };
+
+    //
   } catch (error) {
     console.log({ step: 'error delete.CafeController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };

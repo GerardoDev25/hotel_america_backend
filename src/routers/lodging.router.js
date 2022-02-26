@@ -11,7 +11,7 @@ router.get('/search/', Service.Lodging.getOne);
 
 router.post('/where', Service.Lodging.getWhere);
 
-router.get('/:loggingId', Validator.Lodging.getById, Service.Lodging.getById);
+router.get('/:lodgingId', Validator.Lodging.getById, Service.Lodging.getById);
 
 router.post('/', Validator.Lodging.create, Service.Lodging.lodgingCreateAll);
 

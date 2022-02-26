@@ -4,6 +4,7 @@ import { MESSAGE, STATUS } from '../helpers/settings';
 const getAll = async (limit = 10, offset = 0, where = {}) => {
   try {
     //
+
     const [total, rows] = await Promise.all([
       Model.Lodging.countDocuments(where),
       Model.Lodging.find(where).limit(Number(limit)).skip(Number(offset)),
@@ -24,10 +25,10 @@ const getById = async (lodgingId) => {
   try {
     //
 
-    const user = await Model.Lodging.findById(lodgingId);
+    const result = await Model.Lodging.findById(lodgingId);
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
 
     //
@@ -41,10 +42,10 @@ const getOne = async (where = {}) => {
   try {
     //
 
-    const user = await Model.Lodging.findOne(where);
+    const result = await Model.Lodging.findOne(where);
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
 
     //
@@ -58,11 +59,11 @@ const create = async (fiels) => {
   try {
     //
 
-    const user = new Model.Lodging({ ...fiels });
-    await user.save();
+    const result = new Model.Lodging({ ...fiels });
+    await result.save();
 
-    return user
-      ? { statusCode: STATUS.created, msg: MESSAGE.successCrete, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.created, msg: MESSAGE.successCrete, ok: true, data: [result] }
       : { statusCode: STATUS.internalServerError, msg: MESSAGE.errorCreate, ok: false, data: [] };
 
     //
@@ -77,10 +78,10 @@ const update = async (fiels) => {
     //
 
     const { lodgingId, ...rest } = fiels;
-    const user = await Model.Lodging.findByIdAndUpdate(lodgingId, rest);
+    const result = await Model.Lodging.findByIdAndUpdate(lodgingId, rest);
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.successUpdate, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.successUpdate, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.errorUpdate, ok: false, data: [] };
 
     //
@@ -94,10 +95,10 @@ const del = async (lodgingId) => {
   try {
     //
 
-    const user = await Model.Lodging.findOneAndDelete({ _id: lodgingId });
+    const result = await Model.Lodging.findOneAndDelete({ _id: lodgingId });
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.errorDelete, ok: false, data: [] };
 
     //

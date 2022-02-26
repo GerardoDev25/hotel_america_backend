@@ -1,6 +1,6 @@
 import { response, request } from 'express';
 
-import { existItems } from '../helpers';
+import helpers from '../helpers';
 import { MESSAGE, STATUS } from '../helpers/settings';
 
 import Controller from '../controllers';
@@ -8,6 +8,7 @@ import Controller from '../controllers';
 const getAll = async (req = request, res = response) => {
   try {
     //
+
     const { limit, offset } = req.query;
 
     const { msg, statusCode, data, ok } = await Controller.Amount.getAll(limit, offset);
@@ -22,6 +23,8 @@ const getAll = async (req = request, res = response) => {
 
 const getAllIds = async (registerId) => {
   try {
+    //
+
     const limit = 0;
     const offset = 0;
     const where = { registerId };
@@ -31,6 +34,7 @@ const getAllIds = async (registerId) => {
     const { rows = [] } = data;
     const ids = rows.map((item) => item._id.toString());
     return ids;
+
     //
   } catch (error) {
     console.log({ step: 'error getAllIds.AmountService', error: error.toString() });
@@ -94,7 +98,7 @@ const create = async (req = request, res = response) => {
     const fiels = req.body;
     const { staffId, registerId } = fiels;
 
-    const exist = await existItems({ staffId, registerId });
+    const exist = await helpers.existItems({ staffId, registerId });
     if (!exist) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
 
     const { msg, statusCode, data, ok } = await Controller.Amount.create(fiels);
@@ -115,7 +119,7 @@ const update = async (req = request, res = response) => {
     const fiels = req.body;
     const { staffId, registerId } = fiels;
 
-    const exist = await existItems({ staffId, registerId });
+    const exist = await helpers.existItems({ staffId, registerId });
     if (!exist) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
 
     const { msg, statusCode, data, ok } = await Controller.Amount.update({ ...fiels, amountId });

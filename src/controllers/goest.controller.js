@@ -5,7 +5,10 @@ const getAll = async (limit = 10, offset = 0, where = {}) => {
   try {
     //
 
-    const [total, rows] = await Promise.all([Model.Goest.countDocuments(where), Model.Goest.find(where).limit(Number(limit)).skip(Number(offset))]);
+    const [total, rows] = await Promise.all([
+      Model.Goest.countDocuments(where),
+      Model.Goest.find(where).limit(Number(limit)).skip(Number(offset)),
+    ]);
 
     const data = { rows, total, pageCount: Math.ceil(total / limit) };
 
@@ -22,10 +25,10 @@ const getById = async (goestId) => {
   try {
     //
 
-    const user = await Model.Goest.findById(goestId);
+    const result = await Model.Goest.findById(goestId);
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
 
     //
@@ -39,10 +42,10 @@ const getOne = async (where = {}) => {
   try {
     //
 
-    const user = await Model.Goest.findOne(where);
+    const result = await Model.Goest.findOne(where);
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
 
     //
@@ -56,11 +59,11 @@ const create = async (fiels) => {
   try {
     //
 
-    const user = new Model.Goest({ ...fiels });
-    await user.save();
+    const result = new Model.Goest({ ...fiels });
+    await result.save();
 
-    return user
-      ? { statusCode: STATUS.created, msg: MESSAGE.successCrete, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.created, msg: MESSAGE.successCrete, ok: true, data: [result] }
       : { statusCode: STATUS.internalServerError, msg: MESSAGE.errorCreate, ok: false, data: [] };
 
     //
@@ -75,10 +78,10 @@ const update = async (fiels) => {
     //
 
     const { goestId, ...rest } = fiels;
-    const user = await Model.Goest.findByIdAndUpdate(goestId, rest);
+    const result = await Model.Goest.findByIdAndUpdate(goestId, rest);
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.successUpdate, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.successUpdate, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.errorUpdate, ok: false, data: [] };
 
     //
@@ -90,10 +93,12 @@ const update = async (fiels) => {
 
 const del = async (goestId) => {
   try {
-    const user = await Model.Goest.findOneAndDelete({ _id: goestId });
+    //
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data: [user] }
+    const result = await Model.Goest.findOneAndDelete({ _id: goestId });
+
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.errorDelete, ok: false, data: [] };
 
     //

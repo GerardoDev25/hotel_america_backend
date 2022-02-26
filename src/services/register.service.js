@@ -1,9 +1,10 @@
 import { response, request } from 'express';
 
+import helpers from '../helpers';
+import { MESSAGE, STATUS } from '../helpers/settings';
+
 import Service from '.';
 import Controller from '../controllers';
-import { existItems } from '../helpers';
-import { MESSAGE, STATUS } from '../helpers/settings';
 
 const getAll = async (req = request, res = response) => {
   try {
@@ -77,7 +78,7 @@ const create = async (req = request, res = response) => {
     const fiels = req.body;
     const { roomId, staffId } = fiels;
 
-    const exist = await existItems({ staffId, roomId });
+    const exist = await helpers.existItems({ staffId, roomId });
     if (!exist) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
 
     const { msg, statusCode, data, ok } = await Controller.Register.create(fiels);
@@ -98,7 +99,7 @@ const update = async (req = request, res = response) => {
     const fiels = req.body;
     const { roomId, staffId } = fiels;
 
-    const exist = await existItems({ staffId, roomId });
+    const exist = await helpers.existItems({ staffId, roomId });
     if (!exist) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
 
     const { msg, statusCode, data, ok } = await Controller.Register.update({ ...fiels, registerId });
@@ -124,6 +125,7 @@ const del = async (req = request, res = response) => {
       Service.Goest.goestDelByRegisterId(registerId),
       Service.Cafe.cafeDelByRegisterId(registerId),
     ]);
+
     const { msg, statusCode, data, ok } = await Controller.Register.del(registerId);
     res.status(statusCode).json({ data: { register: data[0], lodging, amount, goest, cafe }, msg, ok });
 

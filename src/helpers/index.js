@@ -1,7 +1,9 @@
-import moment from 'moment';
+import { generateJWT, parseJwt, validateJWT } from './jsonWebToken';
+import { haveRole, validataInputs, validateRole, verifyId } from './validateInputs';
+
 import Controller from '../controllers';
 
-export const existItems = async (ids = {}) => {
+const existItems = async (ids = {}) => {
   //
 
   const values = Object.entries(ids);
@@ -60,46 +62,4 @@ export const existItems = async (ids = {}) => {
   }
 };
 
-export const getAllRegistersItems = async () => {
-  try {
-    const limit = 0;
-    const { ok, data } = await Controller.Register.getAll(limit);
-    if (!ok) return [];
-
-    const { rows = [] } = data;
-    const items = rows.map((item) => ({ registerId: item.data[0]._id.toString(), amount: item.data[0].price }));
-
-    return items;
-
-    //
-  } catch (error) {
-    console.log({ step: 'error getAllRegistersItems.helpers', error: error.toString() });
-    return [];
-  }
-};
-
-export const getAllGoestsItems = async () => {
-  try {
-    const limit = 0;
-    const now = moment().format('L');
-    const { ok, data } = await Controller.Goest.getAll(limit);
-    if (!ok) return [];
-
-    const { rows = [] } = data;
-    const itemsFilter = rows.filter((item) => item.date !== now);
-
-    const items = itemsFilter.map((item) => ({
-      goestId: item.data[0]._id.toString(),
-      registerId: item.data[0].registerId.toString(),
-      name: item.data[0].name + item.data[0].lastName,
-      numberRoom: item.data[0].numberRoom,
-    }));
-
-    return items;
-
-    //
-  } catch (error) {
-    console.log({ step: 'error getAllGoestsItems.helpers', error: error.toString() });
-    return [];
-  }
-};
+export default { existItems, generateJWT, parseJwt, validateJWT, haveRole, validataInputs, validateRole, verifyId };
