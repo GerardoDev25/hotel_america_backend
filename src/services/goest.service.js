@@ -4,6 +4,7 @@ import helpers from '../helpers';
 import { MESSAGE, STATUS } from '../helpers/settings';
 
 import Controller from '../controllers';
+import Service from '.';
 
 const getAll = async (req = request, res = response) => {
   try {
@@ -19,48 +20,6 @@ const getAll = async (req = request, res = response) => {
   } catch (error) {
     console.log({ step: 'error getAll.GoestService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
-  }
-};
-
-const getAllIds = async (registerId) => {
-  try {
-    //
-
-    const limit = 0;
-    const offset = 0;
-    const where = { registerId };
-    const { ok, data } = await Controller.Goest.getAll(limit, offset, where);
-    if (!ok) return [];
-
-    const { rows = [] } = data;
-    const ids = rows.map((item) => item._id.toString());
-    return ids;
-
-    //
-  } catch (error) {
-    console.log({ step: 'error getAllIds.GoestService', error: error.toString() });
-    return [];
-  }
-};
-
-const getCafeAllIds = async (goestId) => {
-  try {
-    //
-
-    const limit = 0;
-    const offset = 0;
-    const where = { goestId };
-    const { ok, data } = await Controller.Cafe.getAll(limit, offset, where);
-    if (!ok) return [];
-
-    const { rows = [] } = data;
-    const ids = rows.map((item) => item._id.toString());
-    return ids;
-
-    //
-  } catch (error) {
-    console.log({ step: 'error getCafeAllIds.GoestService', error: error.toString() });
-    return [];
   }
 };
 
@@ -159,14 +118,12 @@ const del = async (req = request, res = response) => {
     //
 
     const { goestId } = req.params;
+    const params = { goestId };
 
-    const cafeIds = await getCafeAllIds(goestId);
-    const cafeFunctions = cafeIds.map((cafeId) => Controller.Cafe.del(cafeId));
-
-    const cafeItems = await Promise.all([...cafeFunctions]);
+    const cafe = await Service.Cafe.delteMany(params);
     const { msg, statusCode, data, ok } = await Controller.Goest.del(goestId);
 
-    res.status(statusCode).json({ data: { cafe: cafeItems, goest: data }, msg, ok });
+    res.status(statusCode).json({ data: { cafe, goest: data }, msg, ok });
 
     //
   } catch (error) {
@@ -175,15 +132,11 @@ const del = async (req = request, res = response) => {
   }
 };
 
-const goestDelByRegisterId = async (registerId) => {
+const deleteMany = async (params) => {
   try {
     //
-
-    const ids = await getAllIds(registerId);
-    const itemsFuctions = ids.map((goestId) => Controller.Goest.del(goestId));
-    const itemsDelete = await Promise.all([...itemsFuctions]);
-
-    return { ok: true, data: itemsDelete, msg: MESSAGE.successDelete };
+    const result = Controller.Cafe.deleteMany(params);
+    return result;
 
     //
   } catch (error) {
@@ -192,4 +145,65 @@ const goestDelByRegisterId = async (registerId) => {
   }
 };
 
-export default { getAll, getWhere, getById, getOne, create, update, del, goestDelByRegisterId };
+export default { getAll, getWhere, getById, getOne, create, update, del, deleteMany };
+
+// const getCafeAllIds = async (goestId) => {
+//   try {
+//     //
+
+//     const limit = 0;
+//     const offset = 0;
+//     const where = { goestId };
+//     const { ok, data } = await Controller.Cafe.getAll(limit, offset, where);
+//     if (!ok) return [];
+
+//     const { rows = [] } = data;
+//     const ids = rows.map((item) => item._id.toString());
+//     return ids;
+
+//     //
+//   } catch (error) {
+//     console.log({ step: 'error getCafeAllIds.GoestService', error: error.toString() });
+//     return [];
+//   }
+// };
+
+// const getAllIds = async (registerId) => {
+//   try {
+//     //
+
+//     const limit = 0;
+//     const offset = 0;
+//     const where = { registerId };
+//     const { ok, data } = await Controller.Goest.getAll(limit, offset, where);
+//     if (!ok) return [];
+
+//     const { rows = [] } = data;
+//     const ids = rows.map((item) => item._id.toString());
+//     return ids;
+
+//     //
+//   } catch (error) {
+//     console.log({ step: 'error getAllIds.GoestService', error: error.toString() });
+//     return [];
+//   }
+// };
+
+// const goestDelByRegisterId = async (registerId) => {
+//   try {
+//     //
+
+//     const ids = await getAllIds(registerId);
+//     const itemsFuctions = ids.map((goestId) => Controller.Goest.del(goestId));
+//     const itemsDelete = await Promise.all([...itemsFuctions]);
+
+//     return { ok: true, data: itemsDelete, msg: MESSAGE.successDelete };
+
+//     //
+//   } catch (error) {
+//     console.log({ step: 'error goestDelByRegisterId.GoestService', error: error.toString() });
+//     return { ok: false, data: [], msg: MESSAGE.errorDelete };
+//   }
+// };
+
+// export default { getAll, getWhere, getById, getOne, create, update, del, goestDelByRegisterId, deleteMany };

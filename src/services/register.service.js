@@ -119,15 +119,35 @@ const del = async (req = request, res = response) => {
 
     const { registerId } = req.params;
 
-    const [lodging, amount, goest, cafe] = await Promise.all([
-      Service.Lodging.lodgingDelByRegisterId(registerId),
-      Service.Amount.amountDelByRegisterId(registerId),
-      Service.Goest.goestDelByRegisterId(registerId),
-      Service.Cafe.cafeDelByRegisterId(registerId),
+    const limit = 0;
+    const offset = 0;
+    const where = { registerId };
+    const params = { registerId };
+
+    const [goest, amount, lodging] = await Promise.all([
+      Controller.Goest.getAll(limit, offset, where),
+      Controller.Amount.getAll(limit, offset, where),
+      Controller.Lodging.getAll(limit, offset, where),
+    ]);
+
+    const [_, goestDelete, amountDelete, lodgingDelete] = await Promise.all([
+      Controller.Cafe.deleteMany(params),
+      Controller.Goest.deleteMany(params),
+      Controller.Amount.deleteMany(params),
+      Controller.Lodging.deleteMany(params),
     ]);
 
     const { msg, statusCode, data, ok } = await Controller.Register.del(registerId);
-    res.status(statusCode).json({ data: { register: data[0], lodging, amount, goest, cafe }, msg, ok });
+    res.status(statusCode).json({
+      data: {
+        register: data[0],
+        goest: { data: goest, goestDelete },
+        amount: { data: amount, amountDelete },
+        lodging: { data: lodging, lodgingDelete },
+      },
+      msg,
+      ok,
+    });
 
     //
   } catch (error) {

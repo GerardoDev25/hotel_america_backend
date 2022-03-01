@@ -21,40 +21,6 @@ const getAll = async (limit = 10, offset = 0, where = {}) => {
   }
 };
 
-const getById = async (cafeId) => {
-  try {
-    //
-
-    const result = await Model.Cafe.findById(cafeId);
-
-    return result
-      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
-      : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
-
-    //
-  } catch (error) {
-    console.log({ step: 'error getById.CafeController', error: error.toString() });
-    return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
-  }
-};
-
-const getOne = async (where = {}) => {
-  try {
-    //
-
-    const result = await Model.Cafe.findOne(where);
-
-    return result
-      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
-      : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
-
-    //
-  } catch (error) {
-    console.log({ step: 'error getOne.CafeController', error: error.toString() });
-    return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
-  }
-};
-
 const create = async (fiels) => {
   try {
     //
@@ -73,29 +39,11 @@ const create = async (fiels) => {
   }
 };
 
-const update = async (fiels) => {
+const deleteMany = async (params) => {
   try {
     //
 
-    const { cafeId, ...rest } = fiels;
-    const result = await Model.Cafe.findByIdAndUpdate(cafeId, rest);
-
-    return result
-      ? { statusCode: STATUS.success, msg: MESSAGE.successUpdate, ok: true, data: [result] }
-      : { statusCode: STATUS.notFound, msg: MESSAGE.errorUpdate, ok: false, data: [] };
-
-    //
-  } catch (error) {
-    console.log({ step: 'error update.CafeController', error: error.toString() });
-    return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
-  }
-};
-
-const del = async (cafeId) => {
-  try {
-    //
-
-    const result = await Model.Cafe.findOneAndDelete({ _id: cafeId });
+    const result = await Model.Cafe.deleteMany({ ...params });
 
     return result
       ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data: [result] }
@@ -103,9 +51,63 @@ const del = async (cafeId) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error delete.CafeController', error: error.toString() });
+    console.log({ step: 'error deleteMany.CafeController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
   }
 };
 
-export default { getAll, getById, getOne, create, del, update };
+export default { getAll, create, deleteMany };
+
+// const getById = async (cafeId) => {
+//   try {
+//     //
+
+//     const result = await Model.Cafe.findById(cafeId);
+
+//     return result
+//       ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
+//       : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
+
+//     //
+//   } catch (error) {
+//     console.log({ step: 'error getById.CafeController', error: error.toString() });
+//     return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
+//   }
+// };
+
+// const getOne = async (where = {}) => {
+//   try {
+//     //
+
+//     const result = await Model.Cafe.findOne(where);
+
+//     return result
+//       ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
+//       : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
+
+//     //
+//   } catch (error) {
+//     console.log({ step: 'error getOne.CafeController', error: error.toString() });
+//     return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
+//   }
+// };
+
+// const update = async (fiels) => {
+//   try {
+//     //
+
+//     const { cafeId, ...rest } = fiels;
+//     const result = await Model.Cafe.findByIdAndUpdate(cafeId, rest);
+
+//     return result
+//       ? { statusCode: STATUS.success, msg: MESSAGE.successUpdate, ok: true, data: [result] }
+//       : { statusCode: STATUS.notFound, msg: MESSAGE.errorUpdate, ok: false, data: [] };
+
+//     //
+//   } catch (error) {
+//     console.log({ step: 'error update.CafeController', error: error.toString() });
+//     return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
+//   }
+// };
+
+// export default { getAll, getById, getOne, create, deleteMany, update };

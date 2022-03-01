@@ -21,40 +21,6 @@ const getAll = async (limit = 10, offset = 0, where = {}) => {
   }
 };
 
-const getById = async (lodgingId) => {
-  try {
-    //
-
-    const result = await Model.Lodging.findById(lodgingId);
-
-    return result
-      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
-      : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
-
-    //
-  } catch (error) {
-    console.log({ step: 'error getById.LodgingController', error: error.toString() });
-    return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
-  }
-};
-
-const getOne = async (where = {}) => {
-  try {
-    //
-
-    const result = await Model.Lodging.findOne(where);
-
-    return result
-      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
-      : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
-
-    //
-  } catch (error) {
-    console.log({ step: 'error getOne.LodgingController', error: error.toString() });
-    return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
-  }
-};
-
 const create = async (fiels) => {
   try {
     //
@@ -91,11 +57,11 @@ const update = async (fiels) => {
   }
 };
 
-const del = async (lodgingId) => {
+const deleteMany = async (params) => {
   try {
     //
 
-    const result = await Model.Lodging.findOneAndDelete({ _id: lodgingId });
+    const result = await Model.Lodging.deleteMany({ ...params });
 
     return result
       ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data: [result] }
@@ -108,4 +74,57 @@ const del = async (lodgingId) => {
   }
 };
 
-export default { getAll, getById, getOne, create, update, del };
+export default { getAll, create, update, deleteMany };
+
+// const getById = async (lodgingId) => {
+//   try {
+//     //
+
+//     const result = await Model.Lodging.findById(lodgingId);
+
+//     return result
+//       ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
+//       : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
+
+//     //
+//   } catch (error) {
+//     console.log({ step: 'error getById.LodgingController', error: error.toString() });
+//     return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
+//   }
+// };
+
+// const getOne = async (where = {}) => {
+//   try {
+//     //
+
+//     const result = await Model.Lodging.findOne(where);
+
+//     return result
+//       ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
+//       : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
+
+//     //
+//   } catch (error) {
+//     console.log({ step: 'error getOne.LodgingController', error: error.toString() });
+//     return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
+//   }
+// };
+
+// const del = async (lodgingId) => {
+//   try {
+//     //
+
+//     const result = await Model.Lodging.findOneAndDelete({ _id: lodgingId });
+
+//     return result
+//       ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data: [result] }
+//       : { statusCode: STATUS.notFound, msg: MESSAGE.errorDelete, ok: false, data: [] };
+
+//     //
+//   } catch (error) {
+//     console.log({ step: 'error delete.LodgingController', error: error.toString() });
+//     return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
+//   }
+// };
+
+// export default { getAll, getById, getOne, create, update, del };

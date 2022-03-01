@@ -5,7 +5,6 @@ import helpers from '../helpers';
 import { MESSAGE, STATUS } from '../helpers/settings';
 
 import Controller from '../controllers';
-import helpers from '../helpers';
 
 const login = async (req = request, res = response) => {
   try {

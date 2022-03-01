@@ -108,4 +108,21 @@ const del = async (goestId) => {
   }
 };
 
-export default { getAll, getById, getOne, create, update, del };
+const deleteMany = async (params) => {
+  try {
+    //
+
+    const result = await Model.Goest.deleteMany({ ...params });
+
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data: [result] }
+      : { statusCode: STATUS.notFound, msg: MESSAGE.errorDelete, ok: false, data: [] };
+
+    //
+  } catch (error) {
+    console.log({ step: 'error deleteMany.GoestController', error: error.toString() });
+    return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
+  }
+};
+
+export default { getAll, getById, getOne, create, update, del, deleteMany };

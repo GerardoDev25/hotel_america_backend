@@ -9,7 +9,7 @@ const create = [
   check('origin', 'origin is required or kind of wrong data type - String').isString().notEmpty(),
   check('posting', 'posting is required or kind of wrong data type - String').isString().notEmpty(),
   check('lastName', 'lastName is required or kind of wrong data type - String').isString().notEmpty(),
-  check('dateOfBirth', 'dateOfBirth is required or kind of wrong data type - Numeric').isNumeric().notEmpty(),
+  check('dateOfBirth', 'dateOfBirth is required or kind of wrong data type - Numeric').isString().notEmpty(),
   check('ci', 'ci is required or kind of wrong data type - String').isString().notEmpty(),
   check('numberRoom', 'numberRoom is required or kind of wrong data type - Numeric').isNumeric().notEmpty(),
 

@@ -20,3 +20,4 @@ router.put('/:registerId', Validator.Register.update, Service.Register.update);
 router.delete('/:registerId', Validator.Register.del, Service.Register.del);
 
 export default router;
+// TokenExpiredError
