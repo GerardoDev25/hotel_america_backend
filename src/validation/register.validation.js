@@ -1,20 +1,18 @@
 import { check } from 'express-validator';
-import { validataInputs, validateRole, verifyId } from '../helpers/validateInputs';
+import helpers from '../helpers';
 
-const getById = verifyId('registerId');
+const getById = helpers.verifyId('registerId');
 
 const create = [
   check('price', 'price is required or kind of wrong data type - Numeric').isNumeric().notEmpty(),
-  check('checkOut', 'checkOut is required or kind of wrong data type - Numeric').isNumeric().notEmpty(),
   check('numberRoom', 'numberRoom is required or kind of wrong data type - Numeric').isNumeric().notEmpty(),
-
   check('roomId', 'roomId is required or kind of wrong data type - MongoId').isMongoId().notEmpty(),
   check('staffId', 'staffId is required or kind of wrong data type - MongoId').isMongoId().notEmpty(),
-  validataInputs,
+  helpers.validataInputs,
 ];
 
-const update = [...validateRole(['role_reception']), ...verifyId('registerId')];
+const update = [...helpers.validateRole(['role_reception']), ...helpers.verifyId('registerId')];
 
-const del = [...validateRole(['role_reception']), ...verifyId('registerId')];
+const del = [...helpers.validateRole(['role_reception']), ...helpers.verifyId('registerId')];
 
 export default { create, getById, update, del };

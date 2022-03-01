@@ -9,6 +9,8 @@ router.get('/', Service.Amount.getAll);
 
 router.get('/search/', Service.Amount.getOne);
 
+router.post('/where', Service.Amount.getWhere);
+
 router.get('/:amountId', Validator.Amount.getById, Service.Amount.getById);
 
 router.post('/', Validator.Amount.create, Service.Amount.create);

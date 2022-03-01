@@ -2,13 +2,12 @@ import { Schema, model, SchemaTypes } from 'mongoose';
 import { ROLES_STAFF } from '../helpers/settings';
 
 const staffSchema = Schema({
-  active: { type: SchemaTypes.Boolean, default: true },
   role: { type: SchemaTypes.String, required: true, enum: ROLES_STAFF },
   age: { type: SchemaTypes.Number, required: [true, 'age is required'] },
-  name: { type: SchemaTypes.String, required: [true, 'name is required'] },
-  username: { type: SchemaTypes.String, required: [true, 'user name is required'] },
-  phone: { type: SchemaTypes.Number, required: [true, 'phone is required'] },
-  password: { type: SchemaTypes.String, required: [true, 'the password is required'] },
+  name: { type: SchemaTypes.String, required: [true, 'name is required'], unique: true },
+  phone: { type: SchemaTypes.Number, required: [true, 'phone is required'], unique: true },
+  username: { type: SchemaTypes.String, required: [true, 'user name is required'], unique: true },
+  password: { type: SchemaTypes.String, required: [true, 'the password is required'], unique: true },
 });
 
 staffSchema.methods.toJSON = function () {

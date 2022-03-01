@@ -1,6 +1,9 @@
+import { generateJWT, parseJwt, validateJWT } from './jsonWebToken';
+import { haveRole, validataInputs, validateRole, verifyId } from './validateInputs';
+
 import Controller from '../controllers';
 
-export const existItems = async (ids = {}) => {
+const existItems = async (ids = {}) => {
   //
 
   const values = Object.entries(ids);
@@ -35,6 +38,11 @@ export const existItems = async (ids = {}) => {
           querys.push(Controller.Staff.getById(staffId));
           break;
 
+        case 'loggingId':
+          const loggingId = value[1];
+          querys.push(Controller.Lodging.getById(loggingId));
+          break;
+
         default:
           throw new Error(`invalid param: ${value[0]}`);
       }
@@ -53,3 +61,5 @@ export const existItems = async (ids = {}) => {
     return false;
   }
 };
+
+export default { existItems, generateJWT, parseJwt, validateJWT, haveRole, validataInputs, validateRole, verifyId };

@@ -9,6 +9,8 @@ router.get('/', Service.Staff.getAll);
 
 router.get('/search/', Service.Staff.getOne);
 
+router.post('/where', Service.Staff.getWhere);
+
 router.get('/:staffId', Validator.Staff.getById, Service.Staff.getById);
 
 router.post('/', Validator.Staff.create, Service.Staff.create);

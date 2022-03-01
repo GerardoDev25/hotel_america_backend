@@ -5,7 +5,10 @@ const getAll = async (limit = 10, offset = 0, where = {}) => {
   try {
     //
 
-    const [total, rows] = await Promise.all([Model.Amount.countDocuments(where), Model.Amount.find(where).limit(Number(limit)).skip(Number(offset))]);
+    const [total, rows] = await Promise.all([
+      Model.Amount.countDocuments(where),
+      Model.Amount.find(where).limit(Number(limit)).skip(Number(offset)),
+    ]);
 
     const data = { rows, total, pageCount: Math.ceil(total / limit) };
 
@@ -22,10 +25,10 @@ const getById = async (amountId) => {
   try {
     //
 
-    const user = await Model.Amount.findById(amountId);
+    const result = await Model.Amount.findById(amountId);
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
 
     //
@@ -39,10 +42,10 @@ const getOne = async (where = {}) => {
   try {
     //
 
-    const user = await Model.Amount.findOne(where);
+    const result = await Model.Amount.findOne(where);
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
 
     //
@@ -56,11 +59,11 @@ const create = async (fiels) => {
   try {
     //
 
-    const user = new Model.Amount({ ...fiels });
-    await user.save();
+    const result = new Model.Amount({ ...fiels });
+    await result.save();
 
-    return user
-      ? { statusCode: STATUS.created, msg: MESSAGE.successCrete, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.created, msg: MESSAGE.successCrete, ok: true, data: [result] }
       : { statusCode: STATUS.internalServerError, msg: MESSAGE.errorCreate, ok: false, data: [] };
 
     //
@@ -75,10 +78,10 @@ const update = async (fiels) => {
     //
 
     const { amountId, ...rest } = fiels;
-    const user = await Model.Amount.findByIdAndUpdate(amountId, rest);
+    const result = await Model.Amount.findByIdAndUpdate(amountId, rest);
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.successUpdate, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.successUpdate, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.errorUpdate, ok: false, data: [] };
 
     //
@@ -92,10 +95,10 @@ const del = async (amountId) => {
   try {
     //
 
-    const user = await Model.Amount.findOneAndDelete({ _id: amountId });
+    const result = await Model.Amount.findOneAndDelete({ _id: amountId });
 
-    return user
-      ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data: [user] }
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data: [result] }
       : { statusCode: STATUS.notFound, msg: MESSAGE.errorDelete, ok: false, data: [] };
 
     //
@@ -105,4 +108,21 @@ const del = async (amountId) => {
   }
 };
 
-export default { getAll, getById, getOne, create, update, del };
+const deleteMany = async (params) => {
+  try {
+    //
+
+    const result = await Model.Amount.deleteMany({ ...params });
+
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data: [result] }
+      : { statusCode: STATUS.notFound, msg: MESSAGE.errorDelete, ok: false, data: [] };
+
+    //
+  } catch (error) {
+    console.log({ step: 'error deleteMany.AmountController', error: error.toString() });
+    return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
+  }
+};
+
+export default { getAll, getById, getOne, create, update, del, deleteMany };

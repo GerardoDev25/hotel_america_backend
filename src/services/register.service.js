@@ -1,8 +1,9 @@
 import { response, request } from 'express';
 
-import Controller from '../controllers';
-import { existItems } from '../helpers';
+import helpers from '../helpers';
 import { MESSAGE, STATUS } from '../helpers/settings';
+
+import Controller from '../controllers';
 
 const getAll = async (req = request, res = response) => {
   try {
@@ -16,6 +17,22 @@ const getAll = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error getAll.RegisterService', error: error.toString() });
+    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+  }
+};
+
+const getWhere = async (req = request, res = response) => {
+  try {
+    //
+
+    const { limit = 0, offset, ...where } = req.body;
+    console.log({ limit, offset, where });
+    const { msg, statusCode, data, ok } = await Controller.Register.getAll(limit, offset, where);
+    res.status(statusCode).json({ data, msg, ok });
+
+    //
+  } catch (error) {
+    console.log({ step: 'error getWhere.RegisterService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
   }
 };
@@ -60,7 +77,7 @@ const create = async (req = request, res = response) => {
     const fiels = req.body;
     const { roomId, staffId } = fiels;
 
-    const exist = await existItems({ staffId, roomId });
+    const exist = await helpers.existItems({ staffId, roomId });
     if (!exist) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
 
     const { msg, statusCode, data, ok } = await Controller.Register.create(fiels);
@@ -81,7 +98,7 @@ const update = async (req = request, res = response) => {
     const fiels = req.body;
     const { roomId, staffId } = fiels;
 
-    const exist = await existItems({ staffId, roomId });
+    const exist = await helpers.existItems({ staffId, roomId });
     if (!exist) return res.json({ ok: false, data: [], msg: MESSAGE.paramsError });
 
     const { msg, statusCode, data, ok } = await Controller.Register.update({ ...fiels, registerId });
@@ -101,8 +118,35 @@ const del = async (req = request, res = response) => {
 
     const { registerId } = req.params;
 
+    const limit = 0;
+    const offset = 0;
+    const where = { registerId };
+    const params = { registerId };
+
+    const [goest, amount, lodging] = await Promise.all([
+      Controller.Goest.getAll(limit, offset, where),
+      Controller.Amount.getAll(limit, offset, where),
+      Controller.Lodging.getAll(limit, offset, where),
+    ]);
+
+    const [_, goestDelete, amountDelete, lodgingDelete] = await Promise.all([
+      Controller.Cafe.deleteMany(params),
+      Controller.Goest.deleteMany(params),
+      Controller.Amount.deleteMany(params),
+      Controller.Lodging.deleteMany(params),
+    ]);
+
     const { msg, statusCode, data, ok } = await Controller.Register.del(registerId);
-    res.status(statusCode).json({ data, msg, ok });
+    res.status(statusCode).json({
+      data: {
+        register: data[0],
+        goest: { data: goest, goestDelete },
+        amount: { data: amount, amountDelete },
+        lodging: { data: lodging, lodgingDelete },
+      },
+      msg,
+      ok,
+    });
 
     //
   } catch (error) {
@@ -111,4 +155,4 @@ const del = async (req = request, res = response) => {
   }
 };
 
-export default { getAll, getById, getOne, create, update, del };
+export default { getAll, getWhere, getById, getOne, create, update, del };

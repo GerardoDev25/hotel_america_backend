@@ -6,15 +6,17 @@ export const dbConnectionUrl = process.env.MONGOBD;
 export const SECRET_PRIVATE_KEY = process.env.SECRETORPRIVATEKEY;
 
 export const KIND_OF_ROOM = ['simple', 'double', 'multiple', 'suite'];
-export const ROLES_STAFF = ['role_admin', 'role_laundry', 'role_reception', 'role_Cafeteria'];
-export const DESCRIPTION_ROLES = ['advance', 'surcharge', 'laundry', 'frigobar', 'others'];
+export const ROLES_STAFF = ['role_admin', 'role_laundry', 'role_reception', 'role_Cafe'];
+export const DESCRIPTION_AMOUNTS = ['advance', 'surcharge', 'laundry', 'frigobar', 'others'];
 
 export const PATH = {
   auth: '/api/auth',
+  cafe: '/api/cafe',
   room: '/api/room',
   staff: '/api/staff',
   goest: '/api/goest',
   amount: '/api/amount',
+  lodging: '/api/lodging',
   register: '/api/register',
 };
 
