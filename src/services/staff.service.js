@@ -97,7 +97,6 @@ const update = async (req = request, res = response) => {
     const { staffId } = req.params;
     const fiels = req.body;
 
-    // * business logic
     let { password } = fiels;
     if (password) {
       const salt = bcryptjs.genSaltSync();

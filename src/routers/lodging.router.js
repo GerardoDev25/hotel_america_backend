@@ -13,8 +13,4 @@ router.post('/', Validator.Lodging.create, Service.Lodging.lodgingCreateAll);
 
 router.put('/:lodgingId', Validator.Lodging.update, Service.Lodging.update);
 
-// router.get('/search/', Service.Lodging.getOne);
-
-// router.get('/:lodgingId', Validator.Lodging.getById, Service.Lodging.getById);
-
 export default router;

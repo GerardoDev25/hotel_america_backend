@@ -3,7 +3,6 @@ import { response, request } from 'express';
 import helpers from '../helpers';
 import { MESSAGE, STATUS } from '../helpers/settings';
 
-import Service from '.';
 import Controller from '../controllers';
 
 const getAll = async (req = request, res = response) => {
