@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { response, request } from 'express';
 
 import helpers from '../helpers';
@@ -71,9 +72,32 @@ const create = async (fiels) => {
   }
 };
 
+const exitItems = async () => {
+  try {
+    //
+
+    const limit = 0;
+    const offset = 0;
+    const where = { date: moment().format('L') };
+
+    const { data, ok } = await Controller.Lodging.getAll(limit, offset, where);
+    // console.log(data, ok);
+    if (ok && data.total === 0) return true;
+    return false;
+
+    //
+  } catch (error) {
+    console.log({ step: 'error create.LodgingService', error: error.toString() });
+    return false;
+  }
+};
+
 const lodgingCreateAll = async (_, res = response) => {
   try {
     //
+
+    const exist = await exitItems();
+    if (!exist) return res.status(STATUS.success).json({ data: {}, total: 0, msg: MESSAGE.itemsExist });
 
     const registerItems = await getAllRegistersItems();
     const createFun = registerItems.map((fiels) => create(fiels));
@@ -118,7 +142,7 @@ const deleteMany = async (params) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error lodgingDelByRegisterId.AmountService', error: error.toString() });
+    console.log({ step: 'error deleteMany.AmountService', error: error.toString() });
     return { ok: false, data: [], msg: MESSAGE.errorDelete };
   }
 };

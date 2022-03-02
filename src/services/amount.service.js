@@ -148,21 +148,23 @@ const del = async (req = request, res = response) => {
   }
 };
 
-const amountDelByRegisterId = async (registerId) => {
-  try {
-    //
+export default { getAll, getWhere, getById, getOne, create, update, del };
 
-    const ids = await getAllIds(registerId);
-    const itemsFuctions = ids.map((amountId) => Controller.Amount.del(amountId));
-    const itemsDelete = await Promise.all([...itemsFuctions]);
+// const amountDelByRegisterId = async (registerId) => {
+//   try {
+//     //
 
-    return { ok: true, data: itemsDelete, msg: MESSAGE.successDelete };
+//     const ids = await getAllIds(registerId);
+//     const itemsFuctions = ids.map((amountId) => Controller.Amount.del(amountId));
+//     const itemsDelete = await Promise.all([...itemsFuctions]);
 
-    //
-  } catch (error) {
-    console.log({ step: 'error amountDelByRegisterId.AmountService', error: error.toString() });
-    return { ok: false, data: [], msg: MESSAGE.errorDelete };
-  }
-};
+//     return { ok: true, data: itemsDelete, msg: MESSAGE.successDelete };
 
-export default { getAll, getWhere, getById, getOne, create, update, del, amountDelByRegisterId };
+//     //
+//   } catch (error) {
+//     console.log({ step: 'error amountDelByRegisterId.AmountService', error: error.toString() });
+//     return { ok: false, data: [], msg: MESSAGE.errorDelete };
+//   }
+// };
+
+// export default { getAll, getWhere, getById, getOne, create, update, del, amountDelByRegisterId };

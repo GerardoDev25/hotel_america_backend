@@ -140,7 +140,7 @@ const deleteMany = async (params) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error goestDelByRegisterId.GoestService', error: error.toString() });
+    console.log({ step: 'error deleteMany.GoestService', error: error.toString() });
     return { ok: false, data: [], msg: MESSAGE.errorDelete };
   }
 };

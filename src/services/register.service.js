@@ -140,9 +140,9 @@ const del = async (req = request, res = response) => {
     res.status(statusCode).json({
       data: {
         register: data[0],
-        goest: { data: goest, goestDelete },
-        amount: { data: amount, amountDelete },
-        lodging: { data: lodging, lodgingDelete },
+        goest: { data: goest, delete: goestDelete },
+        amount: { data: amount, delete: amountDelete },
+        lodging: { data: lodging, delete: lodgingDelete },
       },
       msg,
       ok,
