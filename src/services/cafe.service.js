@@ -44,23 +44,23 @@ const getAllGoestsItems = async () => {
     const limit = 0;
     const now = moment().format('L');
     const { ok, data } = await Controller.Goest.getAll(limit);
+
     if (!ok) return [];
-
     const { rows = [] } = data;
-    const itemsFilter = rows.filter((item) => item.date !== now);
 
+    const itemsFilter = rows.filter((item) => item.date !== now);
     const items = itemsFilter.map((item) => ({
-      goestId: item.data[0]._id.toString(),
-      registerId: item.data[0].registerId.toString(),
-      name: item.data[0].name + item.data[0].lastName,
-      numberRoom: item.data[0].numberRoom,
+      goestId: item._id.toString(),
+      registerId: item.registerId.toString(),
+      name: item.name + ' ' + item.lastName,
+      numberRoom: item.numberRoom,
     }));
 
     return items;
 
     //
   } catch (error) {
-    console.log({ step: 'error getAllGoestsItems.helpers', error: error.toString() });
+    console.log({ step: 'error getAllGoestsItems.CafeService', error: error.toString() });
     return [];
   }
 };
