@@ -29,7 +29,7 @@ const login = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error loginAuthService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -53,7 +53,7 @@ const renew = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error renewAuthService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 

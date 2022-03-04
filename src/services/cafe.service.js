@@ -17,7 +17,7 @@ const getAll = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error getAll.CafeService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -33,7 +33,7 @@ const getWhere = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error getWhere.CafeService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -75,7 +75,7 @@ const create = async (fiels) => {
     //
   } catch (error) {
     console.log({ step: 'error create.CafeService', error: error.toString() });
-    return { ok: false, data: [], msg: MESSAGE.paramsError };
+    return { ok: false, data: [], msg: MESSAGE.paramsError, error: error.toString() };
   }
 };
 
@@ -92,7 +92,7 @@ const cafeCreateAll = async (_, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error cafeCreateAll.LodgingService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.errorCreate, data: [], ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -104,7 +104,7 @@ const delteMany = async (params) => {
     //
   } catch (error) {
     console.log({ step: 'error cafeCreateAll.LodgingService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.errorCreate, data: [], ok: false });
+    res.status(STATUS.conflict).json({ msg: MESSAGE.errorCreate, data: [], ok: false, error: error.toString() });
   }
 };
 

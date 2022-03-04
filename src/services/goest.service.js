@@ -19,7 +19,7 @@ const getAll = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error getAll.GoestService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -35,7 +35,7 @@ const getWhere = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error getWhere.GoestService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -51,7 +51,7 @@ const getById = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error getById.GoestService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -68,7 +68,7 @@ const getOne = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error getOne.GoestService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -88,7 +88,7 @@ const create = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error create.GoestService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -109,7 +109,7 @@ const update = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error updete.GoestService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -128,7 +128,7 @@ const del = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error delete.GoestService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 

@@ -18,7 +18,7 @@ const getAll = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error getAll.LodgingService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -34,7 +34,7 @@ const getWhere = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error getWhere.LodgingService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -68,7 +68,7 @@ const create = async (fiels) => {
     //
   } catch (error) {
     console.log({ step: 'error create.LodgingService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    return { msg: error.toString(), ok: false, data: [] };
   }
 };
 
@@ -81,7 +81,6 @@ const exitItems = async () => {
     const where = { date: moment().format('L') };
 
     const { data, ok } = await Controller.Lodging.getAll(limit, offset, where);
-    // console.log(data, ok);
     if (ok && data.total === 0) return true;
     return false;
 
@@ -108,7 +107,7 @@ const lodgingCreateAll = async (_, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error lodgingCreateAll.LodgingService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.errorCreate, data: [], ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -129,7 +128,7 @@ const update = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error updete.LodgingService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 

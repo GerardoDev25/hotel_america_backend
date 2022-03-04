@@ -17,7 +17,7 @@ const getAll = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error getAll.AmountService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -33,7 +33,7 @@ const getWhere = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error getWhere.AmountService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -49,7 +49,7 @@ const getById = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error getById.AmountService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -66,7 +66,7 @@ const getOne = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error getOne.AmountService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -86,7 +86,7 @@ const create = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error create.AmountService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -107,7 +107,7 @@ const update = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error updete.AmountService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -123,7 +123,7 @@ const del = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error delete.AmountService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
