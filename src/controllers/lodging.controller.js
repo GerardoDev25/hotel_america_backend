@@ -4,7 +4,6 @@ import { MESSAGE, STATUS } from '../helpers/settings';
 const getAll = async (limit = 10, offset = 0, where = {}) => {
   try {
     //
-    console.log(where);
     const [total, rows] = await Promise.all([
       Model.Lodging.countDocuments(where),
       Model.Lodging.find(where).limit(Number(limit)).skip(Number(offset)),

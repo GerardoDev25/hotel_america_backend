@@ -2,4 +2,6 @@ import helpers from '../helpers';
 
 const create = [...helpers.validateRole(['role_reception']), helpers.validataInputs];
 
-export default { create };
+const update = [...helpers.validateRole(['role_Cafe']), helpers.validataInputs];
+
+export default { create, update };

@@ -91,7 +91,24 @@ const cafeCreateAll = async (_, res = response) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error cafeCreateAll.LodgingService', error: error.toString() });
+    console.log({ step: 'error cafeCreateAll.CafeService', error: error.toString() });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
+  }
+};
+
+const update = async (req = request, res = response) => {
+  try {
+    //
+
+    const { cafeId } = req.params;
+    const fiels = req.body;
+
+    const { msg, statusCode, data, ok } = await Controller.Cafe.update({ ...fiels, cafeId });
+    res.status(statusCode).json({ data, msg, ok });
+
+    //
+  } catch (error) {
+    console.log({ step: 'error updete.CafeService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
@@ -103,9 +120,9 @@ const delteMany = async (params) => {
     return result;
     //
   } catch (error) {
-    console.log({ step: 'error cafeCreateAll.LodgingService', error: error.toString() });
+    console.log({ step: 'error cafeCreateAll.CafeService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: MESSAGE.errorCreate, data: [], ok: false, error: error.toString() });
   }
 };
 
-export default { getAll, getWhere, cafeCreateAll, delteMany };
+export default { getAll, getWhere, cafeCreateAll, update, delteMany };
