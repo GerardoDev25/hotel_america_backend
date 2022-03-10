@@ -11,6 +11,6 @@ router.post('/where', Service.Cafe.getWhere);
 
 router.post('/', Validator.Cafe.create, Service.Cafe.cafeCreateAll);
 
-router.post('/:cafeId', Validator.Cafe.update, Service.Cafe.update);
+router.put('/:cafeId', Validator.Cafe.update, Service.Cafe.update);
 
 export default router;
