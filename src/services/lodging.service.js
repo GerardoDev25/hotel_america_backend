@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { response, request } from 'express';
 
 import helpers from '../helpers';
@@ -78,7 +77,7 @@ const exitItems = async () => {
 
     const limit = 0;
     const offset = 0;
-    const where = { date: moment().format('L') };
+    const where = { date: helpers.getFullDate() };
 
     const { data, ok } = await Controller.Lodging.getAll(limit, offset, where);
     if (ok && data.total === 0) return true;

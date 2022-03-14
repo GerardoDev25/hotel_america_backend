@@ -1,11 +1,10 @@
-import moment from 'moment';
 import { Schema, model, SchemaTypes } from 'mongoose';
 
-import { DESCRIPTION_AMOUNTS } from '../helpers/settings';
+import { DESCRIPTION_AMOUNTS, getFullDate } from '../helpers/settings';
 
 const amountSchema = Schema({
   description: { type: SchemaTypes.String, default: '' },
-  date: { type: SchemaTypes.String, default: moment().format('L') },
+  date: { type: SchemaTypes.String, default: getFullDate() },
   totalAmount: { type: SchemaTypes.Number, required: [true, 'amount is required'] },
   type: { type: SchemaTypes.String, enum: DESCRIPTION_AMOUNTS, required: [true, 'type requered or invalid'] },
 

@@ -1,6 +1,6 @@
-import moment from 'moment';
 import { response, request } from 'express';
 
+import helpers from '../helpers';
 import { MESSAGE, STATUS } from '../helpers/settings';
 
 import Controller from '../controllers';
@@ -42,7 +42,7 @@ const getAllGoestsItems = async () => {
     //
 
     const limit = 0;
-    const now = moment().format('L');
+    const now = helpers.getFullDate();
     const { ok, data } = await Controller.Goest.getAll(limit);
 
     if (!ok) return [];
@@ -83,6 +83,7 @@ const cafeCreateAll = async (_, res = response) => {
   try {
     //
 
+    console.log(helpers.getFullDate());
     const goestItems = await getAllGoestsItems();
     const createFun = goestItems.map((fiels) => create(fiels));
     const createResult = await Promise.all([...createFun]);

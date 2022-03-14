@@ -1,8 +1,9 @@
-import moment from 'moment';
 import { Schema, model, SchemaTypes } from 'mongoose';
 
+import { getFullDate } from '../helpers/settings';
+
 const lodgingSchema = Schema({
-  date: { type: SchemaTypes.String, default: moment().format('L') },
+  date: { type: SchemaTypes.String, default: getFullDate() },
   amount: { type: SchemaTypes.Number, required: [true, 'amount is required'] },
   
   registerId: { type: SchemaTypes.ObjectId, ref: 'Register', required: [true, 'id register is required'] },

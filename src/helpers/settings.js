@@ -51,3 +51,24 @@ export const STATUS = {
   expectationFailed: 417,
   internalServerError: 500,
 };
+
+
+export const getFullDate = () => {
+  //
+
+  const date = new Date();
+  const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+  const month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth();
+  const year = date.getFullYear();
+  return `${day}-${month}-${year}`;
+};
+
+export const getAndAddFullDate = (number) => {
+  //
+
+  const date = new Date();
+  const day = date.getDate() + number < 10 ? '0' + (date.getDate() + number) : date.getDate();
+  const month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth();
+  const year = date.getFullYear();
+  return `${day}-${month}-${year}`;
+};

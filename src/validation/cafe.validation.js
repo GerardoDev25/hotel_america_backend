@@ -1,6 +1,6 @@
 import helpers from '../helpers';
 
-const create = [...helpers.validateRole(['role_reception']), helpers.validataInputs];
+const create = [...helpers.validateRole(['role_Cafe']), helpers.validataInputs];
 
 const update = [...helpers.validateRole(['role_Cafe']), helpers.validataInputs];
 
