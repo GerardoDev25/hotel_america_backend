@@ -68,7 +68,6 @@ const create = async (fiels) => {
   try {
     //
 
-    // const { msg, data, ok } = await Controller.Cafe.create(fiels);
     const { data } = await Controller.Cafe.create(fiels);
     return data[0];
 
@@ -88,21 +87,12 @@ const cafeCreateAll = async (_, res = response) => {
     const where = { date: getFullDate() };
 
     const { msg, statusCode, data, ok } = await Controller.Cafe.getAll(limit, offset, where);
-    console.log(data);
-
     if (data.total > 0) return res.status(statusCode).json({ ok, msg, data });
 
     const goestItems = await getAllGoestsItems();
     const createFun = goestItems.map((fiels) => create(fiels));
     const rows = await Promise.all([...createFun]);
 
-    // console.log(createResult.data);
-    console.log('*****************************');
-    console.log('*****************************');
-    console.log('*****************************');
-
-    // res.status(STATUS.success).json({ data: createResult, ok: true, total: createResult.length, msg: MESSAGE.successCrete });
-    // res.status(STATUS.success).json({ data: createResult[0], ok: true, total: createResult.length, msg: MESSAGE.successCrete });
     res.status(STATUS.success).json({ data: { rows, total: rows.length }, ok: true, msg: MESSAGE.successCrete });
 
     //

@@ -19,7 +19,7 @@ const login = async (req = request, res = response) => {
     const [user] = data;
 
     const validPassword = bcryptjs.compareSync(password, user.password);
-    if (!validPassword) return res.status(STATUS.badRequest).json({ data, ok, msg: MESSAGE.authError });
+    if (!validPassword) return res.status(STATUS.badRequest).json({ data: [], ok: false, msg: MESSAGE.authError });
 
     const { _id, role, name } = user;
     const token = await helpers.generateJWT({ staffId: _id, role, name });
