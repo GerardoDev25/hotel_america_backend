@@ -1,7 +1,6 @@
 import { response, request } from 'express';
 
-import helpers from '../helpers';
-import { MESSAGE, STATUS } from '../helpers/settings';
+import { getFullDate, MESSAGE, STATUS } from '../helpers/settings';
 
 import Controller from '../controllers';
 
@@ -42,7 +41,7 @@ const getAllGoestsItems = async () => {
     //
 
     const limit = 0;
-    const now = helpers.getFullDate();
+    const now = getFullDate();
     const { ok, data } = await Controller.Goest.getAll(limit);
 
     if (!ok) return [];
@@ -69,8 +68,9 @@ const create = async (fiels) => {
   try {
     //
 
-    const { msg, data, ok } = await Controller.Cafe.create(fiels);
-    return { data, msg, ok };
+    // const { msg, data, ok } = await Controller.Cafe.create(fiels);
+    const { data } = await Controller.Cafe.create(fiels);
+    return data[0];
 
     //
   } catch (error) {
@@ -83,12 +83,27 @@ const cafeCreateAll = async (_, res = response) => {
   try {
     //
 
-    console.log(helpers.getFullDate());
+    const limit = 0;
+    const offset = 0;
+    const where = { date: getFullDate() };
+
+    const { msg, statusCode, data, ok } = await Controller.Cafe.getAll(limit, offset, where);
+    console.log(data);
+
+    if (data.total > 0) return res.status(statusCode).json({ ok, msg, data });
+
     const goestItems = await getAllGoestsItems();
     const createFun = goestItems.map((fiels) => create(fiels));
-    const createResult = await Promise.all([...createFun]);
+    const rows = await Promise.all([...createFun]);
 
-    res.status(STATUS.success).json({ data: createResult, total: createResult.length, msg: MESSAGE.successCrete });
+    // console.log(createResult.data);
+    console.log('*****************************');
+    console.log('*****************************');
+    console.log('*****************************');
+
+    // res.status(STATUS.success).json({ data: createResult, ok: true, total: createResult.length, msg: MESSAGE.successCrete });
+    // res.status(STATUS.success).json({ data: createResult[0], ok: true, total: createResult.length, msg: MESSAGE.successCrete });
+    res.status(STATUS.success).json({ data: { rows, total: rows.length }, ok: true, msg: MESSAGE.successCrete });
 
     //
   } catch (error) {

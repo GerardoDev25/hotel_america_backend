@@ -1,7 +1,7 @@
 import { response, request } from 'express';
 
 import helpers from '../helpers';
-import { MESSAGE, STATUS } from '../helpers/settings';
+import { getFullDate, MESSAGE, STATUS } from '../helpers/settings';
 
 import Controller from '../controllers';
 
@@ -77,7 +77,7 @@ const exitItems = async () => {
 
     const limit = 0;
     const offset = 0;
-    const where = { date: helpers.getFullDate() };
+    const where = { date: getFullDate() };
 
     const { data, ok } = await Controller.Lodging.getAll(limit, offset, where);
     if (ok && data.total === 0) return true;
