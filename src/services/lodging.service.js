@@ -131,6 +131,21 @@ const update = async (req = request, res = response) => {
   }
 };
 
+const del = async (req = request, res = response) => {
+  try {
+    //
+
+    const { lodgingId } = req.params;
+    const { msg, statusCode, data, ok } = await Controller.Lodging.del(lodgingId);
+    res.status(statusCode).json({ data, msg, ok });
+
+    //
+  } catch (error) {
+    console.log({ step: 'error delete.LodgingService', error: error.toString() });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
+  }
+};
+
 const deleteMany = async (params) => {
   try {
     //
@@ -140,9 +155,9 @@ const deleteMany = async (params) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error deleteMany.AmountService', error: error.toString() });
+    console.log({ step: 'error deleteMany.LodgingService', error: error.toString() });
     return { ok: false, data: [], msg: MESSAGE.errorDelete };
   }
 };
 
-export default { getAll, getWhere, update, lodgingCreateAll, deleteMany };
+export default { getAll, getWhere, update, lodgingCreateAll, deleteMany, del };

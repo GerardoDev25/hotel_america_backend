@@ -6,4 +6,6 @@ const create = [...helpers.validateRole(['role_reception']), helpers.validataInp
 
 const update = [...helpers.validateRole(['role_reception']), ...helpers.verifyId('lodgingId')];
 
-export default { create, update, getById };
+const del = [...helpers.validateRole(['role_reception']), ...helpers.verifyId('lodgingId')];
+
+export default { create, update, getById, del };

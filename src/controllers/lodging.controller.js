@@ -56,6 +56,22 @@ const update = async (fiels) => {
   }
 };
 
+const del = async (lodgingId) => {
+  try {
+    //
+
+    const result = await Model.Lodging.findOneAndDelete({ _id: lodgingId });
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data: [result] }
+      : { statusCode: STATUS.notFound, msg: MESSAGE.errorDelete, ok: false, data: [] };
+
+    //
+  } catch (error) {
+    console.log({ step: 'error delete.LodgingController', error: error.toString() });
+    return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
+  }
+};
+
 const deleteMany = async (params) => {
   try {
     //
@@ -73,4 +89,4 @@ const deleteMany = async (params) => {
   }
 };
 
-export default { getAll, create, update, deleteMany };
+export default { getAll, create, update, deleteMany, del };
