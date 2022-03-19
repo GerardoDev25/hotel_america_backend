@@ -1,4 +1,5 @@
 {
   "editor.bracketPairColorization.enabled": true,
-  "editor.scrollbar.verticalScrollbarSize": 7
+  "editor.scrollbar.verticalScrollbarSize": 7,
+  "js/ts.implicitProjectConfig.checkJs": true
 }
