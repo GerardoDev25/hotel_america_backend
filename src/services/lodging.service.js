@@ -9,7 +9,10 @@ const getAll = async (req = request, res = response) => {
   try {
     //
 
-    const { limit, offset } = req.query;
+    const query = req.query;
+
+    const limit = Number(query.limit);
+    const offset = Number(query.offset);
 
     const { msg, statusCode, data, ok } = await Controller.Lodging.getAll(limit, offset);
     res.status(statusCode).json({ data, msg, ok });
@@ -17,6 +20,22 @@ const getAll = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error getAll.LodgingService', error: error.toString() });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
+  }
+};
+
+const getById = async (req = request, res = response) => {
+  try {
+    //
+
+    const { lodgingId } = req.params;
+
+    const { msg, statusCode, data, ok } = await Controller.Lodging.getById(lodgingId);
+    res.status(statusCode).json({ data, msg, ok });
+
+    //
+  } catch (error) {
+    console.log({ step: 'error getById.LodgingService', error: error.toString() });
     res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
@@ -160,4 +179,4 @@ const deleteMany = async (params) => {
   }
 };
 
-export default { getAll, getWhere, update, lodgingCreateAll, deleteMany, del };
+export default { getAll, getById, getWhere, update, lodgingCreateAll, deleteMany, del };

@@ -8,7 +8,10 @@ const getAll = async (req = request, res = response) => {
   try {
     //
 
-    const { limit, offset } = req.query;
+    const query = req.query;
+
+    const limit = Number(query.limit);
+    const offset = Number(query.offset);
 
     const { msg, statusCode, data, ok } = await Controller.Cafe.getAll(limit, offset);
     res.status(statusCode).json({ data, msg, ok });
@@ -127,7 +130,7 @@ const delteMany = async (params) => {
     //
   } catch (error) {
     console.log({ step: 'error cafeCreateAll.CafeService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.errorCreate, data: [], ok: false, error: error.toString() });
+    return { msg: MESSAGE.errorCreate, data: [], ok: false, error: error.toString() };
   }
 };
 

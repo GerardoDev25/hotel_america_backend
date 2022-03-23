@@ -20,6 +20,23 @@ const getAll = async (limit = 10, offset = 0, where = {}) => {
   }
 };
 
+const getById = async (lodgingId) => {
+  try {
+    //
+
+    const result = await Model.Lodging.findById(lodgingId);
+
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
+      : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
+
+    //
+  } catch (error) {
+    console.log({ step: 'error getById.LodgingController', error: error.toString() });
+    return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
+  }
+};
+
 const create = async (fiels) => {
   try {
     //
@@ -89,4 +106,4 @@ const deleteMany = async (params) => {
   }
 };
 
-export default { getAll, create, update, deleteMany, del };
+export default { getAll, getById, create, update, deleteMany, del };

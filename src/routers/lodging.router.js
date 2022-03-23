@@ -9,6 +9,8 @@ router.get('/', Service.Lodging.getAll);
 
 router.post('/where', Service.Lodging.getWhere);
 
+router.get('/:lodgingId', Validator.Lodging.getById, Service.Lodging.getById);
+
 router.post('/', Validator.Lodging.create, Service.Lodging.lodgingCreateAll);
 
 router.put('/:lodgingId', Validator.Lodging.update, Service.Lodging.update);

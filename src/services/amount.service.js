@@ -9,7 +9,10 @@ const getAll = async (req = request, res = response) => {
   try {
     //
 
-    const { limit, offset } = req.query;
+    const query = req.query;
+
+    const limit = Number(query.limit)
+    const offset = Number(query.offset)
 
     const { msg, statusCode, data, ok } = await Controller.Amount.getAll(limit, offset);
     res.status(statusCode).json({ data, msg, ok });
