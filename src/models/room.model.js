@@ -1,7 +1,7 @@
 import { Schema, model, SchemaTypes } from 'mongoose';
 import { KIND_OF_ROOM } from '../helpers/settings';
 
-const roomSchema = Schema({
+const roomSchema = new Schema({
   doubleBed: { type: SchemaTypes.Number, default: 0 },
   singleBed: { type: SchemaTypes.Number, default: 0 },
   available: { type: SchemaTypes.Boolean, default: true },

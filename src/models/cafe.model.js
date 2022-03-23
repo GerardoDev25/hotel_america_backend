@@ -2,7 +2,7 @@ import { Schema, model, SchemaTypes } from 'mongoose';
 
 import { getFullDate } from '../helpers/settings';
 
-const cafeSchema = Schema({
+const cafeSchema = new Schema({
   active: { type: SchemaTypes.Boolean, default: false },
   date: { type: SchemaTypes.String, default: getFullDate() },
   name: { type: SchemaTypes.String, required: [true, 'name is required'] },

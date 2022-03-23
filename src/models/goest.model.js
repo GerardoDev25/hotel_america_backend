@@ -1,7 +1,7 @@
 import { Schema, model, SchemaTypes } from 'mongoose';
 import { getFullDate } from '../helpers/settings';
 
-const goestSchema = Schema({
+const goestSchema = new Schema({
   city: { type: SchemaTypes.String, default: '' },
   date: { type: SchemaTypes.String, default: getFullDate() },
   name: { type: SchemaTypes.String, required: [true, 'name is required'] },

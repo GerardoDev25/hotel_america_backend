@@ -2,7 +2,7 @@ import { Schema, model, SchemaTypes } from 'mongoose';
 
 import { getAndAddFullDate, getFullDate } from '../helpers/settings';
 
-const registerSchema = Schema({
+const registerSchema = new Schema({
   checkOut: { type: SchemaTypes.String, default: getAndAddFullDate(1) },
   discount: { type: SchemaTypes.Number, default: 0 },
   numGoest: { type: SchemaTypes.Number, default: 1 },
