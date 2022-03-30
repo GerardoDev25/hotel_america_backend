@@ -11,7 +11,11 @@ const getAll = async (req = request, res = response) => {
     //
 
     const { where } = req.body;
-    const { limit, offset } = req.query;
+
+    const query = req.query;
+
+    const limit = Number(query.limit);
+    const offset = Number(query.offset);
 
     const { msg, statusCode, data, ok } = await Controller.Goest.getAll(limit, offset, where);
     res.status(statusCode).json({ data, msg, ok });
@@ -19,7 +23,7 @@ const getAll = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error getAll.GoestService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -35,7 +39,7 @@ const getWhere = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error getWhere.GoestService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -51,7 +55,7 @@ const getById = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error getById.GoestService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -68,7 +72,7 @@ const getOne = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error getOne.GoestService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -88,7 +92,7 @@ const create = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error create.GoestService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -109,7 +113,7 @@ const update = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error updete.GoestService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -128,7 +132,7 @@ const del = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error delete.GoestService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -140,7 +144,7 @@ const deleteMany = async (params) => {
 
     //
   } catch (error) {
-    console.log({ step: 'error goestDelByRegisterId.GoestService', error: error.toString() });
+    console.log({ step: 'error deleteMany.GoestService', error: error.toString() });
     return { ok: false, data: [], msg: MESSAGE.errorDelete };
   }
 };

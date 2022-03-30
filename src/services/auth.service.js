@@ -19,7 +19,7 @@ const login = async (req = request, res = response) => {
     const [user] = data;
 
     const validPassword = bcryptjs.compareSync(password, user.password);
-    if (!validPassword) return res.status(STATUS.badRequest).json({ data, ok, msg: MESSAGE.authError });
+    if (!validPassword) return res.status(STATUS.badRequest).json({ data: [], ok: false, msg: MESSAGE.authError });
 
     const { _id, role, name } = user;
     const token = await helpers.generateJWT({ staffId: _id, role, name });
@@ -29,7 +29,7 @@ const login = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error loginAuthService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 
@@ -53,7 +53,7 @@ const renew = async (req = request, res = response) => {
     //
   } catch (error) {
     console.log({ step: 'error renewAuthService', error: error.toString() });
-    res.status(STATUS.conflict).json({ msg: MESSAGE.conflict, ok: false });
+    res.status(STATUS.conflict).json({ msg: error.toString(), ok: false, error: true });
   }
 };
 

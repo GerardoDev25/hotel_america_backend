@@ -20,8 +20,12 @@ export const PATH = {
   register: '/api/register',
 };
 
+/**
+ * list of message the request
+ */
 export const MESSAGE = {
   paramsError: 'parameter error necessary items do not exist',
+  itemsExist: 'the items exist',
   authSuccess: 'user logged',
   authError: 'password or username incorrect',
   success: 'Successful request',
@@ -39,6 +43,9 @@ export const MESSAGE = {
   forbidden: 'Resource Forbidden',
 };
 
+/**
+ * list of status request
+ */
 export const STATUS = {
   success: 200,
   created: 201,
@@ -49,4 +56,33 @@ export const STATUS = {
   conflict: 409,
   expectationFailed: 417,
   internalServerError: 500,
+};
+
+/**
+ *
+ * @returns {string} return a string with the current date
+ */
+export const getFullDate = () => {
+  //
+
+  const date = new Date();
+  const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+  const month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth();
+  const year = date.getFullYear();
+  return `${day}-${month}-${year}`;
+};
+
+/**
+ *
+ * @param {number} number get number of days to add
+ * @returns {string} return a string with the current date plus number of days added
+ */
+export const getAndAddFullDate = (number) => {
+  //
+
+  const date = new Date();
+  const day = date.getDate() + number < 10 ? '0' + (date.getDate() + number) : date.getDate();
+  const month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth();
+  const year = date.getFullYear();
+  return `${day}-${month}-${year}`;
 };

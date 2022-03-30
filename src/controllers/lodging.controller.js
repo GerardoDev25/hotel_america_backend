@@ -4,7 +4,6 @@ import { MESSAGE, STATUS } from '../helpers/settings';
 const getAll = async (limit = 10, offset = 0, where = {}) => {
   try {
     //
-
     const [total, rows] = await Promise.all([
       Model.Lodging.countDocuments(where),
       Model.Lodging.find(where).limit(Number(limit)).skip(Number(offset)),
@@ -17,6 +16,23 @@ const getAll = async (limit = 10, offset = 0, where = {}) => {
     //
   } catch (error) {
     console.log({ step: 'error getAll.LodgingController', error: error.toString() });
+    return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
+  }
+};
+
+const getById = async (lodgingId) => {
+  try {
+    //
+
+    const result = await Model.Lodging.findById(lodgingId);
+
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.success, ok: true, data: [result] }
+      : { statusCode: STATUS.notFound, msg: MESSAGE.notFound, ok: false, data: [] };
+
+    //
+  } catch (error) {
+    console.log({ step: 'error getById.LodgingController', error: error.toString() });
     return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
   }
 };
@@ -57,6 +73,22 @@ const update = async (fiels) => {
   }
 };
 
+const del = async (lodgingId) => {
+  try {
+    //
+
+    const result = await Model.Lodging.findOneAndDelete({ _id: lodgingId });
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.successDelete, ok: true, data: [result] }
+      : { statusCode: STATUS.notFound, msg: MESSAGE.errorDelete, ok: false, data: [] };
+
+    //
+  } catch (error) {
+    console.log({ step: 'error delete.LodgingController', error: error.toString() });
+    return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
+  }
+};
+
 const deleteMany = async (params) => {
   try {
     //
@@ -74,4 +106,4 @@ const deleteMany = async (params) => {
   }
 };
 
-export default { getAll, create, update, deleteMany };
+export default { getAll, getById, create, update, deleteMany, del };

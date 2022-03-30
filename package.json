@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "nodemon --inspect index.js",
     "build": "babel -d dist ./src -s ",
     "start": "node dist/index.js",
-    "test": "nodemon test.js"
+    "doc": "jsdoc -c jsdoc.json",
+    "docs:deploy": "npm run clean && npm run docs && gh-pages -d docs"
   },
   "repository": {
     "type": "git",
@@ -29,7 +30,6 @@
     "express": "^4.17.2",
     "express-validator": "^6.14.0",
     "jsonwebtoken": "^8.5.1",
-    "moment": "^2.29.1",
     "mongoose": "^6.1.3",
     "regenerator-runtime": "^0.13.9"
   },
@@ -38,6 +38,9 @@
     "@babel/core": "^7.16.5",
     "@babel/preset-env": "^7.16.5",
     "@babel/register": "^7.16.5",
+    "gh-pages": "^3.2.3",
+    "jsdoc": "^3.6.10",
+    "jsdoc-http-plugin": "^0.3.2",
     "nodemon": "^2.0.15"
   }
 }

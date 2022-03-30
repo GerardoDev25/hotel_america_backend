@@ -18,7 +18,7 @@ export const generateJWT = ({ staffId = '', role = '', name = '' }) =>
       payload,
       SECRET_PRIVATE_KEY,
       {
-        expiresIn: '8h',
+        expiresIn: '9h',
       },
       (err, token) => {
         if (err) {

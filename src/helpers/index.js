@@ -62,4 +62,13 @@ const existItems = async (ids = {}) => {
   }
 };
 
-export default { existItems, generateJWT, parseJwt, validateJWT, haveRole, validataInputs, validateRole, verifyId };
+export default {
+  existItems,
+  generateJWT,
+  parseJwt,
+  validateJWT,
+  haveRole,
+  validataInputs,
+  validateRole,
+  verifyId,
+};

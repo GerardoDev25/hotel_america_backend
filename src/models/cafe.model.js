@@ -1,9 +1,10 @@
-import moment from 'moment';
 import { Schema, model, SchemaTypes } from 'mongoose';
 
-const cafeSchema = Schema({
+import { getFullDate } from '../helpers/settings';
+
+const cafeSchema = new Schema({
   active: { type: SchemaTypes.Boolean, default: false },
-  date: { type: SchemaTypes.String, default: moment().format('L') },
+  date: { type: SchemaTypes.String, default: getFullDate() },
   name: { type: SchemaTypes.String, required: [true, 'name is required'] },
   numberRoom: { type: SchemaTypes.Number, required: [true, 'the room number is required'] },
 

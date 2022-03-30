@@ -39,6 +39,24 @@ const create = async (fiels) => {
   }
 };
 
+const update = async (fiels) => {
+  try {
+    //
+
+    const { cafeId, ...rest } = fiels;
+    const result = await Model.Cafe.findByIdAndUpdate(cafeId, rest);
+
+    return result
+      ? { statusCode: STATUS.success, msg: MESSAGE.successUpdate, ok: true, data: [result] }
+      : { statusCode: STATUS.notFound, msg: MESSAGE.errorUpdate, ok: false, data: [] };
+
+    //
+  } catch (error) {
+    console.log({ step: 'error update.CafeController', error: error.toString() });
+    return { statusCode: STATUS.internalServerError, ok: false, msg: error.toString() };
+  }
+};
+
 const deleteMany = async (params) => {
   try {
     //
@@ -56,4 +74,4 @@ const deleteMany = async (params) => {
   }
 };
 
-export default { getAll, create, deleteMany };
+export default { getAll, create, update, deleteMany };

@@ -1,14 +1,12 @@
 import { Schema, model, SchemaTypes } from 'mongoose';
-import moment from 'moment';
 
-import 'moment/locale/es-mx';
-moment.locale('es-mx');
+import { getAndAddFullDate, getFullDate } from '../helpers/settings';
 
-const registerSchema = Schema({
-  checkOut: { type: SchemaTypes.String, default: moment().add(1, 'day').format('L') },
+const registerSchema = new Schema({
+  checkOut: { type: SchemaTypes.String, default: getAndAddFullDate(1) },
   discount: { type: SchemaTypes.Number, default: 0 },
   numGoest: { type: SchemaTypes.Number, default: 1 },
-  checkIn: { type: SchemaTypes.String, default: moment().format('L') },
+  checkIn: { type: SchemaTypes.String, default: getFullDate() },
   price: { type: SchemaTypes.Number, required: [true, 'the price is required'] },
   numberRoom: { type: SchemaTypes.Number, required: [true, 'room number is required'], unique: true },
 
