@@ -2,6 +2,8 @@ import { Schema, model, SchemaTypes } from 'mongoose';
 
 import { DESCRIPTION_AMOUNTS, getFullDate } from '../helpers/settings';
 
+// todo add invoice fiel
+
 const amountSchema = new Schema({
   description: { type: SchemaTypes.String, default: '' },
   date: { type: SchemaTypes.String, default: getFullDate() },
