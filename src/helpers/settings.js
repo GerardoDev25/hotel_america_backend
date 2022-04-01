@@ -1,14 +1,50 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-export const PORT = process.env.PORT || 3000;
+/**
+ * @module Settings
+ */
+
+/**
+ * number port
+ * @type {number}
+ */
+export const PORT = Number.parseInt(process.env.PORT) || 3000;
+
+/**
+ * url connection data base
+ * @type {string}
+ */
 export const dbConnectionUrl = process.env.MONGOBD;
+
+/**
+ * secret key to generate jwt
+ * @type {string}
+ */
 export const SECRET_PRIVATE_KEY = process.env.SECRETORPRIVATEKEY;
 
+/**
+ * kind of rooms
+ * @type {Array<string>}
+ */
 export const KIND_OF_ROOM = ['simple', 'double', 'multiple', 'suite'];
+
+/**
+ * roles staff
+ * @type {Array<string>}
+ */
 export const ROLES_STAFF = ['role_admin', 'role_laundry', 'role_reception', 'role_Cafe'];
+
+/**
+ * descriptions amounts
+ * @type {Array<string>}
+ */
 export const DESCRIPTION_AMOUNTS = ['advance', 'surcharge', 'laundry', 'frigobar', 'others'];
 
+/**
+ * full paths
+ * @type {object}
+ */
 export const PATH = {
   auth: '/api/auth',
   cafe: '/api/cafe',
@@ -21,7 +57,8 @@ export const PATH = {
 };
 
 /**
- * list of message the request
+ * list of request's messages
+ * @type {object}
  */
 export const MESSAGE = {
   paramsError: 'parameter error necessary items do not exist',
@@ -37,7 +74,7 @@ export const MESSAGE = {
   errorUpdate: 'Error to update the resource',
   errorDelete: 'Error to delete the resource',
   internalServerError: 'Error to connect database',
-  undefined: 'insufficient permissions to access the resource',
+  msgUndefined: 'insufficient permissions to access the resource',
   conflict: 'The request could not be completed because of a conflict',
   badRequest: 'Bad Request',
   forbidden: 'Resource Forbidden',
@@ -45,6 +82,7 @@ export const MESSAGE = {
 
 /**
  * list of status request
+ * @type {object}
  */
 export const STATUS = {
   success: 200,
@@ -59,8 +97,8 @@ export const STATUS = {
 };
 
 /**
- *
- * @returns {string} return a string with the current date
+ * function generate current date
+ * @returns {string}
  */
 export const getFullDate = () => {
   //
@@ -73,7 +111,7 @@ export const getFullDate = () => {
 };
 
 /**
- *
+ * function generate a date with more days
  * @param {number} number get number of days to add
  * @returns {string} return a string with the current date plus number of days added
  */

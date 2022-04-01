@@ -1,6 +1,14 @@
 import { Schema, model, SchemaTypes } from 'mongoose';
 import { KIND_OF_ROOM } from '../helpers/settings';
 
+/**
+ * @module Models
+ */
+
+/**
+ * @name roomSchema of the room
+ * @type {Schema}
+ */
 const roomSchema = new Schema({
   doubleBed: { type: SchemaTypes.Number, default: 0 },
   singleBed: { type: SchemaTypes.Number, default: 0 },

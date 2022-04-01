@@ -2,6 +2,14 @@ import { Schema, model, SchemaTypes } from 'mongoose';
 
 import { getFullDate } from '../helpers/settings';
 
+/**
+ * @module Models
+ */
+
+/**
+ * @name lodgingSchema of the lodging
+ * @type {Schema}
+ */
 const lodgingSchema = new Schema({
   date: { type: SchemaTypes.String, default: getFullDate() },
   amount: { type: SchemaTypes.Number, required: [true, 'amount is required'] },

@@ -1,6 +1,15 @@
 import { Schema, model, SchemaTypes } from 'mongoose';
 import { ROLES_STAFF } from '../helpers/settings';
 
+
+/**
+ * @module Models
+ */
+
+/**
+ * @name staffSchema of the staff
+ * @type {Schema}
+ */
 const staffSchema = new  Schema({
   role: { type: SchemaTypes.String, required: true, enum: ROLES_STAFF },
   age: { type: SchemaTypes.Number, required: [true, 'age is required'] },

@@ -2,6 +2,14 @@ import { Schema, model, SchemaTypes } from 'mongoose';
 
 import { getFullDate } from '../helpers/settings';
 
+/**
+ * @module Models
+ */
+
+/**
+ * @name cafeSchema of the cafe
+ * @type {Schema}
+ */
 const cafeSchema = new Schema({
   active: { type: SchemaTypes.Boolean, default: false },
   date: { type: SchemaTypes.String, default: getFullDate() },
@@ -16,5 +24,6 @@ cafeSchema.methods.toJSON = function () {
   const { __v, _id, ...data } = this.toObject();
   return { cafeId: _id, ...data };
 };
+
 
 export default model('Cafe', cafeSchema);

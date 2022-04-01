@@ -3,6 +3,15 @@ import { haveRole, validataInputs, validateRole, verifyId } from './validateInpu
 
 import Controller from '../controllers';
 
+/**
+ * @module Helpers
+ */
+
+/**
+ * existItems function verify is exist item
+ * @param {object} ids ides's list
+ * @returns {Promise<Boolean>}
+ */
 const existItems = async (ids = {}) => {
   //
 

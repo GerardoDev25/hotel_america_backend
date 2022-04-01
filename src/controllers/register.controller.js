@@ -1,7 +1,16 @@
 import Model from '../models';
 import { MESSAGE, STATUS } from '../helpers/settings';
 
-const getAll = async (limit = 10, offset = 0, where = {}) => {
+/**
+ * @module Register/controller
+ */
+
+/**
+ * getAll controller function get all items
+ * @param {getAllParams} params params for get the items
+ * @returns {Promise<Data>} return a prmise with the values
+ */
+const getAll = async ({ limit = 10, offset = 0, where = {} }) => {
   try {
     //
 
@@ -20,6 +29,11 @@ const getAll = async (limit = 10, offset = 0, where = {}) => {
   }
 };
 
+/**
+ * getById controller function get a item with a id
+ * @param {string} registerId register's id
+ * @returns {Promise<Data>} return a promise with the values
+ */
 const getById = async (registerId) => {
   try {
     //
@@ -37,6 +51,11 @@ const getById = async (registerId) => {
   }
 };
 
+/**
+ * getOne controller function get a item wtih params
+ * @param {object} [where={}] object with all param to make match
+ * @returns {Promise<Data>} return a promise with the result
+ */
 const getOne = async (where = {}) => {
   try {
     //
@@ -54,6 +73,11 @@ const getOne = async (where = {}) => {
   }
 };
 
+/**
+ * create controller function
+ * @param {object} fiels object with all fiels to create a new item
+ * @returns {Promise<Data>} return a promise with the result
+ */
 const create = async (fiels) => {
   try {
     //
@@ -72,6 +96,12 @@ const create = async (fiels) => {
   }
 };
 
+
+/**
+ * update controller function
+ * @param {object} fiels object with all fiels to update a new item
+ * @returns {Promise<Data>} return a promise with the result
+ */
 const update = async (fiels) => {
   try {
     //
@@ -90,6 +120,12 @@ const update = async (fiels) => {
   }
 };
 
+
+/**
+ * del controller function delete a item with a id
+ * @param {string} registerId register's id
+ * @returns {Promise<Data>} return a promise with the result
+ */
 const del = async (registerId) => {
   try {
     //

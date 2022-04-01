@@ -4,7 +4,16 @@ import { getFullDate, MESSAGE, STATUS } from '../helpers/settings';
 
 import Controller from '../controllers';
 
-const getAll = async (req = request, res = response) => {
+/**
+ * @module Cafe/service
+ */
+
+/**
+ * getAll service function get all items
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ */
+const getAll = async (req, res) => {
   try {
     //
 
@@ -13,7 +22,7 @@ const getAll = async (req = request, res = response) => {
     const limit = Number(query.limit);
     const offset = Number(query.offset);
 
-    const { msg, statusCode, data, ok } = await Controller.Cafe.getAll(limit, offset);
+    const { msg, statusCode, data, ok } = await Controller.Cafe.getAll({ limit, offset });
     res.status(statusCode).json({ data, msg, ok });
 
     //
@@ -23,13 +32,18 @@ const getAll = async (req = request, res = response) => {
   }
 };
 
-const getWhere = async (req = request, res = response) => {
+/**
+ * getWhere service function get all items with some params
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ */
+const getWhere = async (req, res) => {
   try {
     //
 
     const { limit, offset, ...where } = req.body;
 
-    const { msg, statusCode, data, ok } = await Controller.Cafe.getAll(limit, offset, where);
+    const { msg, statusCode, data, ok } = await Controller.Cafe.getAll({ limit, offset, where });
     res.status(statusCode).json({ data, msg, ok });
 
     //
@@ -39,6 +53,10 @@ const getWhere = async (req = request, res = response) => {
   }
 };
 
+/**
+ * getAllGoestsItems function get all goest item
+ * @returns {Promise}
+ */
 const getAllGoestsItems = async () => {
   try {
     //
@@ -89,7 +107,7 @@ const cafeCreateAll = async (_, res = response) => {
     const offset = 0;
     const where = { date: getFullDate() };
 
-    const { msg, statusCode, data, ok } = await Controller.Cafe.getAll(limit, offset, where);
+    const { msg, statusCode, data, ok } = await Controller.Cafe.getAll({ limit, offset, where });
     if (data.total > 0) return res.status(statusCode).json({ ok, msg, data });
 
     const goestItems = await getAllGoestsItems();
@@ -105,7 +123,7 @@ const cafeCreateAll = async (_, res = response) => {
   }
 };
 
-const update = async (req = request, res = response) => {
+const update = async (req, res) => {
   try {
     //
 

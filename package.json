@@ -38,6 +38,7 @@
     "@babel/core": "^7.16.5",
     "@babel/preset-env": "^7.16.5",
     "@babel/register": "^7.16.5",
+    "clean-jsdoc-theme": "^3.3.4",
     "gh-pages": "^3.2.3",
     "jsdoc": "^3.6.10",
     "jsdoc-http-plugin": "^0.3.2",
