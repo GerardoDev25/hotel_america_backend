@@ -5,17 +5,25 @@ import { MESSAGE, STATUS } from '../helpers/settings';
 
 import Controller from '../controllers';
 
-const getAll = async (req = request, res = response) => {
+/**
+ * @module Register/service
+ */
+
+/**
+ * getAll service function get all items
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ */
+const getAll = async (req, res) => {
   try {
     //
-
 
     const query = req.query;
 
     const limit = Number(query.limit);
     const offset = Number(query.offset);
 
-    const { msg, statusCode, data, ok } = await Controller.Register.getAll(limit, offset);
+    const { msg, statusCode, data, ok } = await Controller.Register.getAll({ limit, offset });
     res.status(statusCode).json({ data, msg, ok });
 
     //
@@ -25,12 +33,17 @@ const getAll = async (req = request, res = response) => {
   }
 };
 
-const getWhere = async (req = request, res = response) => {
+/**
+ * getWhere service function get all items with some params
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ */
+const getWhere = async (req, res) => {
   try {
     //
 
     const { limit = 0, offset, ...where } = req.body;
-    const { msg, statusCode, data, ok } = await Controller.Register.getAll(limit, offset, where);
+    const { msg, statusCode, data, ok } = await Controller.Register.getAll({ limit, offset, where });
     res.status(statusCode).json({ data, msg, ok });
 
     //
@@ -40,7 +53,12 @@ const getWhere = async (req = request, res = response) => {
   }
 };
 
-const getById = async (req = request, res = response) => {
+/**
+ * getById service function get a items with a id
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ */
+const getById = async (req, res) => {
   try {
     //
 
@@ -55,7 +73,12 @@ const getById = async (req = request, res = response) => {
   }
 };
 
-const getOne = async (req = request, res = response) => {
+/**
+ * getOne service function get a items with params
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ */
+const getOne = async (req, res) => {
   try {
     //
 
@@ -71,7 +94,12 @@ const getOne = async (req = request, res = response) => {
   }
 };
 
-const create = async (req = request, res = response) => {
+/**
+ * create service function
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ */
+const create = async (req, res) => {
   try {
     //
 
@@ -91,7 +119,12 @@ const create = async (req = request, res = response) => {
   }
 };
 
-const update = async (req = request, res = response) => {
+/**
+ * update service function
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ */
+const update = async (req, res) => {
   try {
     //
 
@@ -112,7 +145,13 @@ const update = async (req = request, res = response) => {
   }
 };
 
-const del = async (req = request, res = response) => {
+/**
+ * del service function delte a item and all others items with the 
+ * same id reference
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ */
+const del = async (req, res) => {
   try {
     //
 
@@ -124,9 +163,9 @@ const del = async (req = request, res = response) => {
     const params = { registerId };
 
     const [goest, amount, lodging] = await Promise.all([
-      Controller.Goest.getAll(limit, offset, where),
-      Controller.Amount.getAll(limit, offset, where),
-      Controller.Lodging.getAll(limit, offset, where),
+      Controller.Goest.getAll({ limit, offset, where }),
+      Controller.Amount.getAll({ limit, offset, where }),
+      Controller.Lodging.getAll({ limit, offset, where }),
     ]);
 
     const [_, goestDelete, amountDelete, lodgingDelete] = await Promise.all([

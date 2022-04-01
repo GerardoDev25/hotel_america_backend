@@ -55,7 +55,7 @@ const getWhere = async (req, res) => {
 
 /**
  * getAllGoestsItems function get all goest item
- * @returns {Promise}
+ * @returns {Promise<Array>}
  */
 const getAllGoestsItems = async () => {
   try {
@@ -63,7 +63,7 @@ const getAllGoestsItems = async () => {
 
     const limit = 0;
     const now = getFullDate();
-    const { ok, data } = await Controller.Goest.getAll(limit);
+    const { ok, data } = await Controller.Goest.getAll({ limit });
 
     if (!ok) return [];
     const { rows = [] } = data;
@@ -85,6 +85,11 @@ const getAllGoestsItems = async () => {
   }
 };
 
+/**
+ *
+ * @param {object} fiels object with the fiesl to create a new item
+ * @returns {Promise<object>} return a primise with the item created
+ */
 const create = async (fiels) => {
   try {
     //
@@ -99,7 +104,12 @@ const create = async (fiels) => {
   }
 };
 
-const cafeCreateAll = async (_, res = response) => {
+/**
+ * cafeCreateAll create a item type cafe with all item of goest
+ * @param {any} _
+ * @param {response} res response with the result
+ */
+const cafeCreateAll = async (_, res) => {
   try {
     //
 
@@ -123,6 +133,11 @@ const cafeCreateAll = async (_, res = response) => {
   }
 };
 
+/**
+ * update service function handle update a item
+ * @param {request} req
+ * @param {response} res
+ */
 const update = async (req, res) => {
   try {
     //
@@ -140,6 +155,12 @@ const update = async (req, res) => {
   }
 };
 
+/**
+ * deleteMany service function handle delete all item that make 
+ * match with the params
+ * @param {object} params
+ * @returns {Promise<object>}
+ */
 const delteMany = async (params) => {
   try {
     //

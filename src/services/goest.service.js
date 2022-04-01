@@ -6,6 +6,15 @@ import { MESSAGE, STATUS } from '../helpers/settings';
 import Controller from '../controllers';
 import Service from '.';
 
+/**
+ * @module Goest/service
+ */
+
+/**
+ * getAll service function get all items
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ */
 const getAll = async (req = request, res = response) => {
   try {
     //
@@ -17,7 +26,7 @@ const getAll = async (req = request, res = response) => {
     const limit = Number(query.limit);
     const offset = Number(query.offset);
 
-    const { msg, statusCode, data, ok } = await Controller.Goest.getAll(limit, offset, where);
+    const { msg, statusCode, data, ok } = await Controller.Goest.getAll({ limit, offset, where });
     res.status(statusCode).json({ data, msg, ok });
 
     //
@@ -27,13 +36,18 @@ const getAll = async (req = request, res = response) => {
   }
 };
 
+/**
+ * getWhere service function get all items with some params
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ */
 const getWhere = async (req = request, res = response) => {
   try {
     //
 
     const { limit, offset, ...where } = req.body;
 
-    const { msg, statusCode, data, ok } = await Controller.Goest.getAll(limit, offset, where);
+    const { msg, statusCode, data, ok } = await Controller.Goest.getAll({ limit, offset, where });
     res.status(statusCode).json({ data, msg, ok });
 
     //
@@ -43,6 +57,11 @@ const getWhere = async (req = request, res = response) => {
   }
 };
 
+/**
+ * getById service function get a items with a id
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ */
 const getById = async (req = request, res = response) => {
   try {
     //
@@ -59,6 +78,11 @@ const getById = async (req = request, res = response) => {
   }
 };
 
+/**
+ * getOne service function get a items with params
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ */
 const getOne = async (req = request, res = response) => {
   try {
     //
@@ -76,6 +100,11 @@ const getOne = async (req = request, res = response) => {
   }
 };
 
+/**
+ * create service function
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ */
 const create = async (req = request, res = response) => {
   try {
     //
@@ -96,6 +125,11 @@ const create = async (req = request, res = response) => {
   }
 };
 
+/**
+ * update service function
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ */
 const update = async (req = request, res = response) => {
   try {
     //
@@ -117,6 +151,11 @@ const update = async (req = request, res = response) => {
   }
 };
 
+/**
+ * del service function delte a item
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ */
 const del = async (req = request, res = response) => {
   try {
     //
@@ -136,6 +175,12 @@ const del = async (req = request, res = response) => {
   }
 };
 
+/**
+ * deleteMany service function handle delete all item that make 
+ * match with the params
+ * @param {object} params
+ * @returns {Promise<object>}
+ */
 const deleteMany = async (params) => {
   try {
     //

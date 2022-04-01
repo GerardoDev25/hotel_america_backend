@@ -5,6 +5,15 @@ import { getFullDate, MESSAGE, STATUS } from '../helpers/settings';
 
 import Controller from '../controllers';
 
+/**
+ * @module Lodging/service
+ */
+
+/**
+ * getAll service function get all items
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ */
 const getAll = async (req = request, res = response) => {
   try {
     //
@@ -14,7 +23,7 @@ const getAll = async (req = request, res = response) => {
     const limit = Number(query.limit);
     const offset = Number(query.offset);
 
-    const { msg, statusCode, data, ok } = await Controller.Lodging.getAll(limit, offset);
+    const { msg, statusCode, data, ok } = await Controller.Lodging.getAll({ limit, offset });
     res.status(statusCode).json({ data, msg, ok });
 
     //
@@ -24,6 +33,11 @@ const getAll = async (req = request, res = response) => {
   }
 };
 
+/**
+ * getById service function get a items with a id
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ */
 const getById = async (req = request, res = response) => {
   try {
     //
@@ -40,13 +54,18 @@ const getById = async (req = request, res = response) => {
   }
 };
 
+/**
+ * getWhere service function get all items with some params
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ */
 const getWhere = async (req = request, res = response) => {
   try {
     //
 
     const { limit, offset, ...where } = req.body;
 
-    const { msg, statusCode, data, ok } = await Controller.Lodging.getAll(limit, offset, where);
+    const { msg, statusCode, data, ok } = await Controller.Lodging.getAll({ limit, offset, where });
     res.status(statusCode).json({ data, msg, ok });
 
     //
@@ -56,12 +75,17 @@ const getWhere = async (req = request, res = response) => {
   }
 };
 
+/**
+ * getAllRegistersItems service function return a promise with all
+ * register item
+ * @returns {Promise<Array>}
+ */
 const getAllRegistersItems = async () => {
   try {
     //
 
     const limit = 0;
-    const { ok, data } = await Controller.Register.getAll(limit);
+    const { ok, data } = await Controller.Register.getAll({ limit });
     if (!ok) return [];
 
     const { rows = [] } = data;
@@ -76,6 +100,11 @@ const getAllRegistersItems = async () => {
   }
 };
 
+/**
+ * create service function handle create a new item
+ * @param {object} fiels object with all fiels for create a new item
+ * @returns {Promise<object>} return a promise with the new item create
+ */
 const create = async (fiels) => {
   try {
     //
@@ -90,6 +119,10 @@ const create = async (fiels) => {
   }
 };
 
+/**
+ * existItem service function verify if exist a itemms with the current data
+ * @returns {Promise<boolean>} return a promise with the result
+ */
 const exitItems = async () => {
   try {
     //
@@ -98,7 +131,7 @@ const exitItems = async () => {
     const offset = 0;
     const where = { date: getFullDate() };
 
-    const { data, ok } = await Controller.Lodging.getAll(limit, offset, where);
+    const { data, ok } = await Controller.Lodging.getAll({ limit, offset, where });
     if (ok && data.total === 0) return true;
     return false;
 
@@ -109,6 +142,11 @@ const exitItems = async () => {
   }
 };
 
+/**
+ * lodgingCreateAll service function create many items with all register items
+ * @param {any} _
+ * @param {response} res
+ */
 const lodgingCreateAll = async (_, res = response) => {
   try {
     //
@@ -129,6 +167,11 @@ const lodgingCreateAll = async (_, res = response) => {
   }
 };
 
+/**
+ * update service function
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ */
 const update = async (req = request, res = response) => {
   try {
     //
@@ -150,6 +193,11 @@ const update = async (req = request, res = response) => {
   }
 };
 
+/**
+ * del service function delte a item
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ */
 const del = async (req = request, res = response) => {
   try {
     //
@@ -165,6 +213,12 @@ const del = async (req = request, res = response) => {
   }
 };
 
+/**
+ * deleteMany service function handle delete all item that make
+ * match with the params
+ * @param {object} params
+ * @returns {Promise<object>}
+ */
 const deleteMany = async (params) => {
   try {
     //

@@ -6,7 +6,18 @@ import { MESSAGE, STATUS } from '../helpers/settings';
 
 import Controller from '../controllers';
 
-const login = async (req = request, res = response) => {
+/**
+ * @module Auth/service
+ */
+
+/**
+ * login service function handle login
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ * @returns {Promise}
+ */
+
+const login = async (req, res) => {
   try {
     //
 
@@ -33,7 +44,15 @@ const login = async (req = request, res = response) => {
   }
 };
 
-const renew = async (req = request, res = response) => {
+
+/**
+ * renew service function handle renovate token 
+ * @param {request} req param of type request
+ * @param {response} res param of type response
+ * @returns {Promise}
+ */
+
+const renew = async (req, res) => {
   try {
     //
 
