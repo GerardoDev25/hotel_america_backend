@@ -6,7 +6,18 @@ import Router from '../routers';
 import dbConnection from '../database';
 import { PORT, PATH } from '../helpers/settings';
 
+/**
+ * @class
+ * @public
+ * @example
+ * const server = new Server()
+ * server.listen()
+ */
 class Server {
+  /**
+   * constructor build an instance of Sever
+   * @constructor
+   */
   constructor() {
     this.app = express();
     this.port = PORT;
@@ -16,12 +27,18 @@ class Server {
     this.routerApp();
   }
 
+  /**
+   * middlewares function make functionalities before all
+   */
   middlewares() {
     this.app.use(cors());
     this.app.use(express.json());
     this.app.use(express.static('./src/public'));
   }
 
+  /**
+   * the router app function injects the routes from the apiRest
+   */
   routerApp() {
     this.app.use(PATH.auth, Router.auth);
     this.app.use(PATH.room, Router.room);
@@ -33,10 +50,16 @@ class Server {
     this.app.use(PATH.register, Router.register);
   }
 
+  /**
+   * async function that connnect with the data base
+   */
   async connection() {
     await dbConnection();
   }
 
+  /**
+   * function that raises the server
+   */
   listen() {
     this.app.listen(this.port, () => {
       console.log('*'.blue + `*********************************`.blue + '*'.blue);
