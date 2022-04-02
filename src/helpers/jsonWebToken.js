@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { MESSAGE, STATUS, SECRET_PRIVATE_KEY } from './settings';
 
 /**
- * @module Helpers
+ * @module JWT
  */
 
 /**

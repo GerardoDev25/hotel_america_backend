@@ -5,7 +5,7 @@ import { STATUS, MESSAGE } from './settings';
 import { validateJWT } from './jsonWebToken';
 
 /**
- * @module Helpers
+ * @module Validate Inputs
  */
 
 /**
